@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Login / Sign Up - Momken For Her{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-12">
+    <!-- Logo -->
+    <a href="{{ url_for('home') }}" class="mb-8">
+        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="h-20 p-2 rounded">
+    </a>
+
+    <!-- Auth Container -->
+    <div class="bg-cardBg w-full max-w-md p-8 rounded-xl border border-white/10 shadow-2xl">
+
+        <!-- Toggle Buttons -->
+        <div class="flex border-b border-white/10 mb-8">
+            <button id="btn-login" onclick="switchTab('login')"
+                    class="flex-1 py-3 text-brand border-b-2 border-brand font-bold uppercase tracking-wider text-sm transition">Log In</button>
+            <button id="btn-signup" onclick="switchTab('signup')"
+                    class="flex-1 py-3 text-textMuted border-b-2 border-transparent font-bold uppercase tracking-wider text-sm hover:text-white transition">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" action="{{ url_for('auth_login') }}" method="POST" class="space-y-5">
+            <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" name="email" class="input-field" placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
+                <input type="password" name="password" class="input-field" placeholder="••••••••" required minlength="6">
+            </div>
+            <button type="submit" class="w-full btn-primary py-3.5 rounded mt-4">Log In</button>
+        </form>
+
+        <!-- Sign Up Form (Hidden by default) -->
+        <form id="signup-form" action="{{ url_for('auth_register') }}" method="POST" class="space-y-5 hidden">
+            <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Full Name</label>
+                <input type="text" name="name" class="input-field" placeholder="Sara Ahmed" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" name="email" class="input-field" placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Phone Number</label>
+                <input type="tel" name="phone" class="input-field" placeholder="010XXXXXXXX" pattern="[0-9]{11}">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
+                    <input type="password" name="password" id="reg-pass" class="input-field" placeholder="••••••••" required minlength="6">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Confirm</label>
+                    <input type="password" name="confirm" id="reg-confirm" class="input-field" placeholder="••••••••" required minlength="6">
+                </div>
+            </div>
+            <p id="pass-error" class="text-red-400 text-sm hidden">Passwords do not match!</p>
+            <button type="submit" class="w-full btn-primary py-3.5 rounded mt-4">Create Account</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Momken For Her</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: '#e6003a', darkBg: '#050b24', cardBg: '#0d1536', textMuted: '#8b95b5' },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050b24; color: white; }
+        .input-field { background: #050b24; border: 1px solid rgba(255,255,255,0.2); color: white; transition: all 0.3s; }
+        .input-field:focus { border-color: #e6003a; outline: none; box-shadow: 0 0 10px rgba(230,0,58,0.2); }
+        .error-msg { color: #ff4d4d; font-size: 0.8rem; margin-top: 4px; display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center px-6">
+
+    <!-- Logo -->
+    <a href="index.html" class="mb-8">
+        <img src="images/logo2.png" alt="Logo" class="h-20 p-2 rounded">
+    </a>
+
+    <!-- Auth Container -->
+    <div class="bg-cardBg w-full max-w-md p-8 rounded-xl border border-white/10 shadow-2xl">
+        
+        <!-- Toggle Buttons -->
+        <div class="flex border-b border-white/10 mb-8">
+            <button id="btn-login" onclick="switchTab('login')" class="flex-1 py-3 text-brand border-b-2 border-brand font-bold uppercase tracking-wider text-sm transition">Log In</button>
+            <button id="btn-signup" onclick="switchTab('signup')" class="flex-1 py-3 text-textMuted border-b-2 border-transparent font-bold uppercase tracking-wider text-sm hover:text-white transition">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" id="login-email" class="input-field w-full px-4 py-3 rounded" placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
+                <input type="password" id="login-pass" class="input-field w-full px-4 py-3 rounded" placeholder="••••••••" required minlength="6">
+            </div>
+            <button type="submit" class="w-full bg-brand text-white py-3.5 rounded font-bold uppercase tracking-wider text-sm hover:bg-red-700 transition mt-4">Log In</button>
+        </form>
+
+        <!-- Sign Up Form (Hidden by default) -->
+        <form id="signup-form" onsubmit="handleSignup(event)" class="space-y-5 hidden">
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Full Name</label>
+                <input type="text" id="reg-name" class="input-field w-full px-4 py-3 rounded" placeholder="Sarah Ahmed" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" id="reg-email" class="input-field w-full px-4 py-3 rounded" placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Phone Number</label>
+                <input type="tel" id="reg-phone" class="input-field w-full px-4 py-3 rounded" placeholder="010XXXXXXXX" pattern="[0-9]{11}" required>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
+                    <input type="password" id="reg-pass" class="input-field w-full px-4 py-3 rounded" placeholder="••••••••" required minlength="6">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Confirm</label>
+                    <input type="password" id="reg-confirm" class="input-field w-full px-4 py-3 rounded" placeholder="••••••••" required minlength="6">
+                </div>
+            </div>
+            <p id="pass-error" class="error-msg">Passwords do not match!</p>
+            <button type="submit" class="w-full bg-brand text-white py-3.5 rounded font-bold uppercase tracking-wider text-sm hover:bg-red-700 transition mt-4">Create Account</button>
+        </form>
+    </div>
+
+    <!-- JS for Logic and Validation -->
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const btnLogin = document.getElementById('btn-login');
+            const btnSignup = document.getElementById('btn-signup');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                btnLogin.classList.replace('text-textMuted', 'text-brand');
+                btnLogin.classList.replace('border-transparent', 'border-brand');
+                btnSignup.classList.replace('text-brand', 'text-textMuted');
+                btnSignup.classList.replace('border-brand', 'border-transparent');
+            } else {
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                btnSignup.classList.replace('text-textMuted', 'text-brand');
+                btnSignup.classList.replace('border-transparent', 'border-brand');
+                btnLogin.classList.replace('text-brand', 'text-textMuted');
+                btnLogin.classList.replace('border-brand', 'border-transparent');
+            }
+        }
+
+        // Pass URL parameters (like ticket price) to the checkout page
+        function proceedToCheckout() {
+            const params = window.location.search;
+            window.location.href = `checkout.html${params}`;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            // Demo: Assume login is always successful
+            proceedToCheckout();
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const pass = document.getElementById('reg-pass').value;
+            const confirm = document.getElementById('reg-confirm').value;
+            const errorMsg = document.getElementById('pass-error');
+
+            if (pass !== confirm) {
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            errorMsg.style.display = 'none';
+            // Demo: Assume signup is successful
+            proceedToCheckout();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - Momken For Her</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: '#e6003a', darkBg: '#050b24', cardBg: '#0d1536', textMuted: '#8b95b5' },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050b24; color: white; }
+        .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s; }
+        .input-field:focus { border-color: #e6003a; outline: none; background: rgba(255,255,255,0.1); }
+        .error-border { border-color: #ff4d4d !important; }
+    </style>
+</head>
+<body class="min-h-screen py-12 px-6 flex flex-col items-center">
+
+    <a href="index.html" class="mb-8">
+        <img src="images/logo2.png" alt="Logo" class="h-20 p-2 rounded">
+    </a>
+
+    <div class="w-full max-w-4xl grid md:grid-cols-2 gap-8">
+        
+        <!-- Order Summary -->
+        <div class="bg-cardBg p-8 rounded-xl border border-white/10 h-fit">
+            <p class="text-brand text-xs font-bold uppercase tracking-widest mb-2">Order Summary</p>
+            <h2 class="text-3xl font-black mb-6 border-b border-white/10 pb-6" id="ticket-name">Standard Ticket</h2>
+            
+            <div class="flex justify-between items-center mb-4 text-textMuted">
+                <span>Subtotal</span>
+                <span id="ticket-subtotal">200 EGP</span>
+            </div>
+            <div class="flex justify-between items-center mb-6 text-textMuted border-b border-white/10 pb-6">
+                <span>Fees & Taxes</span>
+                <span>0 EGP</span>
+            </div>
+            <div class="flex justify-between items-center text-xl font-black">
+                <span>Total</span>
+                <span class="text-brand" id="ticket-total">200 EGP</span>
+            </div>
+        </div>
+
+        <!-- Payment Details -->
+        <div class="bg-cardBg p-8 rounded-xl border border-brand/30 shadow-[0_0_30px_rgba(230,0,58,0.1)]">
+            <h3 class="text-xl font-black uppercase tracking-wider mb-6">Payment Details</h3>
+            
+            <form id="payment-form" onsubmit="processPayment(event)" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Name on Card</label>
+                    <input type="text" id="card-name" class="input-field w-full px-4 py-3 rounded" placeholder="Sarah Ahmed" required>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Card Number</label>
+                    <input type="text" id="card-number" class="input-field w-full px-4 py-3 rounded tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required oninput="formatCardNumber(this)">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Expiry Date</label>
+                        <input type="text" id="card-expiry" class="input-field w-full px-4 py-3 rounded text-center" placeholder="MM/YY" maxlength="5" required oninput="formatExpiry(this)">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">CVV</label>
+                        <input type="password" id="card-cvv" class="input-field w-full px-4 py-3 rounded text-center" placeholder="123" maxlength="3" required pattern="\d{3}">
+                    </div>
+                </div>
+
+                <button type="submit" id="pay-btn" class="w-full bg-brand text-white py-4 rounded font-black uppercase tracking-widest text-sm hover:bg-red-700 transition mt-6 flex justify-center items-center gap-2">
+                    <span>Pay Securely</span>
+                    <span id="btn-amount">200 EGP</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div id="success-modal" class="fixed inset-0 bg-darkBg/95 backdrop-blur-sm z-50 hidden flex items-center justify-center px-6">
+        <div class="bg-cardBg p-10 rounded-2xl border border-brand/50 text-center max-w-md">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-3xl font-black mb-4">Payment Successful!</h2>
+            <p class="text-textMuted mb-8 leading-relaxed">Your ticket has been booked successfully. A confirmation email with your QR code has been sent to your inbox.</p>
+            <a href="index.html" class="inline-block bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded font-bold uppercase tracking-wider text-sm transition">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Load data from URL (e.g. ?type=VIP Ticket&price=300)
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            const price = params.get('price') || '200';
+            const type = params.get('type') || 'Standard Ticket';
+
+            document.getElementById('ticket-name').innerText = type;
+            document.getElementById('ticket-subtotal').innerText = price + ' EGP';
+            document.getElementById('ticket-total').innerText = price + ' EGP';
+            document.getElementById('btn-amount').innerText = price + ' EGP';
+        };
+
+        // Format Card Number (add spaces)
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove non-digits
+            value = value.replace(/(.{4})/g, '$1 ').trim(); // Add space every 4 digits
+            input.value = value;
+        }
+
+        // Format Expiry (MM/YY)
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        // Handle Payment Submission
+        function processPayment(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('pay-btn');
+            const cardNum = document.getElementById('card-number').value.replace(/\s/g, '');
+            const expiry = document.getElementById('card-expiry').value;
+
+            // Simple Validation
+            if(cardNum.length !== 16) {
+                alert('Card number must be 16 digits.');
+                return;
+            }
+            if(expiry.length !== 5) {
+                alert('Please enter a valid expiry date (MM/YY).');
+                return;
+            }
+
+            // Simulate API Call
+            btn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg> Processing...`;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                document.getElementById('success-modal').classList.remove('hidden');
+            }, 2000); // Wait 2 seconds then show success
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speakers - Momken For Her</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: '#e6003a', darkBg: '#050b24', cardBg: '#0d1536', textMuted: '#8b95b5' },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050b24; color: white; }
+        .glass-nav { background: rgba(5, 11, 36, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full top-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center">
+                <img src="images/logo2.png" alt="Momken For Her" class="h-20 object-contain  p-1 rounded">
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-bold tracking-wider text-textMuted uppercase">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="speakers.html" class="text-white transition">Speakers</a>
+                <a href="agenda.html" class="hover:text-white transition">Agenda</a>
+            </div>
+            <a href="#tickets" class="bg-brand text-white px-6 py-2.5 font-bold uppercase tracking-wider text-sm hover:bg-red-700 transition">Get Ticket</a>
+        </div>
+    </nav>
+
+    <!-- Speakers Section -->
+    <section class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <p class="text-brand text-sm font-bold uppercase tracking-widest mb-2">Meet Our</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-4 uppercase">All Speakers</h1>
+            <div class="w-16 h-1 bg-brand mx-auto mb-6"></div>
+            <p class="text-textMuted max-w-2xl mx-auto">Learn from industry leaders and experts who have shaped successful careers across various fields.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 gap-y-12">
+            <!-- Speaker Item Template (Repeated 20 times based on provided list) -->
+            
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Salah+Abo+Elmagd&background=0d1536&color=e6003a&size=150" alt="Salah" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300 object-cover">
+                <h3 class="font-bold uppercase text-sm mb-1">Salah Abo Elmagd</h3>
+                <p class="text-xs text-textMuted">CEO of ACTA and founder of TMS</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Hesham+Afifi&background=0d1536&color=e6003a&size=150" alt="Hesham" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Hesham Afifi</h3>
+                <p class="text-xs text-textMuted">Director</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Eslam+Hossam&background=0d1536&color=e6003a&size=150" alt="Eslam" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Eslam Hossam</h3>
+                <p class="text-xs text-textMuted">Creative Director</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Amr+Salama&background=0d1536&color=e6003a&size=150" alt="Amr" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Amr Salama</h3>
+                <p class="text-xs text-textMuted">Filmmaker | Writer</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Youssef+Othman&background=0d1536&color=e6003a&size=150" alt="Youssef" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Youssef Othman</h3>
+                <p class="text-xs text-textMuted">Actor - Content creator</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Islam+El-Tiar&background=0d1536&color=e6003a&size=150" alt="Islam" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Islam El-Tiar</h3>
+                <p class="text-xs text-textMuted">CVM Director at WaffarX</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Waleed+Khalil&background=0d1536&color=e6003a&size=150" alt="Waleed" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Waleed Khalil</h3>
+                <p class="text-xs text-textMuted">Managing Partner at Den VC</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Khaled+Halfawy&background=0d1536&color=e6003a&size=150" alt="Khaled" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Khaled Halfawy</h3>
+                <p class="text-xs text-textMuted">Film / TV Director</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Jessy+Radwan&background=0d1536&color=e6003a&size=150" alt="Jessy" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Jessy Radwan</h3>
+                <p class="text-xs text-textMuted">Founder and CEO Carerha</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Omar+El+Aawar&background=0d1536&color=e6003a&size=150" alt="Omar" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Omar El Aawar</h3>
+                <p class="text-xs text-textMuted">Founder & CEO Youth Summit</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Omar+Abdelsalam&background=0d1536&color=e6003a&size=150" alt="Omar" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Omar Abdelsalam</h3>
+                <p class="text-xs text-textMuted">Founder & CEO POV</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Yasmine+Yehia&background=0d1536&color=e6003a&size=150" alt="Yasmine" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Yasmine Yehia</h3>
+                <p class="text-xs text-textMuted">Founder The Coaching Lab</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Marianne+Georges&background=0d1536&color=e6003a&size=150" alt="Marianne" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Marianne Georges</h3>
+                <p class="text-xs text-textMuted">Business consultant</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Marwa+Abbas&background=0d1536&color=e6003a&size=150" alt="Marwa" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Marwa Abbas</h3>
+                <p class="text-xs text-textMuted">General Manager - IBM</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Amll+Askar&background=0d1536&color=e6003a&size=150" alt="Amll" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Amll Askar</h3>
+                <p class="text-xs text-textMuted">Founder and CEO of Arise</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Safaa+Badr&background=0d1536&color=e6003a&size=150" alt="Safaa" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Safaa Badr</h3>
+                <p class="text-xs text-textMuted">Skills and Learning Sr. Manager</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Mai+Zahra&background=0d1536&color=e6003a&size=150" alt="Mai" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Mai Zahra</h3>
+                <p class="text-xs text-textMuted">Sr. Employer Branding Partner</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Omnia+Kelig&background=0d1536&color=e6003a&size=150" alt="Omnia" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Omnia Kelig</h3>
+                <p class="text-xs text-textMuted">Deputy CEO - NAEEM Holding</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Hilda+Louca&background=0d1536&color=e6003a&size=150" alt="Hilda" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Hilda Louca</h3>
+                <p class="text-xs text-textMuted">Founder & CEO, Mitcha</p>
+            </div>
+
+            <div class="text-center group">
+                <img src="https://ui-avatars.com/api/?name=Ayman+Elgohary&background=0d1536&color=e6003a&size=150" alt="Ayman" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300">
+                <h3 class="font-bold uppercase text-sm mb-1">Eng. Ayman Elgohary</h3>
+                <p class="text-xs text-textMuted">Chairman of the Board, GSS</p>
+            </div>
+
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="bg-cardBg py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <!-- Branding -->
+            <div>
+                <img src="images/logo.jpg" alt="Logo" class="h-14 mb-4 bg-white p-1 rounded">
+                <p class="text-sm text-textMuted max-w-md leading-relaxed">Empowering Egypt's next generation of professionals through world-class career development events and networking opportunities.</p>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h4 class="font-black text-white mb-4 uppercase tracking-wider">Contact</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-sm text-textMuted">
+                        <!-- Mail Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                        haneen@career-180.com
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Social Updates -->
+            <div>
+                <h4 class="font-black text-white mb-4 uppercase tracking-wider">Social Updates</h4>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
+                        <!-- Facebook Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
+                        <!-- Instagram Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
+                        <!-- LinkedIn Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-white/10 mt-12 pt-8 text-center text-xs text-textMuted/60">
+            © 2026 Momken For Her Summit. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

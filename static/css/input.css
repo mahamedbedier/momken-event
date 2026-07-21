@@ -1,0 +1,123 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Custom Component Classes ===== */
+@layer components {
+  /* Glass-effect navigation bar */
+  .glass-nav {
+    background: rgba(5, 11, 36, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Sponsor card badge */
+  .sponsor-card {
+    @apply flex flex-col items-center justify-center gap-3 p-5 rounded-xl;
+    @apply bg-white/5 border border-white/10;
+    @apply hover:border-brand hover:bg-brand/5;
+    @apply transition-all duration-300 hover:-translate-y-1;
+  }
+
+  /* Form input fields */
+  .input-field {
+    @apply w-full px-4 py-3 rounded bg-darkBg border border-white/20 text-white;
+    @apply transition-all duration-300;
+    @apply focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply bg-brand text-white font-bold uppercase tracking-wider text-sm;
+    @apply hover:bg-red-700 transition-all duration-300;
+  }
+
+  /* Outline button */
+  .btn-outline {
+    @apply border border-brand text-brand font-bold uppercase tracking-wider text-sm;
+    @apply hover:bg-brand hover:text-white transition-all duration-300;
+  }
+
+  /* Section heading pattern */
+  .section-label {
+    @apply text-brand text-sm font-bold uppercase tracking-widest mb-2;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-black mb-4;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply bg-cardBg p-6 border-l-2 border-brand;
+  }
+
+  /* Agenda item card */
+  .agenda-card {
+    @apply bg-cardBg p-6 border border-white/5 border-l-4;
+  }
+
+  /* Admin metric card */
+  .metric-card {
+    @apply bg-cardBg p-6 rounded-xl border border-white/10;
+  }
+}
+
+/* ===== Base Styles ===== */
+@layer base {
+  body {
+    @apply bg-darkBg text-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050b24;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}
+
+/* ===== Utility Animations ===== */
+@layer utilities {
+  /* Mobile menu slide animation */
+  .slide-in {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+  .slide-out {
+    animation: slideOut 0.3s ease-in forwards;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+
+  /* Fade in for flash messages */
+  .fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

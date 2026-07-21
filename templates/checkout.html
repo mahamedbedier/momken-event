@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Secure Checkout - Momken For Her{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12 px-6 flex flex-col items-center pt-28">
+    <a href="{{ url_for('home') }}" class="mb-8">
+        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="h-20 p-2 rounded">
+    </a>
+
+    <div class="w-full max-w-4xl grid md:grid-cols-2 gap-8">
+
+        <!-- Order Summary (price from DB, NOT from URL) -->
+        <div class="bg-cardBg p-8 rounded-xl border border-white/10 h-fit">
+            <p class="section-label">Order Summary</p>
+            <h2 class="text-3xl font-black mb-6 border-b border-white/10 pb-6">{{ ticket.name }}</h2>
+
+            <div class="flex justify-between items-center mb-4 text-textMuted">
+                <span>Subtotal</span>
+                <span>{{ ticket.price }} EGP</span>
+            </div>
+            <div class="flex justify-between items-center mb-6 text-textMuted border-b border-white/10 pb-6">
+                <span>Fees & Taxes</span>
+                <span>0 EGP</span>
+            </div>
+            <div class="flex justify-between items-center text-xl font-black">
+                <span>Total</span>
+                <span class="text-brand">{{ ticket.price }} EGP</span>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="bg-cardBg p-8 rounded-xl border border-brand/30 shadow-[0_0_30px_rgba(230,0,58,0.1)]">
+            <h3 class="text-xl font-black uppercase tracking-wider mb-6">Payment Details</h3>
+
+            <form id="payment-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Name on Card</label>
+                    <input type="text" id="card-name" class="input-field" placeholder="Sara Ahmed" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Card Number</label>
+                    <input type="text" id="card-number" class="input-field tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Expiry Date</label>
+                        <input type="text" id="card-expiry" class="input-field text-center" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">CVV</label>
+                        <input type="password" id="card-cvv" class="input-field text-center" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+
+                <!-- Server-side error display -->
+                <div id="payment-errors" class="hidden">
+                    <ul class="list-disc list-inside text-red-400 text-sm space-y-1"></ul>
+                </div>
+
+                <button type="submit" id="pay-btn"
+                        class="w-full btn-primary py-4 rounded font-black tracking-widest flex justify-center items-center gap-2 mt-6">
+                    <span>Pay Securely</span>
+                    <span>{{ ticket.price }} EGP</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="fixed inset-0 bg-darkBg/95 backdrop-blur-sm z-50 hidden flex items-center justify-center px-6">
+    <div class="bg-cardBg p-10 rounded-2xl border border-brand/50 text-center max-w-md">
+        <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <h2 class="text-3xl font-black mb-4">Payment Successful!</h2>
+        <p class="text-textMuted mb-8 leading-relaxed">Your ticket has been booked successfully. A confirmation email with your QR code has been sent to your inbox.</p>
+        <a href="{{ url_for('home') }}" class="inline-block bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded font-bold uppercase tracking-wider text-sm transition">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Pass ticket_id to JS securely via data attribute -->
+<script>
+    window.CHECKOUT_CONFIG = {
+        ticketId: {{ ticket.id }},
+        processUrl: "{{ url_for('checkout_process') }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+{% endblock %}

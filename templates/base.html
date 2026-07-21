@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Momken For Her - Take The Lead{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}A comprehensive platform dedicated to empowering women through real job opportunities, training sessions, and professional networking.{% endblock %}">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+    {% include 'partials/_navbar.html' %}
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="fixed top-24 right-6 z-[60] space-y-3 max-w-sm" id="flash-container">
+            {% for category, message in messages %}
+            <div class="fade-in flex items-center gap-3 px-5 py-3 rounded-lg border backdrop-blur-sm shadow-xl
+                {% if category == 'success' %}bg-green-900/80 border-green-500/40 text-green-200
+                {% elif category == 'error' %}bg-red-900/80 border-red-500/40 text-red-200
+                {% else %}bg-blue-900/80 border-blue-500/40 text-blue-200{% endif %}">
+                <span class="text-sm font-medium">{{ message }}</span>
+                <button onclick="this.parentElement.remove()" class="ml-auto text-white/60 hover:text-white text-lg">&times;</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Page Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <!-- Core JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+
+    <!-- Auto-dismiss flash messages after 5 seconds -->
+    <script>
+        setTimeout(() => {
+            const container = document.getElementById('flash-container');
+            if (container) {
+                container.querySelectorAll(':scope > div').forEach(el => {
+                    el.style.transition = 'opacity 0.4s';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 400);
+                });
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

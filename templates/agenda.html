@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Agenda - Momken For Her{% endblock %}
+{% block meta_description %}Explore the full schedule of sessions, workshops, and panels at Momken For Her 3rd Edition.{% endblock %}
+
+{% block content %}
+<section class="pt-32 pb-24 px-6 max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+        <p class="section-label">Event Schedule</p>
+        <h1 class="section-title uppercase">Agenda</h1>
+        <div class="w-16 h-1 bg-brand mx-auto mb-6"></div>
+        <p class="text-textMuted">Explore the full schedule across both days of the summit.</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12 sticky top-24 z-40 bg-darkBg/90 py-4 backdrop-blur">
+        <button onclick="filterAgenda('all', this)"
+                class="filter-btn bg-brand text-white border border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">All</button>
+        <button onclick="filterAgenda('main', this)"
+                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Main Stage</button>
+        <button onclick="filterAgenda('secondary', this)"
+                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Secondary Stage</button>
+        <button onclick="filterAgenda('workshop', this)"
+                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Workshop</button>
+    </div>
+
+    <!-- Agenda List — Rendered from DB -->
+    <div class="space-y-6" id="agenda-list">
+        {% for item in agenda_items %}
+        {% set stage_colors = {'main': 'brand', 'secondary': 'blue-500', 'workshop': 'purple-500'} %}
+        {% set stage_color = stage_colors.get(item.stage, 'brand') %}
+        {% set stage_labels = {'main': 'Main Stage', 'secondary': 'Secondary Stage', 'workshop': 'Workshop'} %}
+
+        <div class="agenda-item agenda-card border-l-{{ stage_color }}" data-stage="{{ item.stage }}">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-{{ stage_color }} font-bold">{{ item.time_start }} — {{ item.time_end }}</span>
+                <span class="text-xs bg-white/10 px-2 py-1 rounded text-textMuted">{{ stage_labels.get(item.stage, item.stage) }}</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">{{ item.title }}</h3>
+            <p class="text-sm text-textMuted">{{ item.speakers_text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function filterAgenda(stage, btnElement) {
+        // Update button styles
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('bg-brand', 'text-white', 'border-brand');
+            btn.classList.add('bg-cardBg', 'text-textMuted', 'border-white/10');
+        });
+        btnElement.classList.remove('bg-cardBg', 'text-textMuted', 'border-white/10');
+        btnElement.classList.add('bg-brand', 'text-white', 'border-brand');
+
+        // Filter items
+        document.querySelectorAll('.agenda-item').forEach(item => {
+            if (stage === 'all' || item.getAttribute('data-stage') === stage) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

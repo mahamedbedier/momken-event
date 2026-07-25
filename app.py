@@ -11,6 +11,7 @@ Full-stack event management platform with:
 
 import base64
 import io
+import csv
 import json
 import os
 import re
@@ -25,6 +26,7 @@ from flask import (
     Flask,
     flash,
     jsonify,
+    Response,
     redirect,
     render_template,
     request,
@@ -577,10 +579,38 @@ def register_routes(app):
                 "ticket_type_id": ticket_type_id,
                 "order_id": order_id,
                 "order_status": order_status,
+                "role": user.role,
                 "registered": user.created_at.strftime("%b %d, %Y"),
             })
 
         return jsonify({"users": result, "total": len(result)})
+
+    @app.route("/admin/api/users/export")
+    @admin_required
+    def admin_users_export():
+        """API: Export all users to a CSV file for marketing."""
+        users = User.query.order_by(User.created_at.desc()).all()
+
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(["ID", "Name", "Email", "Phone", "Role", "Ticket Status", "Registration Date"])
+
+        for user in users:
+            latest_order = Order.query.filter_by(user_id=user.id).order_by(Order.created_at.desc()).first()
+            ticket_name = latest_order.ticket_type.name if latest_order else "No ticket"
+            writer.writerow([
+                user.id,
+                user.name,
+                user.email,
+                user.phone or "—",
+                user.role,
+                ticket_name,
+                user.created_at.strftime("%b %d, %Y")
+            ])
+
+        response = Response(output.getvalue(), mimetype="text/csv")
+        response.headers["Content-Disposition"] = "attachment; filename=momken_users_export.csv"
+        return response
 
     @app.route("/admin/api/users/<int:user_id>/ticket", methods=["POST"])
     @admin_required

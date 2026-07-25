@@ -779,6 +779,16 @@ def register_routes(app):
         order = None
         if code.isdigit():
             order = db.session.get(Order, int(code))
+        
+        # Check if code is in the MH-ORD-00012 format
+        if not order and code.upper().startswith("MH-ORD-"):
+            try:
+                # Extract the number part
+                order_id = int(code.split("-")[-1])
+                order = db.session.get(Order, order_id)
+            except ValueError:
+                pass
+
         if not order:
             order = Order.query.filter(
                 db.or_(

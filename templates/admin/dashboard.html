@@ -361,27 +361,27 @@
                     <!-- Universities Chart -->
                     <div>
                         <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Top Universities</h4>
-                        <canvas id="chart-universities"></canvas>
+                        <div class="relative w-full h-48"><canvas id="chart-universities"></canvas></div>
                     </div>
                     <!-- Cities Chart -->
                     <div>
                         <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Top Cities</h4>
-                        <canvas id="chart-cities"></canvas>
+                        <div class="relative w-full h-48"><canvas id="chart-cities"></canvas></div>
                     </div>
                     <!-- Academic Status Chart -->
                     <div>
                         <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Academic Status</h4>
-                        <canvas id="chart-academic"></canvas>
+                        <div class="relative w-full h-48"><canvas id="chart-academic"></canvas></div>
                     </div>
                     <!-- Source Chart -->
                     <div>
                         <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">How they knew us</h4>
-                        <canvas id="chart-sources"></canvas>
+                        <div class="relative w-full h-48"><canvas id="chart-sources"></canvas></div>
                     </div>
                     <!-- Goals Chart -->
                     <div class="lg:col-span-2">
                         <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Why they came (Goals)</h4>
-                        <canvas id="chart-goals"></canvas>
+                        <div class="relative w-full h-64"><canvas id="chart-goals"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -396,6 +396,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <!-- Load Chart.js for analytics -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
 <script>
     var videoStream = null;
@@ -424,6 +425,9 @@
         if (tabName === 'analytics') loadAnalytics();
     }
 
+    // Register datalabels plugin globally
+    Chart.register(ChartDataLabels);
+
     // Chart instances
     var chartInsts = {};
     function renderChart(canvasId, type, dataObj, titleStr) {
@@ -435,6 +439,10 @@
             '#e11d48', '#06b6d4', '#d946ef', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#3b82f6'
         ];
         
+        var total = data.reduce(function(acc, val) { return acc + val; }, 0);
+        
+        var isPie = type === 'pie' || type === 'doughnut';
+
         chartInsts[canvasId] = new Chart(ctx, {
             type: type,
             data: {
@@ -449,7 +457,20 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: type === 'pie' || type === 'doughnut' ? 'right' : 'bottom', labels: { color: '#881337' } }
+                    legend: { 
+                        position: isPie ? 'right' : 'bottom', 
+                        labels: { color: '#881337', font: { size: 10 } } 
+                    },
+                    datalabels: {
+                        display: isPie, // Only show data labels on pie/doughnut charts
+                        color: '#fff',
+                        font: { weight: 'bold', size: 10 },
+                        formatter: function(value, context) {
+                            if (total === 0) return '';
+                            var percentage = Math.round((value / total) * 100) + '%';
+                            return percentage;
+                        }
+                    }
                 }
             }
         });

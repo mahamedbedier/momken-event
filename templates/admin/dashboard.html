@@ -71,13 +71,19 @@
             <button id="tab-btn-users" onclick="switchAdminTab('users')"
                     class="admin-tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
                 <span>👥</span>
-                <span>User &amp; Volunteer Roles</span>
+                <span>All Users</span>
             </button>
 
             <button id="tab-btn-payments" onclick="switchAdminTab('payments')"
                     class="admin-tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
                 <span>💳</span>
                 <span>Payments &amp; Ticket Sales</span>
+            </button>
+
+            <button id="tab-btn-analytics" onclick="switchAdminTab('analytics')"
+                    class="admin-tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+                <span>📈</span>
+                <span>Analytics Data</span>
             </button>
             {% endif %}
 
@@ -124,22 +130,22 @@
                 </div>
             </div>
 
-            <!-- Quick Action Banners -->
+            <!-- Charts Row -->
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="glass-card p-6 border-l-4 border-l-accent-red flex items-center justify-between">
-                    <div>
-                        <h4 class="font-extrabold text-rose-950 dark:text-white text-lg">Volunteer Role Assignment</h4>
-                        <p class="text-xs text-rose-900 dark:text-gray-300 font-bold mt-1">Grant or remove volunteer privileges to registered emails.</p>
+                <!-- Registration Line Chart -->
+                <div class="glass-card p-6 border-t-2 border-t-accent-red">
+                    <h4 class="font-extrabold text-rose-950 dark:text-white mb-4">Registration Growth</h4>
+                    <div class="relative w-full h-64">
+                        <canvas id="overview-line-chart"></canvas>
                     </div>
-                    <button onclick="switchAdminTab('users')" class="btn-primary py-2 px-4 text-xs shrink-0">Manage Roles →</button>
                 </div>
 
-                <div class="glass-card p-6 border-l-4 border-l-accent-cyan flex items-center justify-between">
-                    <div>
-                        <h4 class="font-extrabold text-rose-950 dark:text-white text-lg">On-Site QR Ticket Scanner</h4>
-                        <p class="text-xs text-rose-900 dark:text-gray-300 font-bold mt-1">Launch live camera feed to check in attendees at venue entrance.</p>
+                <!-- Ticket Pie Chart -->
+                <div class="glass-card p-6 border-t-2 border-t-accent-cyan">
+                    <h4 class="font-extrabold text-rose-950 dark:text-white mb-4">Ticket Distribution</h4>
+                    <div class="relative w-full h-64">
+                        <canvas id="overview-pie-chart"></canvas>
                     </div>
-                    <button onclick="switchAdminTab('scanner')" class="btn-outline py-2 px-4 text-xs shrink-0">Launch Scanner 📷</button>
                 </div>
             </div>
         </div>
@@ -185,6 +191,8 @@
                                 <th class="p-3">User Name</th>
                                 <th class="p-3">Email Address</th>
                                 <th class="p-3">Phone</th>
+                                <th class="p-3">City</th>
+                                <th class="p-3">University</th>
                                 <th class="p-3">Current Role</th>
                                 <th class="p-3">Ticket Status</th>
                                 <th class="p-3 text-center">1-Click Volunteer Action</th>
@@ -194,7 +202,7 @@
                         </thead>
                         <tbody id="users-table-body" class="divide-y divide-rose-200 dark:divide-white/5 font-bold">
                             <tr>
-                                <td colspan="7" class="p-6 text-center text-rose-800 dark:text-gray-400">Loading user database...</td>
+                                <td colspan="9" class="p-6 text-center text-rose-800 dark:text-gray-400">Loading user database...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -277,6 +285,16 @@
                         <div id="scan-frame-overlay" class="hidden absolute inset-8 border-2 border-dashed border-accent-cyan/80 rounded-xl pointer-events-none flex items-center justify-center animate-pulse">
                             <span class="text-[10px] uppercase font-black tracking-widest text-accent-cyan bg-black/60 px-3 py-1 rounded-full">Position QR Code Here</span>
                         </div>
+
+                        <!-- Scan Result Modal Overlay -->
+                        <div id="scan-result-overlay" class="hidden absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-10 p-4 text-center backdrop-blur-md">
+                            <div id="scan-result-icon" class="text-6xl mb-4">✅</div>
+                            <h4 id="scan-result-title" class="text-2xl font-black text-white mb-2">Success!</h4>
+                            <p id="scan-result-msg" class="text-sm text-gray-300 font-bold mb-6">User checked in.</p>
+                            <button onclick="resumeScanner()" class="btn-primary py-2 px-6 text-xs font-black">
+                                Scan Next Ticket 📷
+                            </button>
+                        </div>
                     </div>
 
                     <div class="flex justify-center gap-3">
@@ -329,6 +347,46 @@
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB 5: ANALYTICS & DEMOGRAPHICS
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="pane-analytics" class="admin-tab-pane space-y-6">
+            <div class="glass-card p-6 border-t-2 border-t-accent-magenta">
+                <div class="mb-6">
+                    <h3 class="text-xl font-black text-rose-950 dark:text-white">Demographics & Analytics</h3>
+                    <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">Insights into universities, cities, and user goals.</p>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Universities Chart -->
+                    <div>
+                        <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Top Universities</h4>
+                        <canvas id="chart-universities"></canvas>
+                    </div>
+                    <!-- Cities Chart -->
+                    <div>
+                        <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Top Cities</h4>
+                        <canvas id="chart-cities"></canvas>
+                    </div>
+                    <!-- Academic Status Chart -->
+                    <div>
+                        <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Academic Status</h4>
+                        <canvas id="chart-academic"></canvas>
+                    </div>
+                    <!-- Source Chart -->
+                    <div>
+                        <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">How they knew us</h4>
+                        <canvas id="chart-sources"></canvas>
+                    </div>
+                    <!-- Goals Chart -->
+                    <div class="lg:col-span-2">
+                        <h4 class="font-extrabold text-sm mb-2 text-rose-950 dark:text-white">Why they came (Goals)</h4>
+                        <canvas id="chart-goals"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}
@@ -336,13 +394,15 @@
 {% block scripts %}
 <!-- Load jsQR library for live camera QR scanning -->
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<!-- Load Chart.js for analytics -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     var videoStream = null;
     var isScanningCam = false;
 
     function switchAdminTab(tabName) {
-        var tabs = ['overview', 'users', 'payments', 'scanner'];
+        var tabs = ['overview', 'users', 'payments', 'scanner', 'analytics'];
         tabs.forEach(function(t) {
             var btn = document.getElementById('tab-btn-' + t);
             var pane = document.getElementById('pane-' + t);
@@ -361,6 +421,50 @@
         if (tabName === 'payments') loadOrdersTable();
         if (tabName === 'scanner') loadCheckinFeed();
         if (tabName === 'overview') loadOverviewStats();
+        if (tabName === 'analytics') loadAnalytics();
+    }
+
+    // Chart instances
+    var chartInsts = {};
+    function renderChart(canvasId, type, dataObj, titleStr) {
+        if (chartInsts[canvasId]) chartInsts[canvasId].destroy();
+        var ctx = document.getElementById(canvasId).getContext('2d');
+        var labels = Object.keys(dataObj);
+        var data = Object.values(dataObj);
+        var bgColors = [
+            '#e11d48', '#06b6d4', '#d946ef', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#3b82f6'
+        ];
+        
+        chartInsts[canvasId] = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: bgColors.slice(0, labels.length),
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: type === 'pie' || type === 'doughnut' ? 'right' : 'bottom', labels: { color: '#881337' } }
+                }
+            }
+        });
+    }
+
+    function loadAnalytics() {
+        fetch('/admin/api/analytics')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            renderChart('chart-universities', 'doughnut', data.universities);
+            renderChart('chart-cities', 'pie', data.cities);
+            renderChart('chart-academic', 'pie', data.academic_status);
+            renderChart('chart-sources', 'doughnut', data.sources);
+            renderChart('chart-goals', 'bar', data.why_attending);
+        });
     }
 
     /* ══════════════════════════════════════════════════════════════
@@ -379,6 +483,27 @@
         .then(function(res) { return res.json(); })
         .then(function(data) {
             document.getElementById('stat-total-checkins').innerText = data.total_checked_in || 0;
+        });
+
+        fetch('/admin/api/registrations-chart')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var ctx = document.getElementById('overview-line-chart').getContext('2d');
+            if (chartInsts['overview-line-chart']) chartInsts['overview-line-chart'].destroy();
+            chartInsts['overview-line-chart'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{ label: 'Registrations', data: data.data, borderColor: '#e11d48', tension: 0.3 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        });
+
+        fetch('/admin/api/analytics')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            renderChart('overview-pie-chart', 'doughnut', data.tickets);
         });
     }
 
@@ -418,10 +543,11 @@
                 tr.setAttribute('data-ticket', hasTicket);
                 tr.className = "hover:bg-rose-100/50 dark:hover:bg-white/5 transition-colors";
                 
-                var isVol = u.role === 'volunteer' || u.role === 'admin';
-                var volBadge = isVol
-                    ? '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-cyan-100 text-cyan-800 border border-cyan-300 dark:bg-cyan-950 dark:text-cyan-300">VOLUNTEER ✓</span>'
-                    : '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-950 dark:text-rose-300">ATTENDEE</span>';
+                var volBadge = '';
+                if (u.role === 'admin') volBadge = '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-100 text-purple-800 border border-purple-300">ADMIN</span>';
+                else if (u.role === 'speaker') volBadge = '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-orange-100 text-orange-800 border border-orange-300">SPEAKER</span>';
+                else if (u.role === 'volunteer') volBadge = '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-cyan-100 text-cyan-800 border border-cyan-300">VOLUNTEER ✓</span>';
+                else volBadge = '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">ATTENDEE</span>';
 
                 var toggleBtnText = u.role === 'volunteer' ? 'Remove Volunteer' : 'Make Volunteer ✦';
                 var toggleBtnClass = u.role === 'volunteer'
@@ -437,7 +563,9 @@
                 tr.innerHTML = `
                     <td class="p-3 font-extrabold text-rose-950 dark:text-white">${u.name}</td>
                     <td class="p-3 text-rose-900 dark:text-gray-300">${u.email}</td>
-                    <td class="p-3 text-rose-800 dark:text-gray-400">${u.phone}</td>
+                    <td class="p-3 text-rose-800 dark:text-gray-400">${u.phone || '—'}</td>
+                    <td class="p-3 text-rose-800 dark:text-gray-400">${u.city || '—'}</td>
+                    <td class="p-3 text-rose-800 dark:text-gray-400 text-[10px] max-w-[120px] truncate" title="${u.university || ''}">${u.university || '—'}</td>
                     <td class="p-3">${volBadge}</td>
                     <td class="p-3">
                         <select onchange="changeUserTicket(${u.id}, this.value)" class="input-field py-1 px-2 text-xs w-36 font-bold text-rose-700 dark:text-accent-cyan">
@@ -657,6 +785,9 @@
     }
 
     function processTicketVerification(ticketCode) {
+        // Pause scanning while processing
+        isScanningCam = false;
+        
         fetch('/api/verify-ticket', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -664,27 +795,27 @@
         })
         .then(function(res) { return res.json(); })
         .then(function(data) {
-            var box = document.getElementById('scanner-result-box');
+            var overlay = document.getElementById('scan-result-overlay');
             var icon = document.getElementById('scan-result-icon');
             var title = document.getElementById('scan-result-title');
             var msg = document.getElementById('scan-result-msg');
 
-            box.classList.remove('hidden', 'bg-emerald-100', 'border-emerald-400', 'text-emerald-900', 'bg-amber-100', 'border-amber-400', 'text-amber-900', 'bg-rose-100', 'border-rose-400', 'text-rose-900', 'dark:bg-emerald-950', 'dark:bg-amber-950', 'dark:bg-rose-950');
+            overlay.classList.remove('hidden');
 
             if (data.status === 'success') {
-                box.className = "p-5 rounded-2xl border-2 bg-emerald-100 border-emerald-400 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-500 shadow-xl";
                 icon.innerText = "✅";
                 title.innerText = "CHECK-IN SUCCESSFUL!";
+                title.className = "text-2xl font-black text-emerald-400 mb-2";
                 msg.innerText = data.message;
             } else if (data.status === 'already_used') {
-                box.className = "p-5 rounded-2xl border-2 bg-amber-100 border-amber-400 text-amber-900 dark:bg-amber-950 dark:text-amber-200 dark:border-amber-500 shadow-xl";
                 icon.innerText = "⚠️";
                 title.innerText = "TICKET ALREADY USED!";
+                title.className = "text-2xl font-black text-amber-400 mb-2";
                 msg.innerText = data.message;
             } else {
-                box.className = "p-5 rounded-2xl border-2 bg-rose-100 border-rose-400 text-rose-900 dark:bg-rose-950 dark:text-rose-200 dark:border-rose-500 shadow-xl";
                 icon.innerText = "❌";
                 title.innerText = "INVALID TICKET CODE";
+                title.className = "text-2xl font-black text-rose-500 mb-2";
                 msg.innerText = data.message || "Ticket code not found.";
             }
 
@@ -692,6 +823,14 @@
             loadCheckinFeed();
             loadOverviewStats();
         });
+    }
+
+    function resumeScanner() {
+        document.getElementById('scan-result-overlay').classList.add('hidden');
+        if (videoStream) {
+            isScanningCam = true;
+            requestAnimationFrame(tickScanner);
+        }
     }
 
     /* Live Camera Stream Implementation using Canvas & jsQR */

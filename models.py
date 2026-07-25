@@ -23,6 +23,17 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(20), nullable=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), default="user")  # "user", "volunteer", "speaker", "admin"
+    
+    # Demographics & Registration Data
+    city = db.Column(db.String(100), nullable=True)
+    university = db.Column(db.String(150), nullable=True)
+    faculty = db.Column(db.String(150), nullable=True)
+    academic_status = db.Column(db.String(50), nullable=True)
+    age = db.Column(db.Integer, nullable=True)
+    source = db.Column(db.String(100), nullable=True)
+    why_attending = db.Column(db.String(300), nullable=True)
+    hopes_gained = db.Column(db.String(300), nullable=True)
+    
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     orders = db.relationship("Order", foreign_keys="Order.user_id", backref="user", lazy=True)

@@ -57,6 +57,22 @@ def migrate_db(app):
                 cols = [row[1] for row in conn.execute(db.text("PRAGMA table_info(users)")).fetchall()]
                 if "role" not in cols:
                     conn.execute(db.text("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user'"))
+                if "city" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN city VARCHAR(100)"))
+                if "university" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN university VARCHAR(150)"))
+                if "faculty" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN faculty VARCHAR(150)"))
+                if "academic_status" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN academic_status VARCHAR(50)"))
+                if "age" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN age INTEGER"))
+                if "source" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN source VARCHAR(100)"))
+                if "why_attending" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN why_attending VARCHAR(300)"))
+                if "hopes_gained" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN hopes_gained VARCHAR(300)"))
 
                 # Speakers table
                 cols = [row[1] for row in conn.execute(db.text("PRAGMA table_info(speakers)")).fetchall()]
@@ -479,9 +495,24 @@ def register_routes(app):
             user_id=current_user.id,
             ticket_type_id=ticket.id,
             card_last_four=card_last_four,
-            status="completed",
+            status="completed"
         )
         db.session.add(order)
+        
+        # ── Save Demographic Data ────────────────────────────────────
+        current_user.city = data.get("city", "").strip()[:100]
+        current_user.university = data.get("university", "").strip()[:150]
+        current_user.faculty = data.get("faculty", "").strip()[:150]
+        current_user.academic_status = data.get("academic_status", "").strip()[:50]
+        
+        age_str = data.get("age", "")
+        if age_str.isdigit():
+            current_user.age = int(age_str)
+            
+        current_user.source = data.get("source", "").strip()[:100]
+        current_user.why_attending = data.get("why_attending", "").strip()[:300]
+        current_user.hopes_gained = data.get("hopes_gained", "").strip()[:300]
+
         db.session.commit()
 
         return jsonify({
@@ -593,7 +624,7 @@ def register_routes(app):
 
         output = io.StringIO()
         writer = csv.writer(output)
-        writer.writerow(["ID", "Name", "Email", "Phone", "Role", "Ticket Status", "Registration Date"])
+        writer.writerow(["ID", "Name", "Email", "Phone", "Role", "Ticket Status", "City", "University", "Faculty", "Academic Status", "Age", "Source", "Why Attending", "Hopes Gained", "Registration Date"])
 
         for user in users:
             latest_order = Order.query.filter_by(user_id=user.id).order_by(Order.created_at.desc()).first()
@@ -605,12 +636,64 @@ def register_routes(app):
                 user.phone or "—",
                 user.role,
                 ticket_name,
+                user.city or "",
+                user.university or "",
+                user.faculty or "",
+                user.academic_status or "",
+                user.age or "",
+                user.source or "",
+                user.why_attending or "",
+                user.hopes_gained or "",
                 user.created_at.strftime("%b %d, %Y")
             ])
 
         response = Response(output.getvalue(), mimetype="text/csv")
         response.headers["Content-Disposition"] = "attachment; filename=momken_users_export.csv"
         return response
+
+    @app.route("/admin/api/analytics")
+    @admin_required
+    def admin_analytics():
+        """API: Aggregated demographic and ticket data for charts."""
+        users = User.query.filter(User.role != "admin").all()
+        orders = Order.query.all()
+        
+        # Ticket Types Distribution
+        ticket_counts = defaultdict(int)
+        for order in orders:
+            if order.ticket_type:
+                ticket_counts[order.ticket_type.name] += 1
+                
+        # Demographics
+        uni_counts = defaultdict(int)
+        city_counts = defaultdict(int)
+        status_counts = defaultdict(int)
+        source_counts = defaultdict(int)
+        
+        for u in users:
+            if u.university: uni_counts[u.university] += 1
+            if u.city: city_counts[u.city] += 1
+            if u.academic_status: status_counts[u.academic_status] += 1
+            if u.source: source_counts[u.source] += 1
+
+        # Why Attending (Comma separated)
+        why_counts = defaultdict(int)
+        for u in users:
+            if u.why_attending:
+                for reason in u.why_attending.split(","):
+                    why_counts[reason.strip()] += 1
+                    
+        def top_n(d, n=6):
+            return dict(sorted(d.items(), key=lambda item: item[1], reverse=True)[:n])
+
+        return jsonify({
+            "tickets": top_n(ticket_counts),
+            "universities": top_n(uni_counts),
+            "cities": top_n(city_counts, 8),
+            "academic_status": top_n(status_counts),
+            "sources": top_n(source_counts),
+            "why_attending": top_n(why_counts)
+        })
 
     @app.route("/admin/api/users/<int:user_id>/ticket", methods=["POST"])
     @admin_required
@@ -965,6 +1048,18 @@ def register_routes(app):
 # ═══════════════════════════════════════════════════════════════════════════
 
 app = create_app()
+
+with app.app_context():
+    # Ensure "VIP Free pass" exists
+    if not TicketType.query.filter_by(name="VIP Free pass").first():
+        vip_free = TicketType(
+            name="VIP Free pass",
+            price=0,
+            description="Complimentary pass for speakers and special guests.",
+            badge="Speaker"
+        )
+        db.session.add(vip_free)
+        db.session.commit()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

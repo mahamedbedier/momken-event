@@ -556,6 +556,11 @@
         var phoneVal = document.getElementById('wallet-phone').value.trim();
         var attendeeName = document.getElementById('full-name').value.trim() || 'Attendee';
 
+        // Get checkboxes array values
+        var whyAttending = Array.from(document.querySelectorAll('input[name="why_attending"]:checked')).map(cb => cb.value).join(', ');
+        var hopesGained = Array.from(document.querySelectorAll('input[name="hopes_gained"]:checked')).map(cb => cb.value).join(', ');
+        var sourceSelected = document.querySelector('input[name="source"]:checked');
+        
         var payload = {
             ticket_id: window.CHECKOUT_CONFIG.ticketId,
             payment_method: 'wallet',
@@ -563,8 +568,16 @@
             otp: otpVal,
             full_name: attendeeName,
             email: document.getElementById('email').value.trim(),
+            
+            // New demographic fields
+            city: document.getElementById('city').value,
             university: document.getElementById('university').value,
-            academic_status: document.getElementById('academic-status').value
+            faculty: document.getElementById('faculty').value,
+            academic_status: document.getElementById('academic-status').value,
+            age: document.getElementById('age').value,
+            source: sourceSelected ? sourceSelected.value : '',
+            why_attending: whyAttending,
+            hopes_gained: hopesGained
         };
 
         setTimeout(function() {

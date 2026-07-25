@@ -1,71 +1,109 @@
 {% extends "base.html" %}
 
-{% block title %}Login / Sign Up - Momken For Her{% endblock %}
+{% block title %}Sign In / Register Account - Momken For Her{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-12">
-    <!-- Logo -->
-    <a href="{{ url_for('home') }}" class="mb-8">
-        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="h-20 p-2 rounded">
+<div class="min-h-screen pt-32 pb-20 px-4 md:px-6 flex flex-col items-center justify-center relative">
+    
+    <!-- Ambient Glow Orbs -->
+    <div class="fixed top-24 left-1/2 -translate-x-1/2 w-[550px] h-[550px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(225,29,72,0.12), transparent 70%); filter: blur(90px);"></div>
+
+    <!-- Branding Logo -->
+    <a href="{{ url_for('home') }}" class="mb-6 relative z-10" data-aos="fade-down">
+        <div class="logo-glow">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="h-14 object-contain">
+        </div>
     </a>
 
-    <!-- Auth Container -->
-    <div class="bg-cardBg w-full max-w-md p-8 rounded-xl border border-white/10 shadow-2xl">
+    <!-- Container Card -->
+    <div class="w-full max-w-md glass-card p-8 rounded-3xl relative z-10 border-t-4 border-t-accent-red" data-aos="fade-up">
 
-        <!-- Toggle Buttons -->
-        <div class="flex border-b border-white/10 mb-8">
-            <button id="btn-login" onclick="switchTab('login')"
-                    class="flex-1 py-3 text-brand border-b-2 border-brand font-bold uppercase tracking-wider text-sm transition">Log In</button>
-            <button id="btn-signup" onclick="switchTab('signup')"
-                    class="flex-1 py-3 text-textMuted border-b-2 border-transparent font-bold uppercase tracking-wider text-sm hover:text-white transition">Sign Up</button>
+        <!-- Tab Toggle Buttons -->
+        <div class="flex rounded-xl bg-gray-100/80 dark:bg-white/5 p-1 mb-8">
+            <button id="auth-tab-login" onclick="showAuthTab('login')" class="flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-white bg-gradient-to-r from-accent-red to-accent-magenta shadow-md">
+                Sign In
+            </button>
+            <button id="auth-tab-register" onclick="showAuthTab('register')" class="flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-secondaryLight dark:text-secondaryDark hover:text-accent-red">
+                Create Account
+            </button>
         </div>
 
-        <!-- Login Form -->
-        <form id="login-form" action="{{ url_for('auth_login') }}" method="POST" class="space-y-5">
-            <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+        <!-- ── LOGIN FORM ────────────────────────────────────────────── -->
+        <form id="form-login" action="{{ url_for('auth_login') }}" method="POST" class="space-y-5">
+            <input type="hidden" name="ticket_id" value="{{ ticket_id or '' }}">
+
             <div>
-                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" name="email" class="input-field" placeholder="you@example.com" required>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-secondaryLight dark:text-secondaryDark mb-2">Email Address *</label>
+                <input type="email" name="email" class="input-field" placeholder="sara@example.com" required>
             </div>
+
             <div>
-                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
-                <input type="password" name="password" class="input-field" placeholder="••••••••" required minlength="6">
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-secondaryLight dark:text-secondaryDark mb-2">Password *</label>
+                <input type="password" name="password" class="input-field" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="w-full btn-primary py-3.5 rounded mt-4">Log In</button>
+
+            <button type="submit" class="w-full btn-primary py-3.5 text-sm font-black mt-2">
+                Sign In to Account ✦
+            </button>
         </form>
 
-        <!-- Sign Up Form (Hidden by default) -->
-        <form id="signup-form" action="{{ url_for('auth_register') }}" method="POST" class="space-y-5 hidden">
-            <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+        <!-- ── REGISTER FORM ─────────────────────────────────────────── -->
+        <form id="form-register" action="{{ url_for('auth_register') }}" method="POST" class="space-y-5 hidden">
+            <input type="hidden" name="ticket_id" value="{{ ticket_id or '' }}">
+
             <div>
-                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Full Name</label>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-secondaryLight dark:text-secondaryDark mb-2">Full Name *</label>
                 <input type="text" name="name" class="input-field" placeholder="Sara Ahmed" required>
             </div>
+
             <div>
-                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" name="email" class="input-field" placeholder="you@example.com" required>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Phone Number *</label>
+                <input type="tel" name="phone" class="input-field" placeholder="01012345678" pattern="^(010|011|012|015)[0-9]{8}$" maxlength="11" title="Egyptian phone number (11 digits starting with 010, 011, 012, or 015)" required>
             </div>
+
             <div>
-                <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Phone Number</label>
-                <input type="tel" name="phone" class="input-field" placeholder="010XXXXXXXX" pattern="[0-9]{11}">
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Email Address *</label>
+                <input type="email" name="email" class="input-field" placeholder="sara@example.com" required>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Password</label>
-                    <input type="password" name="password" id="reg-pass" class="input-field" placeholder="••••••••" required minlength="6">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Confirm</label>
-                    <input type="password" name="confirm" id="reg-confirm" class="input-field" placeholder="••••••••" required minlength="6">
-                </div>
+
+            <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Password *</label>
+                <input type="password" name="password" class="input-field" placeholder="••••••••" required>
             </div>
-            <p id="pass-error" class="text-red-400 text-sm hidden">Passwords do not match!</p>
-            <button type="submit" class="w-full btn-primary py-3.5 rounded mt-4">Create Account</button>
+
+            <button type="submit" class="w-full neon-btn py-3.5 text-sm font-black mt-2">
+                Create Account &amp; Continue →
+            </button>
         </form>
+
+        <p class="text-[11px] text-secondaryLight dark:text-secondaryDark text-center mt-6 font-bold">
+            Creating an account allows you to register for event tickets, manage volunteer roles, and view your QR passes.
+        </p>
+
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script>
+function showAuthTab(tab) {
+    var loginBtn = document.getElementById('auth-tab-login');
+    var regBtn = document.getElementById('auth-tab-register');
+    var loginForm = document.getElementById('form-login');
+    var regForm = document.getElementById('form-register');
+
+    if (tab === 'login') {
+        loginBtn.className = "flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-white bg-gradient-to-r from-accent-red to-accent-magenta shadow-md";
+        regBtn.className = "flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-secondaryLight dark:text-secondaryDark hover:text-accent-red";
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+    } else {
+        regBtn.className = "flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-white bg-gradient-to-r from-accent-red to-accent-magenta shadow-md";
+        loginBtn.className = "flex-1 py-2.5 rounded-lg text-xs font-black transition-all duration-300 text-secondaryLight dark:text-secondaryDark hover:text-accent-red";
+        regForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+    }
+}
+</script>
 {% endblock %}

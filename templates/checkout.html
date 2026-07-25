@@ -1,97 +1,610 @@
 {% extends "base.html" %}
 
-{% block title %}Secure Checkout - Momken For Her{% endblock %}
+{% block title %}Multi-Step Registration & Checkout - Momken For Her{% endblock %}
 
 {% block content %}
-<div class="min-h-screen py-12 px-6 flex flex-col items-center pt-28">
-    <a href="{{ url_for('home') }}" class="mb-8">
-        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="h-20 p-2 rounded">
+<!-- Custom CSS for Smooth Step Transitions & Futuristic 2060 Cyber-Glass Styling -->
+<style>
+    .step-content {
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .step-content.hidden-step {
+        display: none !important;
+        opacity: 0;
+        transform: translateX(25px);
+    }
+    .step-content.active-step {
+        display: block !important;
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .progress-bar-fill {
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .step-dot.active-dot {
+        background: linear-gradient(135deg, #e11d48, #c026d3) !important;
+        border-color: #e11d48 !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+    }
+    .step-dot.completed-dot {
+        background: #06b6d4 !important;
+        border-color: #06b6d4 !important;
+        color: #ffffff !important;
+    }
+</style>
+
+<div class="min-h-screen py-12 px-4 md:px-6 flex flex-col items-center pt-28 relative">
+    
+    <!-- Ambient Atmospheric Glow Orbs -->
+    <div class="absolute top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(225,29,72,0.12), rgba(192,38,211,0.08), transparent 70%); filter: blur(90px);"></div>
+
+    <!-- Branding Logo -->
+    <a href="{{ url_for('home') }}" class="mb-6 relative z-10" data-aos="fade-down">
+        <div class="logo-glow">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Momken For Her Logo" class="h-14 object-contain">
+        </div>
     </a>
 
-    <div class="w-full max-w-4xl grid md:grid-cols-2 gap-8">
+    <!-- Main Container Card -->
+    <div class="w-full max-w-3xl glass-card p-6 md:p-10 relative z-10 border-t-4 border-t-accent-red" data-aos="fade-up">
 
-        <!-- Order Summary (price from DB, NOT from URL) -->
-        <div class="bg-cardBg p-8 rounded-xl border border-white/10 h-fit">
-            <p class="section-label">Order Summary</p>
-            <h2 class="text-3xl font-black mb-6 border-b border-white/10 pb-6">{{ ticket.name }}</h2>
-
-            <div class="flex justify-between items-center mb-4 text-textMuted">
-                <span>Subtotal</span>
-                <span>{{ ticket.price }} EGP</span>
-            </div>
-            <div class="flex justify-between items-center mb-6 text-textMuted border-b border-white/10 pb-6">
-                <span>Fees & Taxes</span>
-                <span>0 EGP</span>
-            </div>
-            <div class="flex justify-between items-center text-xl font-black">
-                <span>Total</span>
-                <span class="text-brand">{{ ticket.price }} EGP</span>
-            </div>
+        <!-- Header Title -->
+        <div class="text-center mb-8">
+            <span class="holo-badge mb-3">✦ 2060 Registration Portal ✦</span>
+            <h1 class="text-3xl md:text-4xl font-black text-primaryLight dark:text-primaryDark dark:glow-text mt-2">
+                Ticket Registration &amp; Checkout
+            </h1>
+            <p class="text-xs md:text-sm text-secondaryLight dark:text-secondaryDark font-bold mt-1">
+                Complete your 3-step registration to generate your official pass for <span class="text-rose-600 dark:text-rose-400 font-extrabold">{{ ticket.name }}</span>
+            </p>
         </div>
 
-        <!-- Payment Form -->
-        <div class="bg-cardBg p-8 rounded-xl border border-brand/30 shadow-[0_0_30px_rgba(230,0,58,0.1)]">
-            <h3 class="text-xl font-black uppercase tracking-wider mb-6">Payment Details</h3>
+        <!-- ═══════════════════════════════════════════════════════════════════
+             VISUAL PROGRESS BAR & STEP INDICATORS
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div class="mb-10 relative px-2">
+            <!-- Progress Line Track -->
+            <div class="absolute top-1/2 left-8 right-8 h-1 bg-rose-200 dark:bg-white/10 -translate-y-1/2 -z-0 rounded-full"></div>
+            <!-- Animated Progress Line Fill -->
+            <div id="progress-bar-fill" class="absolute top-1/2 left-8 h-1 bg-gradient-to-r from-accent-red via-accent-magenta to-accent-cyan -translate-y-1/2 -z-0 rounded-full progress-bar-fill" style="width: 0%;"></div>
 
-            <form id="payment-form" class="space-y-5">
-                <div>
-                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Name on Card</label>
-                    <input type="text" id="card-name" class="input-field" placeholder="Sara Ahmed" required>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Card Number</label>
-                    <input type="text" id="card-number" class="input-field tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" required>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Expiry Date</label>
-                        <input type="text" id="card-expiry" class="input-field text-center" placeholder="MM/YY" maxlength="5" required>
+            <!-- Steps Dots -->
+            <div class="flex justify-between items-center relative z-10">
+                <!-- Step 1 Dot -->
+                <div class="flex flex-col items-center gap-1.5">
+                    <div id="dot-1" class="step-dot active-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-gray-200 bg-white text-primaryLight dark:bg-black/80 dark:border-white/20 transition-all duration-300">
+                        1
                     </div>
+                    <span class="text-[10px] md:text-xs font-black uppercase tracking-wider text-secondaryLight dark:text-secondaryDark">Profile</span>
+                </div>
+                <!-- Step 2 Dot -->
+                <div class="flex flex-col items-center gap-1.5">
+                    <div id="dot-2" class="step-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-gray-200 bg-white text-primaryLight dark:bg-black/80 dark:border-white/20 transition-all duration-300">
+                        2
+                    </div>
+                    <span class="text-[10px] md:text-xs font-black uppercase tracking-wider text-secondaryLight dark:text-secondaryDark">Goals</span>
+                </div>
+                <!-- Step 3 Dot -->
+                <div class="flex flex-col items-center gap-1.5">
+                    <div id="dot-3" class="step-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-gray-200 bg-white text-primaryLight dark:bg-black/80 dark:border-white/20 transition-all duration-300">
+                        3
+                    </div>
+                    <span class="text-[10px] md:text-xs font-black uppercase tracking-wider text-secondaryLight dark:text-secondaryDark">Checkout</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             MULTI-STEP FORM CONTAINER
+             ═══════════════════════════════════════════════════════════════════ -->
+        <form id="wizard-form" onsubmit="return false;" class="space-y-6">
+
+            <!-- ── STEP 1: PERSONAL & ACADEMIC PROFILE ────────────────────────── -->
+            <div id="step-1" class="step-content active-step">
+                <div class="mb-6 border-b border-gray-200 dark:border-white/10 pb-3 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-rose-950/60 text-accent-red flex items-center justify-center font-bold text-sm">👤</div>
                     <div>
-                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">CVV</label>
-                        <input type="password" id="card-cvv" class="input-field text-center" placeholder="123" maxlength="3" required>
+                        <h3 class="text-xl font-extrabold text-primaryLight dark:text-primaryDark">Step 1: Personal &amp; Academic Profile</h3>
+                        <p class="text-xs text-secondaryLight dark:text-secondaryDark font-bold">Please verify your contact and educational background.</p>
                     </div>
                 </div>
 
-                <!-- Server-side error display -->
-                <div id="payment-errors" class="hidden">
-                    <ul class="list-disc list-inside text-red-400 text-sm space-y-1"></ul>
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Full Name *</label>
+                        <input type="text" id="full-name" class="input-field" placeholder="Sara Ahmed"
+                               value="{% if current_user.is_authenticated %}{{ current_user.name }}{% endif %}" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Email Address *</label>
+                        <input type="email" id="email" class="input-field" placeholder="sara@example.com"
+                               value="{% if current_user.is_authenticated %}{{ current_user.email }}{% endif %}" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Phone Number *</label>
+                        <input type="tel" id="phone" class="input-field" placeholder="01012345678"
+                               value="{% if current_user.is_authenticated and current_user.phone %}{{ current_user.phone }}{% endif %}" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">City / Governorate *</label>
+                        <select id="city" class="input-field" required>
+                            <option value="" disabled selected>Select your city...</option>
+                            <option value="Cairo">Cairo</option>
+                            <option value="Alexandria">Alexandria</option>
+                            <option value="Giza">Giza</option>
+                            <option value="Mansoura">Mansoura</option>
+                            <option value="Assiut">Assiut</option>
+                            <option value="Tanta">Tanta</option>
+                            <option value="Zagazig">Zagazig</option>
+                            <option value="Suez">Suez</option>
+                            <option value="Other">Other Governorate</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">University / Institution *</label>
+                        <select id="university" class="input-field" required>
+                            <option value="" disabled selected>Select your university...</option>
+                            <option value="Cairo University">Cairo University</option>
+                            <option value="Ain Shams University">Ain Shams University</option>
+                            <option value="American University in Cairo (AUC)">American University in Cairo (AUC)</option>
+                            <option value="German University in Cairo (GUC)">German University in Cairo (GUC)</option>
+                            <option value="Information Technology Institute (ITI) / Creativa">ITI / Creativa Hub</option>
+                            <option value="Alexandria University">Alexandria University</option>
+                            <option value="Mansoura University">Mansoura University</option>
+                            <option value="Other">Other University / Institute</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Faculty / Major *</label>
+                        <input type="text" id="faculty" class="input-field" placeholder="Computer Science, Business, Engineering..." required>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Academic Status *</label>
+                        <select id="academic-status" class="input-field" required>
+                            <option value="" disabled selected>Select your current status...</option>
+                            <option value="1st Year">1st Year Student</option>
+                            <option value="2nd Year">2nd Year Student</option>
+                            <option value="3rd Year">3rd Year Student</option>
+                            <option value="4th Year">4th Year Student</option>
+                            <option value="Fresh Graduate">Fresh Graduate</option>
+                            <option value="Postgraduate / Master's">Postgraduate / Master's</option>
+                            <option value="Working Professional">Working Professional</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Age *</label>
+                        <input type="number" id="age" class="input-field" placeholder="21" min="15" max="80" required>
+                    </div>
                 </div>
 
-                <button type="submit" id="pay-btn"
-                        class="w-full btn-primary py-4 rounded font-black tracking-widest flex justify-center items-center gap-2 mt-6">
-                    <span>Pay Securely</span>
-                    <span>{{ ticket.price }} EGP</span>
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
+                <div class="mt-8 flex justify-end">
+                    <button type="button" onclick="nextStep(2)" class="btn-primary">
+                        <span>Next: Event Goals</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
 
-<!-- Success Modal -->
-<div id="success-modal" class="fixed inset-0 bg-darkBg/95 backdrop-blur-sm z-50 hidden flex items-center justify-center px-6">
-    <div class="bg-cardBg p-10 rounded-2xl border border-brand/50 text-center max-w-md">
-        <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-            </svg>
+            <!-- ── STEP 2: EVENT GOALS & INSIGHTS ─────────────────────────── -->
+            <div id="step-2" class="step-content hidden-step">
+                <div class="mb-6 border-b border-gray-200 dark:border-white/10 pb-3 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-fuchsia-100 dark:bg-fuchsia-950/60 text-accent-magenta flex items-center justify-center font-bold text-sm">🎯</div>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-primaryLight dark:text-primaryDark">Step 2: Event Goals &amp; Insights</h3>
+                        <p class="text-xs text-secondaryLight dark:text-secondaryDark font-bold">Help us tailor workshop sessions and mentoring tracks to your needs.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-3">How did you hear about Momken For Her? *</label>
+                        <div class="space-y-2" id="source-container">
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="radio" name="source" value="Social Media" class="text-accent-red" required> Social Media (Instagram, LinkedIn, Facebook)</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="radio" name="source" value="Friends" class="text-accent-red"> Friends or University Colleagues</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="radio" name="source" value="University" class="text-accent-red"> University / ITI Campus Announcement</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="radio" name="source" value="Employer" class="text-accent-red"> Employer / Workplace</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-3">Why are you attending this summit? *</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="why-attending-container">
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="why_attending" value="Job Opportunities" class="rounded text-accent-cyan"> Seeking job opportunities in tech</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="why_attending" value="AI Workshops" class="rounded text-accent-cyan"> Attending AI workshops</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="why_attending" value="Networking" class="rounded text-accent-cyan"> Networking &amp; Connections</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="why_attending" value="Startups" class="rounded text-accent-cyan"> Scaling a startup</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-3">What do you hope to gain from Momken For Her? *</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="hopes-gained-container">
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="hopes_gained" value="Hiring Managers" class="rounded text-accent-magenta"> Connect with hiring managers</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="hopes_gained" value="Mentorship" class="rounded text-accent-magenta"> Get mentorship</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="hopes_gained" value="Certifications" class="rounded text-accent-magenta"> Acquire digital certifications</label>
+                            <label class="flex items-center gap-2 text-sm text-secondaryLight dark:text-secondaryDark cursor-pointer"><input type="checkbox" name="hopes_gained" value="Investment" class="rounded text-accent-magenta"> Find investors</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button type="button" onclick="prevStep(1)" class="btn-outline">
+                        <span>← Back</span>
+                    </button>
+                    <button type="button" onclick="nextStep(3)" class="btn-primary">
+                        <span>Proceed to Checkout</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── STEP 3: CHECKOUT & MOCK MOBILE WALLET PAYMENT ──────────── -->
+            <div id="step-3" class="step-content hidden-step">
+                <div class="mb-6 border-b border-rose-200 dark:border-white/10 pb-3 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center font-bold text-sm">💳</div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-rose-950 dark:text-white">Step 3: Ticket Checkout</h3>
+                            <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">Simulated Mobile Wallet Payment &amp; Holographic Pass Generation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Bar -->
+                <div class="p-5 rounded-2xl bg-rose-50/90 border border-rose-200 dark:bg-white/5 dark:border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <span class="text-[10px] uppercase font-black tracking-widest text-rose-700 dark:text-accent-cyan">Selected Ticket</span>
+                        <h4 class="text-2xl font-black text-rose-950 dark:text-white">{{ ticket.name }}</h4>
+                        <p class="text-xs text-rose-900 dark:text-gray-300 font-bold">August 8, 2026 ✦ Creativa Sultan Hussein Kamel Palace</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <span class="text-[10px] uppercase font-black tracking-widest text-rose-700 dark:text-gray-400">Total Price</span>
+                        <div class="text-3xl font-black text-rose-600 dark:text-rose-400">{{ ticket.price }} EGP</div>
+                    </div>
+                </div>
+
+                <!-- Payment Container -->
+                <div class="space-y-6">
+
+                    <!-- Mobile Wallet Simulation Section -->
+                    <div id="mobile-wallet-box" class="p-6 rounded-2xl border border-rose-300 dark:border-white/15 bg-white/60 dark:bg-black/40">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-2xl">📱</span>
+                            <div>
+                                <h4 class="font-extrabold text-rose-950 dark:text-white text-base">Mobile Wallet Payment (Vodafone Cash / InstaPay)</h4>
+                                <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">Instant demo payment simulation via OTP confirmation.</p>
+                            </div>
+                        </div>
+
+                        <!-- Stage 1: Phone Input -->
+                        <div id="wallet-stage-phone">
+                            <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Enter Mobile Wallet Number *</label>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="tel" id="wallet-phone" class="input-field tracking-widest text-lg font-bold"
+                                       placeholder="01012345678" maxlength="11" 
+                                       value="{% if current_user.is_authenticated and current_user.phone %}{{ current_user.phone }}{% endif %}" required>
+                                <button type="button" id="btn-send-otp" onclick="sendWalletOTP()" class="btn-primary shrink-0 py-3 px-6">
+                                    <span id="send-otp-text">Send OTP 📱</span>
+                                    <span id="send-otp-spinner" class="hidden animate-spin text-lg">🌀</span>
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-rose-700 dark:text-gray-400 mt-2 font-bold">
+                                Works with Vodafone Cash, InstaPay, Orange Cash, Etisalat Cash &amp; Smart Wallets.
+                            </p>
+                        </div>
+
+                        <!-- Stage 2: OTP Input (Initially Hidden) -->
+                        <div id="wallet-stage-otp" class="hidden space-y-4">
+                            <!-- OTP Sent Alert -->
+                            <div class="p-3.5 rounded-xl bg-emerald-100/90 border border-emerald-300 text-emerald-900 dark:bg-emerald-950/60 dark:border-emerald-500/40 dark:text-emerald-300 text-xs font-black flex items-center gap-2">
+                                <span class="text-base">✅</span>
+                                <span id="otp-sent-msg">OTP sent successfully to your mobile wallet number!</span>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300 mb-2">Enter 6-Digit Payment OTP *</label>
+                                <input type="text" id="wallet-otp" class="input-field tracking-[0.5em] text-center text-2xl font-black"
+                                       placeholder="••••••" maxlength="6">
+                                <p class="text-[11px] text-rose-700 dark:text-gray-400 mt-1 font-bold">Enter any 6 digits for instant demo validation.</p>
+                            </div>
+
+                            <button type="button" id="btn-confirm-payment" onclick="confirmWalletPayment()" class="w-full neon-btn py-4 text-base font-black">
+                                <span id="confirm-pay-text">✦ Confirm Payment &amp; Issue Ticket ✦</span>
+                                <span id="confirm-pay-spinner" class="hidden animate-spin text-lg">🌀</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Server Error Notice -->
+                    <div id="checkout-errors" class="hidden p-4 rounded-xl bg-rose-100 border border-rose-400 text-rose-900 text-xs font-bold">
+                        <ul id="error-list" class="list-disc list-inside space-y-1"></ul>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-start">
+                    <button type="button" onclick="prevStep(2)" class="btn-outline">
+                        <span>← Back to Goals</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             GLOWING HOLOGRAPHIC SUCCESS STATE (Revealed after payment)
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="success-state" class="hidden py-8 text-center space-y-6">
+            
+            <!-- Glowing Success Badge -->
+            <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto text-4xl shadow-2xl animate-bounce"
+                 style="background: linear-gradient(135deg, #10b981, #06b6d4); box-shadow: 0 0 50px rgba(16, 185, 129, 0.5);">
+                ✨
+            </div>
+
+            <div>
+                <h2 class="text-3xl md:text-5xl font-black text-rose-950 dark:text-white dark:glow-text">
+                    Payment Successful!
+                </h2>
+                <p class="text-rose-900 dark:text-accent-cyan text-sm md:text-base font-extrabold mt-2">
+                    Your biometric holographic ticket has been generated and activated!
+                </p>
+            </div>
+
+            <!-- Digital Holographic Pass Card -->
+            <div class="max-w-md mx-auto p-6 rounded-3xl glass-card border-2 border-accent-cyan shadow-2xl text-left relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-accent-cyan/20 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex justify-between items-center border-b border-rose-200 dark:border-white/10 pb-4 mb-4">
+                    <div>
+                        <span class="text-[10px] font-black uppercase text-accent-red tracking-widest block">Official Pass</span>
+                        <h4 class="font-extrabold text-rose-950 dark:text-white text-lg" id="ticket-pass-name">{{ ticket.name }}</h4>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300">
+                        CONFIRMED ✓
+                    </span>
+                </div>
+
+                <div class="space-y-2 text-xs font-bold text-rose-900 dark:text-gray-300">
+                    <p><span class="text-rose-700 dark:text-gray-400 uppercase tracking-wider">Attendee:</span> <strong class="text-rose-950 dark:text-white" id="pass-attendee-name">Sara Ahmed</strong></p>
+                    <p><span class="text-rose-700 dark:text-gray-400 uppercase tracking-wider">Order ID:</span> <strong class="text-accent-cyan font-mono" id="pass-order-id">#MH-88294</strong></p>
+                    <p><span class="text-rose-700 dark:text-gray-400 uppercase tracking-wider">Date &amp; Venue:</span> August 8, 2026 ✦ Creativa Palace</p>
+                </div>
+
+                <!-- Simulated Holographic QR -->
+                <div class="mt-6 pt-4 border-t border-rose-200 dark:border-white/10 flex items-center justify-between">
+                    <div class="w-16 h-16 rounded-xl bg-white p-1.5 border border-rose-300 shadow-inner flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <rect width="100" height="100" fill="#000"/>
+                            <rect x="10" y="10" width="30" height="30" fill="#fff"/>
+                            <rect x="15" y="15" width="20" height="20" fill="#000"/>
+                            <rect x="60" y="10" width="30" height="30" fill="#fff"/>
+                            <rect x="65" y="15" width="20" height="20" fill="#000"/>
+                            <rect x="10" y="60" width="30" height="30" fill="#fff"/>
+                            <rect x="15" y="65" width="20" height="20" fill="#000"/>
+                            <rect x="50" y="50" width="15" height="15" fill="#fff"/>
+                            <rect x="70" y="70" width="20" height="20" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] uppercase tracking-widest font-black text-rose-700 dark:text-gray-400 block">Biometric Hologram</span>
+                        <span class="text-xs font-mono font-black text-rose-600 dark:text-rose-400">STATUS: VALID</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <a href="{{ url_for('profile') }}" class="neon-btn px-8 py-3 font-black inline-block">
+                    Go to my profile & QR code
+                </a>
+            </div>
         </div>
-        <h2 class="text-3xl font-black mb-4">Payment Successful!</h2>
-        <p class="text-textMuted mb-8 leading-relaxed">Your ticket has been booked successfully. A confirmation email with your QR code has been sent to your inbox.</p>
-        <a href="{{ url_for('home') }}" class="inline-block bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded font-bold uppercase tracking-wider text-sm transition">Back to Home</a>
+
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<!-- Pass ticket_id to JS securely via data attribute -->
 <script>
     window.CHECKOUT_CONFIG = {
         ticketId: {{ ticket.id }},
         processUrl: "{{ url_for('checkout_process') }}"
     };
+
+    var currentStepIdx = 1;
+
+    function updateProgressBar(step) {
+        var fill = document.getElementById('progress-bar-fill');
+        var percentage = ((step - 1) / 2) * 100;
+        fill.style.width = percentage + '%';
+
+        for (var i = 1; i <= 3; i++) {
+            var dot = document.getElementById('dot-' + i);
+            if (!dot) continue;
+            if (i === step) {
+                dot.className = "step-dot active-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-rose-300 bg-white text-rose-950 dark:bg-black/80 dark:border-white/20 transition-all duration-300";
+            } else if (i < step) {
+                dot.className = "step-dot completed-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-cyan-400 bg-cyan-500 text-white transition-all duration-300";
+            } else {
+                dot.className = "step-dot w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border-2 border-rose-300 bg-white text-rose-950 dark:bg-black/80 dark:border-white/20 transition-all duration-300";
+            }
+        }
+    }
+
+    function validateStep(step) {
+        if (step === 1) {
+            var name = document.getElementById('full-name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var city = document.getElementById('city').value;
+            
+            var uni = document.getElementById('university').value;
+            var faculty = document.getElementById('faculty').value.trim();
+            var status = document.getElementById('academic-status').value;
+            var age = document.getElementById('age').value.trim();
+
+            if (!name || !email || !phone || !city || !uni || !faculty || !status || !age) {
+                alert('Please fill in all required personal and academic details before proceeding.');
+                return false;
+            }
+        } else if (step === 2) {
+            var source = document.querySelector('input[name="source"]:checked');
+            var why = document.querySelectorAll('input[name="why_attending"]:checked');
+            var hopes = document.querySelectorAll('input[name="hopes_gained"]:checked');
+
+            if (!source || why.length === 0 || hopes.length === 0) {
+                alert('Please answer all event goals questions to proceed to checkout.');
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function nextStep(targetStep) {
+        if (!validateStep(currentStepIdx)) return;
+
+        var currentEl = document.getElementById('step-' + currentStepIdx);
+        var targetEl  = document.getElementById('step-' + targetStep);
+
+        currentEl.classList.remove('active-step');
+        currentEl.classList.add('hidden-step');
+
+        setTimeout(function() {
+            targetEl.classList.remove('hidden-step');
+            targetEl.classList.add('active-step');
+            currentStepIdx = targetStep;
+            updateProgressBar(targetStep);
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }, 150);
+    }
+
+    function prevStep(targetStep) {
+        var currentEl = document.getElementById('step-' + currentStepIdx);
+        var targetEl  = document.getElementById('step-' + targetStep);
+
+        currentEl.classList.remove('active-step');
+        currentEl.classList.add('hidden-step');
+
+        setTimeout(function() {
+            targetEl.classList.remove('hidden-step');
+            targetEl.classList.add('active-step');
+            currentStepIdx = targetStep;
+            updateProgressBar(targetStep);
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }, 150);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       STEP 4: MOCK MOBILE WALLET PAYMENT & OTP FLOW
+       ══════════════════════════════════════════════════════════════ */
+    function sendWalletOTP() {
+        var phoneInput = document.getElementById('wallet-phone');
+        var phoneVal = phoneInput.value.trim();
+
+        if (!phoneVal || phoneVal.length < 10) {
+            alert('Please enter a valid Mobile Wallet number (e.g. 01012345678).');
+            phoneInput.focus();
+            return;
+        }
+
+        var btnText = document.getElementById('send-otp-text');
+        var btnSpinner = document.getElementById('send-otp-spinner');
+        var btn = document.getElementById('btn-send-otp');
+
+        btnText.innerText = 'Sending OTP...';
+        btnSpinner.classList.remove('hidden');
+        btn.disabled = true;
+
+        setTimeout(function() {
+            btnSpinner.classList.add('hidden');
+            btnText.innerText = 'Sent ✓';
+
+            document.getElementById('wallet-stage-phone').classList.add('hidden');
+            document.getElementById('wallet-stage-otp').classList.remove('hidden');
+            document.getElementById('otp-sent-msg').innerText = 'OTP sent successfully to mobile wallet number ' + phoneVal + '!';
+            document.getElementById('wallet-otp').focus();
+        }, 1500);
+    }
+
+    function confirmWalletPayment() {
+        var otpVal = document.getElementById('wallet-otp').value.trim();
+        if (!otpVal) {
+            alert('Please enter the payment OTP digits.');
+            document.getElementById('wallet-otp').focus();
+            return;
+        }
+
+        var btnText = document.getElementById('confirm-pay-text');
+        var btnSpinner = document.getElementById('confirm-pay-spinner');
+        var btn = document.getElementById('btn-confirm-payment');
+
+        btnText.innerText = 'Verifying & Generating Pass...';
+        btnSpinner.classList.remove('hidden');
+        btn.disabled = true;
+
+        var phoneVal = document.getElementById('wallet-phone').value.trim();
+        var attendeeName = document.getElementById('full-name').value.trim() || 'Attendee';
+
+        var payload = {
+            ticket_id: window.CHECKOUT_CONFIG.ticketId,
+            payment_method: 'wallet',
+            wallet_number: phoneVal,
+            otp: otpVal,
+            full_name: attendeeName,
+            email: document.getElementById('email').value.trim(),
+            university: document.getElementById('university').value,
+            academic_status: document.getElementById('academic-status').value
+        };
+
+        setTimeout(function() {
+            fetch(window.CHECKOUT_CONFIG.processUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    document.getElementById('wizard-form').classList.add('hidden');
+                    document.getElementById('pass-attendee-name').innerText = attendeeName;
+                    document.getElementById('pass-order-id').innerText = '#MH-' + (data.order_id || '88294');
+                    document.getElementById('success-state').classList.remove('hidden');
+                    window.scrollTo({ top: 100, behavior: 'smooth' });
+                } else {
+                    btnSpinner.classList.add('hidden');
+                    btnText.innerText = '✦ Confirm Payment & Issue Ticket ✦';
+                    btn.disabled = false;
+                    var errBox = document.getElementById('checkout-errors');
+                    var errList = document.getElementById('error-list');
+                    errList.innerHTML = '';
+                    (data.errors || ['Payment processing failed.']).forEach(function(err) {
+                        var li = document.createElement('li');
+                        li.innerText = err;
+                        errList.appendChild(li);
+                    });
+                    errBox.classList.remove('hidden');
+                }
+            })
+            .catch(function(err) {
+                btnSpinner.classList.add('hidden');
+                btnText.innerText = '✦ Confirm Payment & Issue Ticket ✦';
+                btn.disabled = false;
+                alert('Network response error. Please try again.');
+            });
+        }, 1500);
+    }
 </script>
-<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
 {% endblock %}

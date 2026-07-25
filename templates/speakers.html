@@ -1,33 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}Speakers - Momken For Her{% endblock %}
-{% block meta_description %}Meet the industry leaders and experts speaking at Momken For Her 3rd Edition.{% endblock %}
+{% block title %}Speakers &amp; Industry Leaders - Momken For Her{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
-    <div class="text-center mb-16">
-        <p class="section-label">Meet Our</p>
-        <h1 class="section-title uppercase">All Speakers</h1>
-        <div class="w-16 h-1 bg-brand mx-auto mb-6"></div>
-        <p class="text-textMuted max-w-2xl mx-auto">Learn from industry leaders and experts who have shaped successful careers across various fields.</p>
-    </div>
+<div class="min-h-screen pt-32 pb-24 px-4 md:px-6 relative">
+    
+    <!-- Ambient Glow Orbs -->
+    <div class="fixed top-24 left-10 w-[500px] h-[500px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(225,29,72,0.12), transparent 70%); filter: blur(90px);"></div>
+    <div class="fixed top-1/2 right-10 w-[450px] h-[450px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%); filter: blur(90px);"></div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 gap-y-12">
-        {% for speaker in speakers %}
-        <div class="text-center group">
-            <!-- SVG Avatar with Initials -->
-            <div class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300 overflow-hidden bg-cardBg flex items-center justify-center">
-                <svg viewBox="0 0 150 150" class="w-full h-full">
-                    <rect width="150" height="150" fill="#0d1536"/>
-                    <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-                          font-family="Inter, system-ui, sans-serif" font-weight="700"
-                          font-size="48" fill="#e6003a">{{ speaker.initials }}</text>
-                </svg>
-            </div>
-            <h3 class="font-bold uppercase text-sm mb-1">{{ speaker.name }}</h3>
-            <p class="text-xs text-textMuted">{{ speaker.title }}</p>
+    <div class="max-w-7xl mx-auto space-y-16">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+            <span class="holo-badge mb-3">✦ Visionaries &amp; Mentors ✦</span>
+            <h1 class="text-4xl md:text-6xl font-black text-primaryLight dark:text-primaryDark dark:glow-text mt-2">
+                SPEAKERS &amp; EXPERTS
+            </h1>
+            <p class="text-secondaryLight dark:text-secondaryDark text-base md:text-lg font-bold mt-3 leading-relaxed">
+                Meet the executive leaders, tech pioneers, and visionary founders shaping career empowerment at Momken For Her 3rd Edition.
+            </p>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-accent-red via-accent-magenta to-accent-cyan mx-auto mt-6 rounded-full"></div>
         </div>
-        {% endfor %}
+
+        <!-- Speakers Grid (Matching Main Page Card Design with Medium 3:4 Height) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for speaker in speakers %}
+            <div class="group" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 60 }}">
+                <div class="aspect-[3/4] rounded-3xl overflow-hidden glass-card mb-4 relative shadow-lg border border-gray-200 dark:border-white/10">
+                    {% set speaker_images = [
+                        "images/Speakers/88 (2).png",
+                        "images/Speakers/88(1).png",
+                        "images/Speakers/Abbberrupd.png",
+                        "images/Speakers/Ayman (2).png",
+                        "images/Speakers/Ayman(1).png",
+                        "images/Speakers/WhatsApp Image 2026-02-02 at 8.22(1).01 PM.jpeg",
+                        "images/Speakers/dina(1).png",
+                        "images/Speakers/heba.jpg",
+                        "images/Speakers/mohamed bedier.png",
+                        "images/Speakers/radwa(1).png"
+                    ] %}
+                    <img src="{{ url_for('static', filename=speaker_images[loop.index0 % 10]) }}" alt="{{ speaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    
+                    {% if speaker.is_featured %}
+                    <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-600/90 text-white backdrop-blur-md border border-rose-400/30 shadow-md">
+                        Featured
+                    </span>
+                    {% endif %}
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70"></div>
+                </div>
+
+                <h3 class="text-base md:text-lg font-black text-primaryLight dark:text-primaryDark group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+                    {{ speaker.name }}
+                </h3>
+                <p class="text-xs font-bold text-secondaryLight dark:text-secondaryDark mt-0.5 leading-snug">
+                    {{ speaker.title }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
-</section>
+</div>
 {% endblock %}

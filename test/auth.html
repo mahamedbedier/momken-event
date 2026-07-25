@@ -1,0 +1,415 @@
+<!-- Checkout - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | Momken For Her 2060</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#131313",
+                      "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                      "secondary": "#4cd7f6",
+                      "tertiary-fixed-dim": "#fda9ff",
+                      "inverse-surface": "#e5e2e1",
+                      "on-surface-variant": "#e5bdbe",
+                      "primary-fixed": "#ffdada",
+                      "on-primary": "#68001a",
+                      "on-tertiary": "#580063",
+                      "surface-container-highest": "#353534",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-container-low": "#1c1b1b",
+                      "inverse-primary": "#be0037",
+                      "primary-container": "#e11d48",
+                      "surface-bright": "#3a3939",
+                      "secondary-container": "#03b5d3",
+                      "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                      "on-tertiary-fixed": "#36003d",
+                      "on-secondary": "#003640",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#00424e",
+                      "on-secondary-fixed-variant": "#004e5c",
+                      "tertiary-container": "#c026d3",
+                      "surface-tint": "#ffb3b6",
+                      "outline-variant": "#5c3f40",
+                      "secondary-fixed": "#acedff",
+                      "on-error": "#690005",
+                      "tertiary": "#fda9ff",
+                      "outline": "#ac8889",
+                      "on-tertiary-container": "#fffafa",
+                      "on-primary-fixed": "#40000c",
+                      "error-container": "#93000a",
+                      "surface-container": "#201f1f",
+                      "on-error-container": "#ffdad6",
+                      "on-background": "#e5e2e1",
+                      "inverse-on-surface": "#313030",
+                      "surface-glass": "rgba(255, 255, 255, 0.03)",
+                      "background": "#131313",
+                      "tertiary-fixed": "#ffd6fb",
+                      "on-secondary-fixed": "#001f26",
+                      "on-primary-container": "#fffaf9",
+                      "on-tertiary-fixed-variant": "#7d008c",
+                      "on-surface": "#e5e2e1",
+                      "primary": "#ffb3b6",
+                      "surface": "#131313",
+                      "accent-yellow": "#facc15",
+                      "surface-variant": "#353534",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-primary-fixed-variant": "#920028",
+                      "primary-fixed-dim": "#ffb3b6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "stack-md": "1.5rem",
+                      "card-padding": "2.5rem",
+                      "section-gap-md": "5rem",
+                      "section-gap-lg": "8rem",
+                      "grid-gutter": "2rem",
+                      "stack-sm": "0.75rem"
+              },
+              "fontFamily": {
+                      "body-lg": ["Outfit"],
+                      "headline-lg": ["Outfit"],
+                      "hero-xl": ["Outfit"],
+                      "headline-md": ["Outfit"],
+                      "body-base": ["Outfit"],
+                      "hero-xl-mobile": ["Outfit"],
+                      "label-sm": ["Outfit"],
+                      "label-caps": ["Outfit"]
+              },
+              "fontSize": {
+                      "body-lg": ["20px", {"lineHeight": "1.6", "letterSpacing": "normal", "fontWeight": "500"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "normal", "fontWeight": "900"}],
+                      "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                      "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "normal", "fontWeight": "800"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "normal", "fontWeight": "400"}],
+                      "hero-xl-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                      "label-sm": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cyber-gradient-text {
+            background: linear-gradient(to right, #ffb3b6, #c026d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #e11d48 0%, #c026d3 100%);
+            box-shadow: 0 4px 20px rgba(225, 29, 72, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(225, 29, 72, 0.5);
+            transform: translateY(-2px);
+        }
+        .form-input {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .form-input:focus {
+            border-color: #4cd7f6;
+            outline: none;
+            box-shadow: 0 0 10px rgba(76, 215, 246, 0.2);
+        }
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body class="bg-surface-dim selection:bg-primary selection:text-on-primary">
+<!-- Atmospheric Background -->
+<div class="orb w-[500px] h-[500px] bg-primary/20 top-[-100px] left-[-100px] animate-pulse"></div>
+<div class="orb w-[600px] h-[600px] bg-tertiary-container/10 bottom-[-200px] right-[-100px] animate-pulse" style="animation-delay: 2s;"></div>
+<!-- Navigation suppressed per task requirement (Checkout is task-focused) -->
+<header class="pt-12 pb-8 px-8 max-w-container-max mx-auto flex justify-between items-center">
+<a class="font-headline-md text-headline-md font-black text-primary tracking-tighter flex items-center gap-2" href="index.html">
+            Momken For Her
+        </a>
+<div class="flex items-center gap-4 text-on-surface-variant font-body-base">
+<span class="material-symbols-outlined text-secondary">security</span>
+<span class="hidden sm:inline">Secure Checkout</span>
+</div>
+</header>
+<main class="px-8 max-w-container-max mx-auto pb-section-gap-lg">
+<div class="flex flex-col lg:grid lg:grid-cols-12 gap-grid-gutter">
+<!-- Left Column: Payment Form -->
+<div class="lg:col-span-7 space-y-stack-md">
+<section class="glass-panel rounded-xl p-card-padding">
+<h1 class="font-headline-md text-headline-md mb-8">Secure Payment</h1>
+<form class="space-y-6" id="checkoutForm">
+<!-- Identity Information -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Full Name</label>
+<input class="w-full form-input rounded-lg px-4 py-3 text-body-base" placeholder="Amina El-Sayed" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Email Address</label>
+<input class="w-full form-input rounded-lg px-4 py-3 text-body-base" placeholder="amina@futurists.eg" required="" type="email"/>
+</div>
+</div>
+<!-- Card Details -->
+<div class="space-y-4 pt-4 border-t border-surface-glass-border">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Credit Card Details</label>
+<div class="flex gap-2">
+<div class="h-6 w-10 bg-white/5 rounded flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-sm">credit_card</span>
+</div>
+<div class="h-6 w-10 bg-white/5 rounded flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-sm">payments</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="relative">
+<input class="w-full form-input rounded-lg px-4 py-3 text-body-base pr-12" placeholder="0000 0000 0000 0000" required="" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<input class="w-full form-input rounded-lg px-4 py-3 text-body-base" placeholder="MM / YY" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<input class="w-full form-input rounded-lg px-4 py-3 text-body-base" placeholder="CVV" required="" type="password"/>
+</div>
+</div>
+</div>
+<!-- Billing Address -->
+<div class="space-y-2 pt-4 border-t border-surface-glass-border">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Country / Region</label>
+<select class="w-full form-input rounded-lg px-4 py-3 text-body-base appearance-none">
+<option>Egypt</option>
+<option>United Arab Emirates</option>
+<option>Saudi Arabia</option>
+<option>Morocco</option>
+<option>Global / International</option>
+</select>
+</div>
+<div class="pt-6">
+<button class="w-full btn-primary py-4 rounded-xl font-body-lg text-white flex items-center justify-center gap-3" type="submit">
+<span>Complete Registration</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center mt-4 text-label-sm text-on-surface-variant opacity-70">
+                                Your transaction is protected by 256-bit SSL encryption.
+                            </p>
+</div>
+</form>
+</section>
+<div class="flex items-center justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+<span class="material-symbols-outlined text-3xl">format_image_left</span>
+<span class="material-symbols-outlined text-3xl">workspace_premium</span>
+</div>
+</div>
+<!-- Right Column: Order Summary -->
+<aside class="lg:col-span-5 space-y-6">
+<div class="glass-panel rounded-xl p-card-padding sticky top-24">
+<h2 class="font-headline-md text-headline-md text-2xl mb-6">Summit Pass</h2>
+<div class="space-y-6">
+<!-- Ticket Card -->
+<div class="relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative p-4 border border-surface-glass-border rounded-lg flex items-start gap-4">
+<div class="w-16 h-16 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" data-weight="fill">confirmation_number</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-white">VIP All-Access Pass</h3>
+<span class="text-primary font-bold">$499.00</span>
+</div>
+<p class="text-on-surface-variant text-sm mt-1">Cairo Summit • Oct 12-14, 2060</p>
+<div class="flex gap-2 mt-3">
+<span class="bg-secondary/20 text-secondary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Early Bird</span>
+<span class="bg-tertiary-container/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Full Access</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coupon -->
+<div class="flex gap-2">
+<input class="flex-grow form-input rounded-lg px-4 py-2 text-sm" placeholder="Promo Code" type="text"/>
+<button class="px-4 py-2 bg-surface-container-high rounded-lg text-sm font-bold hover:bg-surface-container-highest transition-colors">Apply</button>
+</div>
+<!-- Totals -->
+<div class="space-y-3 pt-6 border-t border-surface-glass-border">
+<div class="flex justify-between font-body-base text-on-surface-variant">
+<span>Subtotal</span>
+<span>$499.00</span>
+</div>
+<div class="flex justify-between font-body-base text-on-surface-variant">
+<span>Service Fee</span>
+<span>$15.00</span>
+</div>
+<div class="flex justify-between font-body-lg text-white pt-3 border-t border-surface-glass-border">
+<span class="font-bold">Total</span>
+<span class="font-black text-secondary">$514.00</span>
+</div>
+</div>
+<!-- Perks List -->
+<div class="bg-white/5 rounded-xl p-4 space-y-3">
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Access to all 12 keynotes</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>AI Career Matchmaking Tool</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Exclusive Networking Lounge</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonial for Social Proof -->
+<div class="px-4 text-center">
+<p class="text-on-surface-variant italic text-sm">"The most transformative experience for female tech leaders in the region."</p>
+<div class="mt-2 flex items-center justify-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a confident middle-eastern female tech executive in professional attire, soft studio lighting, futuristic office background, muted dark aesthetic with pink light accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXh7cLnbBeeOmyPj6tVYgH_JbOfFoYiHla-ZUNRTOu1epJzJTezR7p67hfsOUFktoldBJIoJd6kCxJRJAD2qPdvLolj8t9VqME6iXEKxbty-6lakgCreVZquqHPcdVhN0ky8K9SHDJUwCg7q_jfGjg4svVGs67w52Z9NKw6_E9U5XEw9HZ9XEtwrj9NC0vo7IAQO5XUOYqgdQ6qwq5m4sE9UDGWyeFbxFcNzYr6h211tsaXLx2Jd5iii2k0BkVvBLWGOrdqHYqMM1M"/>
+</div>
+<span class="text-[11px] font-bold uppercase tracking-widest text-primary">Fatima Z. • Lead Architect</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Success Modal (Hidden by Default) -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background/80 backdrop-blur-xl hidden" id="successModal">
+<div class="glass-panel w-full max-w-lg rounded-3xl p-8 text-center relative overflow-hidden transform scale-95 opacity-0 transition-all duration-500 shadow-[0_0_50px_rgba(76,215,246,0.2)]">
+<!-- Confetti Canvas or Animated Orbs -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+
+</div>
+<div class="relative z-10">
+<div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(255,179,182,0.4)] animate-bounce">
+<span class="material-symbols-outlined text-white text-5xl">celebration</span>
+</div>
+<h2 class="font-hero-xl-mobile md:font-headline-lg text-hero-xl-mobile md:text-headline-lg cyber-gradient-text mb-4">You're In!</h2>
+<p class="font-body-lg text-on-surface mb-8">
+                    Your registration for Momken For Her 2060 is confirmed. Get ready to empower the future.
+                </p>
+<div class="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10 text-left">
+<div class="flex justify-between items-center mb-4">
+<span class="text-label-caps text-on-surface-variant">Order #MOM-2060-4921</span>
+<span class="text-label-caps text-primary">Confirmed</span>
+</div>
+<p class="text-white font-bold">VIP All-Access Pass</p>
+<p class="text-on-surface-variant text-sm">Confirmation sent to your email.</p>
+</div>
+<div class="flex flex-col gap-3">
+<a class="btn-primary py-4 rounded-xl font-bold text-white" href="index.html">Back to Home</a>
+<button class="py-4 text-on-surface-variant hover:text-white transition-colors font-bold text-sm">Download Digital Ticket</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Segment -->
+<footer class="w-full mt-section-gap-lg border-t border-surface-glass-border bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter px-8 py-section-gap-md max-w-container-max mx-auto">
+<div class="md:col-span-1">
+<div class="font-headline-md text-headline-md font-black text-primary mb-4">Momken For Her</div>
+<p class="text-on-surface-variant font-body-base opacity-70">Empowering the next generation of female leaders through technology and innovation.</p>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-white font-bold mb-2">Explore</span>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Speakers</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Agenda</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Empowerment</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-white font-bold mb-2">Support</span>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="text-white font-bold mb-2">Follow the Movement</span>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full border border-surface-glass-border flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-lg">language</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-surface-glass-border flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-lg">camera</span>
+</div>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-4">© 2060 Momken For Her. Empowering the Future.</p>
+</div>
+</div>
+</footer>
+<script>
+        // Form Submission Logic
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Interaction: Button loading state
+            const btn = e.target.querySelector('button');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Processing...';
+            btn.disabled = true;
+
+            // Simulate Payment Processing
+            setTimeout(() => {
+                const modal = document.getElementById('successModal');
+                const modalContent = modal.querySelector('div.glass-panel');
+                
+                modal.classList.remove('hidden');
+                
+                // Animate Modal In
+                requestAnimationFrame(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                });
+
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }, 2000);
+        });
+
+        // Close modal logic (optional improvement)
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if(e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+    </script>
+</body></html>

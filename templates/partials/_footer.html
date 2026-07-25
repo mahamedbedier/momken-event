@@ -1,60 +1,72 @@
 <!-- ═══════════════════════════════════════════════════════════════════
-     FOOTER — Single source of truth, consistent across all pages
+     FOOTER — Light & Dark dual mode
      ═══════════════════════════════════════════════════════════════════ -->
-<footer class="bg-cardBg py-16 px-6">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+<footer class="relative mt-20">
+    <!-- Top gradient border -->
+    <div class="h-px bg-gradient-to-r from-transparent via-accent-red/25 to-transparent"></div>
 
-        <!-- Branding -->
-        <div>
-            <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Momken For Her"
-                 class="h-14 mb-4 object-contain">
-            <p class="text-sm text-textMuted max-w-md leading-relaxed">
-                Empowering Egypt's next generation of professionals through world-class career development events and networking opportunities.
-            </p>
-        </div>
+    <div class="py-16 px-6 bg-lightBg dark:bg-transparent">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left" data-aos="fade-up">
 
-        <!-- Contact -->
-        <div>
-            <h4 class="font-black text-white mb-4 uppercase tracking-wider">Contact</h4>
-            <ul class="space-y-3">
-                <li class="flex items-center gap-3 text-sm text-textMuted">
-                    <!-- Mail Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                    bd@momkenforher.com
-                </li>
-                <li class="flex items-center gap-3 text-sm text-textMuted">
-                    <!-- WhatsApp Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand shrink-0">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
-                        <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
-                    </svg>
-                    01013454402
-                </li>
-            </ul>
-        </div>
+            <!-- Branding -->
+            <div>
+                <div class="logo-glow inline-block mb-5">
+                    <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Momken For Her"
+                        class="h-12 object-contain">
+                </div>
+                <p class="text-sm text-secondaryLight dark:text-secondaryDark max-w-md leading-relaxed font-bold">
+                    Empowering Egypt's next generation of professionals through world-class career development events and networking opportunities.
+                </p>
+            </div>
 
-        <!-- Social Updates -->
-        <div>
-            <h4 class="font-black text-white mb-4 uppercase tracking-wider">Social Updates</h4>
-            <div class="flex gap-4">
-                <a href="https://www.facebook.com/MomkenForHer" target="_blank" rel="noopener"
-                   class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>
-                <a href="https://www.instagram.com/momkenforher" target="_blank" rel="noopener"
-                   class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-                </a>
-                <a href="https://www.linkedin.com/company/momkenforher" target="_blank" rel="noopener"
-                   class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand hover:border-brand transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
+            <!-- Contact -->
+            <div>
+                <h4 class="font-extrabold text-primaryLight dark:text-primaryDark mb-4 uppercase tracking-wider text-sm">Contact</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-sm text-secondaryLight dark:text-secondaryDark font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-red shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                        bd@momkenforher.com
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-secondaryLight dark:text-secondaryDark font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-red shrink-0">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                            <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+                        </svg>
+                        01013454402
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Social -->
+            <div>
+                <h4 class="font-extrabold text-primaryLight dark:text-primaryDark mb-4 uppercase tracking-wider text-sm">Social Updates</h4>
+                <div class="flex gap-3">
+                    <a href="https://www.facebook.com/MomkenForHer" target="_blank" rel="noopener"
+                       class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300
+                              bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10
+                              hover:border-accent-red/50 hover:bg-accent-red/5 hover:shadow-[0_0_12px_rgba(225,29,72,0.15)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primaryLight dark:text-primaryDark"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="https://www.instagram.com/momkenforher" target="_blank" rel="noopener"
+                       class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300
+                              bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10
+                              hover:border-accent-magenta/50 hover:bg-accent-magenta/5 hover:shadow-[0_0_12px_rgba(192,38,211,0.15)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primaryLight dark:text-primaryDark"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/momkenforher" target="_blank" rel="noopener"
+                       class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300
+                              bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10
+                              hover:border-accent-cyan/50 hover:bg-accent-cyan/5 hover:shadow-[0_0_12px_rgba(6,182,212,0.15)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primaryLight dark:text-primaryDark"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="border-t border-white/10 mt-12 pt-8 text-center text-xs text-textMuted/60">
-        &copy; 2026 Momken For Her Summit. All rights reserved.
+        <!-- Bottom bar -->
+        <div class="border-t border-gray-200 dark:border-white/5 mt-12 pt-8 text-center">
+            <p class="text-xs text-secondaryLight dark:text-secondaryDark font-extrabold">&copy; 2026 Momken For Her Summit. All rights reserved.</p>
+        </div>
     </div>
 </footer>

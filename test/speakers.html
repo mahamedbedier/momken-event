@@ -1,0 +1,381 @@
+<!-- Speakers - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Speakers | Momken For Her 2060</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-dim": "#131313",
+                "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                "secondary": "#4cd7f6",
+                "tertiary-fixed-dim": "#fda9ff",
+                "inverse-surface": "#e5e2e1",
+                "on-surface-variant": "#e5bdbe",
+                "primary-fixed": "#ffdada",
+                "on-primary": "#68001a",
+                "on-tertiary": "#580063",
+                "surface-container-highest": "#353534",
+                "surface-container-high": "#2a2a2a",
+                "surface-container-low": "#1c1b1b",
+                "inverse-primary": "#be0037",
+                "primary-container": "#e11d48",
+                "surface-bright": "#3a3939",
+                "secondary-container": "#03b5d3",
+                "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                "on-tertiary-fixed": "#36003d",
+                "on-secondary": "#003640",
+                "error": "#ffb4ab",
+                "on-secondary-container": "#00424e",
+                "on-secondary-fixed-variant": "#004e5c",
+                "tertiary-container": "#c026d3",
+                "surface-tint": "#ffb3b6",
+                "outline-variant": "#5c3f40",
+                "secondary-fixed": "#acedff",
+                "on-error": "#690005",
+                "tertiary": "#fda9ff",
+                "outline": "#ac8889",
+                "on-tertiary-container": "#fffafa",
+                "on-primary-fixed": "#40000c",
+                "error-container": "#93000a",
+                "surface-container": "#201f1f",
+                "on-error-container": "#ffdad6",
+                "on-background": "#e5e2e1",
+                "inverse-on-surface": "#313030",
+                "surface-glass": "rgba(255, 255, 255, 0.03)",
+                "background": "#131313",
+                "tertiary-fixed": "#ffd6fb",
+                "on-secondary-fixed": "#001f26",
+                "on-primary-container": "#fffaf9",
+                "on-tertiary-fixed-variant": "#7d008c",
+                "on-surface": "#e5e2e1",
+                "primary": "#ffb3b6",
+                "surface": "#131313",
+                "accent-yellow": "#facc15",
+                "surface-variant": "#353534",
+                "surface-container-lowest": "#0e0e0e",
+                "on-primary-fixed-variant": "#920028",
+                "primary-fixed-dim": "#ffb3b6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-max": "1280px",
+                "stack-md": "1.5rem",
+                "card-padding": "2.5rem",
+                "section-gap-md": "5rem",
+                "section-gap-lg": "8rem",
+                "grid-gutter": "2rem",
+                "stack-sm": "0.75rem"
+            },
+            "fontFamily": {
+                "body-lg": ["Outfit"],
+                "headline-lg": ["Outfit"],
+                "hero-xl": ["Outfit"],
+                "headline-md": ["Outfit"],
+                "body-base": ["Outfit"],
+                "hero-xl-mobile": ["Outfit"],
+                "label-sm": ["Outfit"],
+                "label-caps": ["Outfit"]
+            },
+            "fontSize": {
+                "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "900"}],
+                "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "800"}],
+                "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "hero-xl-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                "label-sm": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(225, 29, 72, 0.1);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 100%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: pulse 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+            50% { transform: scale(1.2) translate(5%, 5%); opacity: 0.5; }
+            100% { transform: scale(0.9) translate(-5%, -2%); opacity: 0.3; }
+        }
+
+        .text-gradient-primary {
+            background: linear-gradient(to right, #ffb3b6, #e11d48);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .speaker-initials {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(76, 215, 246, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body class="bg-background selection:bg-primary selection:text-on-primary">
+<!-- Atmospheric Orbs -->
+<div class="orb w-[600px] h-[600px] bg-primary-container top-[-200px] left-[-200px]"></div>
+<div class="orb w-[500px] h-[500px] bg-secondary-container bottom-[-100px] right-[-100px]"></div>
+<div class="orb w-[400px] h-[400px] bg-tertiary-container top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-2xl border-b border-surface-glass-border shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-container-max mx-auto">
+<a class="font-headline-md text-headline-md font-black text-primary tracking-tighter" href="#">Momken For Her</a>
+<div class="hidden md:flex items-center space-x-8 font-body-base text-body-base font-bold">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Home</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Speakers</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Agenda</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Empowerment</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sponsors</a>
+</div>
+<button class="bg-gradient-to-r from-[#e11d48] to-[#c026d3] px-6 py-2 rounded-xl text-on-primary-container font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-momken-red-glow">
+                Get Tickets
+            </button>
+</div>
+</nav>
+<!-- Hero Header -->
+<header class="relative pt-40 pb-20 px-8 text-center max-w-container-max mx-auto">
+
+<div class="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1 mb-8 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-secondary">VOICES OF THE FUTURE</span>
+</div>
+<h1 class="font-hero-xl text-hero-xl md:text-hero-xl mobile:text-hero-xl-mobile mb-6">
+            Meet the <span class="text-gradient-primary">Visionaries</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+            The pioneers, the disruptors, and the creators. These leaders are shaping the trajectory of the 2060 landscape across technology, culture, and social equity.
+        </p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="glass-card px-8 py-3 rounded-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined">filter_list</span>
+                Filter Speakers
+            </button>
+<button class="glass-card px-8 py-3 rounded-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined">search</span>
+                Search by Topic
+            </button>
+</div>
+</header>
+<!-- Speakers Grid -->
+<main class="max-w-container-max mx-auto px-8 pb-section-gap-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-grid-gutter">
+<!-- Speaker 1: Tech Disruptor -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A portrait of a futuristic female tech leader in a glass-walled office with digital overlays, wearing a sophisticated architectural blazer. High-energy magenta and cyan ambient lighting, cinematic composition, sharp focus, 8k resolution, cyberpunk aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgo6nn3x8HpFRf7uDCzPAztNc3v4op-7OFBMWnPrtCdD33SsttKEoQjw_H1NQKQCkVNn76l-mFZ7DlA6mmmg7jv697kosyLpGtIuFK5-Rp4Y2rteSkS-5G2co3KwAahwFUO-xxCQO6OIOKmgReAMJ3x40tnk4OHkRTqYdz6ZrfZXJcgztiAVsh1Ld4rFEU2xftYCcpZ0OyTEhLivXuQz7MaTtSFzVR0puSeO3ZuaNdt7VzBdHm-lfpnVkBpjEBSRASStvdoZXLR9mf"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+<div class="absolute top-4 right-4 bg-primary text-on-primary px-3 py-1 rounded-full font-label-caps text-label-caps">KEYNOTE</div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Dr. Aris Thorne</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">HEAD OF QUANTUM ETHICS @ NEURALINK 2.0</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Pioneering the fusion of biological consciousness and algorithmic governance. Aris is leading the global dialogue on neural privacy in the 2060s.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">share</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">mic</span>
+</div>
+</div>
+</div>
+<!-- Speaker 2: Climate Visionary -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high speaker-initials font-hero-xl">
+<span class="opacity-40 select-none">SY</span>
+<div class="absolute inset-0 bg-gradient-to-tr from-momken-red-glow/20 to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="bg-surface-glass backdrop-blur-md px-3 py-1 rounded-full text-label-caps text-on-surface text-[10px]">ECOLOGY</span>
+</div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Sana Yang</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">DIRECTOR OF VERTICAL BIOMES</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Architecting the first self-sustaining floating cities in the Pacific basin. Sana transforms urban waste into living architectural carbon-sinks.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">language</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">calendar_today</span>
+</div>
+</div>
+</div>
+<!-- Speaker 3: Digital Artist -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A portrait of a contemporary digital artist with neon hair accents, wearing reflective smart-fabric clothing, standing in front of a giant holographic screen displaying abstract fluid art. Vibrant magenta and purple lighting, futuristic studio setting, hyper-detailed, sleek and modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKS40Bq122wQhF6p34D7fWTj1CgKCyYGQLna24WeDi1tcz99hXBco0j372ve8hWamIVkN3rNpOnVZAyqlBmmLnn7woGMeU1QZmYKZm-49K_ITbgDafBIFQsUKlDb6CWplutWvyIMIV4o9EUQB7JzN1YcxajHIRgdqoJ_o23xqNdzS7xCkPh25zg0Zx-ZGU__GsG9KD4X8E-uATnagWj0sQapYJe5sduz3YanRtmjRQGqwkBXOyi_hBV5b9EIqxQVVEtNt6syS47fgp"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Kaelen Vox</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">METAVERSE CURATOR &amp; DESIGNER</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Redefining spatial identity in decentralized worlds. Kaelen explores how digital fashion impacts our physical-world perceptions of self.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">brush</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">bolt</span>
+</div>
+</div>
+</div>
+<!-- Speaker 4: Finance Futurist -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high speaker-initials font-hero-xl">
+<span class="opacity-40 select-none">EM</span>
+<div class="absolute inset-0 bg-gradient-to-bl from-secondary/10 to-transparent"></div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Elena Moretti</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">BLOCKCHAIN POLICY LEAD</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Architect of the Global Credit Protocol. Elena is instrumental in dismantling traditional banking silos to empower unbanked communities globally.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">payments</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">verified</span>
+</div>
+</div>
+</div>
+<!-- Speaker 5: Education Reformer -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A portrait of a visionary educator in a clean, high-tech classroom with floating light tablets and bioluminescent plants. Soft, warm lighting contrasting with sharp white tech edges, optimistic and intelligent mood, professional photography style, 8k." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz0VEHdWfNSJjJ1BecJMOhI7HMGzafs8JyFYmQqNfT7H3aTGIUjt6LykcXUZ7cRT2IbQQntwhT2O2XZy90_7ScUB8nHGKY3nVgVeMJ85xdf9NDrRDnksm9mDWXTy7LIsa6elAEsf1UhXL-rYP4etD7uJKpE4A6OPlQiXzki2hteumf9_j75pZOdvoNeinn5aHTc71pPSpDdgxeraSWNN460-28JVOS-dvQfP-i3OBT8iCokil82tom1rlsBPrg5GUVosHoWVpyD9bJ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Maya Patel</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">FOUNDER OF EDU-NET 2060</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Using AI-driven personalized learning paths to eliminate the education gap. Maya believes knowledge is a universal right, not a privilege.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">school</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">trending_up</span>
+</div>
+</div>
+</div>
+<!-- Speaker 6: Space Colonist -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container-high speaker-initials font-hero-xl">
+<span class="opacity-40 select-none">JR</span>
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/10 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full font-label-caps text-label-caps">REMOTE</div>
+</div>
+<div class="p-card-padding">
+<h3 class="font-headline-md text-headline-md mb-2 group-hover:text-primary transition-colors">Jada Reed</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-4">LUNAR OUTPOST COMMANDER</p>
+<p class="font-body-base text-body-base text-on-surface-variant line-clamp-3">
+                        Directing the Artemis Base infrastructure. Jada shares her unique perspective on leadership from 238,000 miles away.
+                    </p>
+<div class="mt-6 flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">rocket_launch</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">public</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Join the Stage CTA -->
+<section class="mt-section-gap-md glass-card p-card-padding rounded-3xl text-center border-primary/20 relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 -z-10"></div>
+<h2 class="font-headline-lg text-headline-lg mb-4">Think You Belong on <span class="text-primary">Stage?</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl mx-auto">
+                Nominations for the 2060 Emerging Voices segment are still open. Show us your vision.
+            </p>
+<button class="bg-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-momken-red-glow">
+                APPLY TO SPEAK
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-surface-glass-border">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter px-8 py-section-gap-md max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md font-black text-primary mb-4">Momken For Her</div>
+<p class="text-on-surface-variant font-body-base">Empowering the Future, one vision at a time. The summit for the next century.</p>
+</div>
+<div class="flex flex-col space-y-4">
+<span class="font-bold text-primary mb-2">QUICK LINKS</span>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Contact Support</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col space-y-4">
+<span class="font-bold text-primary mb-2">RESOURCES</span>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Press Kit</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Brand Assets</a>
+</div>
+<div class="flex flex-col space-y-4">
+<span class="font-bold text-primary mb-2">NEWSLETTER</span>
+<p class="text-sm text-on-surface-variant mb-2">Get futuristic updates delivered to your neural feed.</p>
+<div class="flex">
+<input class="bg-surface-container border border-white/10 rounded-l-lg px-4 py-2 w-full focus:outline-none focus:border-secondary" placeholder="Email Address" type="email"/>
+<button class="bg-secondary text-on-secondary px-4 rounded-r-lg font-bold">JOIN</button>
+</div>
+</div>
+</div>
+<div class="px-8 py-8 border-t border-white/5 text-center text-on-surface-variant/50 text-sm">
+            © 2060 Momken For Her. Empowering the Future. All Rights Reserved.
+        </div>
+</footer>
+<script>
+        // Micro-interactions for glass cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,92 +1,742 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Dashboard - Momken For Her{% endblock %}
-
-{% block head_extra %}
-<!-- Chart.js for data visualization -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-{% endblock %}
+{% block title %}Admin & Volunteer Dashboard - Momken For Her{% endblock %}
 
 {% block content %}
-<section class="pt-28 pb-24 px-6 max-w-7xl mx-auto">
-    <!-- Header -->
-    <div class="mb-10">
-        <p class="section-label">Dashboard</p>
-        <h1 class="text-3xl md:text-4xl font-black">Admin Panel</h1>
-        <p class="text-textMuted text-sm mt-2">Overview of registrations, ticket sales, and attendee data.</p>
-    </div>
+<!-- Custom Dashboard CSS -->
+<style>
+    .admin-tab-btn.active-tab {
+        background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(192, 38, 211, 0.15)) !important;
+        border-color: #e11d48 !important;
+        color: #ffffff !important;
+        font-weight: 800;
+        box-shadow: 0 0 20px rgba(225, 29, 72, 0.25);
+    }
+    .admin-tab-pane {
+        display: none;
+    }
+    .admin-tab-pane.active-pane {
+        display: block;
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
 
-    <!-- ─── Top Metrics Cards ────────────────────────────────────────── -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-        <div class="metric-card">
-            <p class="text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Total Users</p>
-            <p class="text-3xl font-black text-white" id="metric-users">—</p>
-        </div>
-        <div class="metric-card">
-            <p class="text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Tickets Sold</p>
-            <p class="text-3xl font-black text-brand" id="metric-orders">—</p>
-        </div>
-        <div class="metric-card">
-            <p class="text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Total Revenue</p>
-            <p class="text-3xl font-black text-green-400" id="metric-revenue">—</p>
-        </div>
-    </div>
+<div class="min-h-screen pt-24 pb-16 px-4 md:px-8 relative">
+    
+    <!-- Ambient Glow Orbs -->
+    <div class="fixed top-20 right-0 w-[500px] h-[500px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(225,29,72,0.1), transparent 70%); filter: blur(100px);"></div>
+    <div class="fixed bottom-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%); filter: blur(100px);"></div>
 
-    <!-- ─── Registrations Chart ──────────────────────────────────────── -->
-    <div class="bg-cardBg p-6 md:p-8 rounded-xl border border-white/10 mb-10">
-        <h2 class="text-lg font-black uppercase tracking-wider mb-6">Registered Users Over Time</h2>
-        <div class="relative" style="height: 300px;">
-            <canvas id="registrations-chart"></canvas>
-        </div>
-    </div>
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header & Title Bar -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8" data-aos="fade-down">
+            <div>
+                <div class="flex items-center gap-3">
+                    <span class="holo-badge">✦ Admin &amp; Volunteer Portal ✦</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-500/40">
+                        Role: {{ current_user.role | upper }}
+                    </span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black text-rose-950 dark:text-white dark:glow-text mt-2">
+                    Summit Operations Center
+                </h1>
+                <p class="text-xs md:text-sm text-rose-900 dark:text-gray-300 font-bold mt-1">
+                    Manage users, volunteer roles, tickets, payments, and real-time ticket QR check-ins.
+                </p>
+            </div>
 
-    <!-- ─── Users Table ──────────────────────────────────────────────── -->
-    <div class="bg-cardBg p-6 md:p-8 rounded-xl border border-white/10">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h2 class="text-lg font-black uppercase tracking-wider">All Attendees</h2>
-            <!-- Search Bar -->
-            <div class="relative">
-                <input type="text" id="user-search" placeholder="Search by name or email..."
-                       class="input-field w-full sm:w-72 pl-10 text-sm">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-textMuted w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
+            <div class="flex items-center gap-3">
+                <a href="{{ url_for('home') }}" class="btn-outline text-xs">← Back to Site</a>
             </div>
         </div>
 
-        <!-- Table -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead>
-                    <tr class="border-b border-white/10 text-textMuted uppercase text-xs tracking-wider">
-                        <th class="pb-3 pr-4">Name</th>
-                        <th class="pb-3 pr-4">Email</th>
-                        <th class="pb-3 pr-4">Phone</th>
-                        <th class="pb-3 pr-4">Ticket Type</th>
-                        <th class="pb-3 pr-4">Status</th>
-                        <th class="pb-3 pr-4">Registered</th>
-                        <th class="pb-3">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="users-table-body">
-                    <tr><td colspan="7" class="py-8 text-center text-textMuted">Loading...</td></tr>
-                </tbody>
-            </table>
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB NAVIGATION BAR
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div class="glass-pill p-2 mb-8 flex flex-wrap items-center gap-2 rounded-2xl border border-rose-200 dark:border-white/10" data-aos="fade-up">
+            {% if current_user.role == 'admin' %}
+            <button id="tab-btn-overview" onclick="switchAdminTab('overview')"
+                    class="admin-tab-btn active-tab flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+                <span>📊</span>
+                <span>Overview</span>
+            </button>
+
+            <button id="tab-btn-users" onclick="switchAdminTab('users')"
+                    class="admin-tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+                <span>👥</span>
+                <span>User &amp; Volunteer Roles</span>
+            </button>
+
+            <button id="tab-btn-payments" onclick="switchAdminTab('payments')"
+                    class="admin-tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+                <span>💳</span>
+                <span>Payments &amp; Ticket Sales</span>
+            </button>
+            {% endif %}
+
+            <button id="tab-btn-scanner" onclick="switchAdminTab('scanner')"
+                    class="admin-tab-btn {% if current_user.role != 'admin' %}active-tab{% endif %} flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+                <span>📷</span>
+                <span>Live QR Code Scanner</span>
+            </button>
         </div>
 
-        <p class="text-xs text-textMuted mt-4" id="users-count"></p>
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB 1: OVERVIEW & SYSTEM METRICS
+             ═══════════════════════════════════════════════════════════════════ -->
+        {% if current_user.role == 'admin' %}
+        <div id="pane-overview" class="admin-tab-pane active-pane space-y-8">
+            <!-- Top Stat Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stat 1: Total Users -->
+                <div class="stat-card-2060 text-left relative overflow-hidden">
+                    <span class="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-accent-cyan">Registered Users</span>
+                    <div class="text-4xl font-black text-rose-950 dark:text-white mt-2" id="stat-total-users">--</div>
+                    <p class="text-[11px] text-rose-900 dark:text-gray-400 font-bold mt-1">Total account holders</p>
+                </div>
+
+                <!-- Stat 2: Tickets Sold -->
+                <div class="stat-card-2060 text-left relative overflow-hidden">
+                    <span class="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-accent-cyan">Tickets Issued</span>
+                    <div class="text-4xl font-black text-rose-600 dark:text-rose-400 mt-2" id="stat-total-orders">--</div>
+                    <p class="text-[11px] text-rose-900 dark:text-gray-400 font-bold mt-1">Completed event bookings</p>
+                </div>
+
+                <!-- Stat 3: Revenue -->
+                <div class="stat-card-2060 text-left relative overflow-hidden">
+                    <span class="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-accent-cyan">Total Revenue</span>
+                    <div class="text-3xl font-black text-rose-950 dark:text-white mt-2"><span id="stat-total-revenue">--</span> EGP</div>
+                    <p class="text-[11px] text-rose-900 dark:text-gray-400 font-bold mt-1">Gross ticket sales</p>
+                </div>
+
+                <!-- Stat 4: Check-in Count -->
+                <div class="stat-card-2060 text-left relative overflow-hidden">
+                    <span class="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-accent-cyan">Checked-In Attendees</span>
+                    <div class="text-4xl font-black text-emerald-600 dark:text-emerald-400 mt-2" id="stat-total-checkins">--</div>
+                    <p class="text-[11px] text-rose-900 dark:text-gray-400 font-bold mt-1">Verified on-site check-ins</p>
+                </div>
+            </div>
+
+            <!-- Quick Action Banners -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 border-l-4 border-l-accent-red flex items-center justify-between">
+                    <div>
+                        <h4 class="font-extrabold text-rose-950 dark:text-white text-lg">Volunteer Role Assignment</h4>
+                        <p class="text-xs text-rose-900 dark:text-gray-300 font-bold mt-1">Grant or remove volunteer privileges to registered emails.</p>
+                    </div>
+                    <button onclick="switchAdminTab('users')" class="btn-primary py-2 px-4 text-xs shrink-0">Manage Roles →</button>
+                </div>
+
+                <div class="glass-card p-6 border-l-4 border-l-accent-cyan flex items-center justify-between">
+                    <div>
+                        <h4 class="font-extrabold text-rose-950 dark:text-white text-lg">On-Site QR Ticket Scanner</h4>
+                        <p class="text-xs text-rose-900 dark:text-gray-300 font-bold mt-1">Launch live camera feed to check in attendees at venue entrance.</p>
+                    </div>
+                    <button onclick="switchAdminTab('scanner')" class="btn-outline py-2 px-4 text-xs shrink-0">Launch Scanner 📷</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB 2: USERS & VOLUNTEER MANAGEMENT
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="pane-users" class="admin-tab-pane space-y-6">
+            <div class="glass-card p-6 border-t-2 border-t-accent-red">
+                
+                <!-- Search & Filters -->
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-black text-rose-950 dark:text-white">User Directory &amp; Role Management</h3>
+                        <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">Search users, update roles, or assign Volunteer status in 1-click.</p>
+                    </div>
+
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <input type="text" id="user-search-input" onkeyup="filterUsersTable()"
+                               class="input-field py-2 text-sm w-full md:w-64" placeholder="Search by name or email...">
+                        <button onclick="loadUsersTable()" class="btn-primary py-2.5 px-4 text-xs shrink-0">Refresh 🔄</button>
+                    </div>
+                </div>
+
+                <!-- Users Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-rose-950 dark:text-gray-300">
+                        <thead class="bg-rose-100/80 dark:bg-white/5 uppercase text-[10px] font-black text-rose-900 dark:text-gray-400 tracking-wider">
+                            <tr>
+                                <th class="p-3">User Name</th>
+                                <th class="p-3">Email Address</th>
+                                <th class="p-3">Phone</th>
+                                <th class="p-3">Current Role</th>
+                                <th class="p-3">Ticket Status</th>
+                                <th class="p-3 text-center">1-Click Volunteer Action</th>
+                                <th class="p-3 text-right">Role Dropdown</th>
+                                <th class="p-3 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body" class="divide-y divide-rose-200 dark:divide-white/5 font-bold">
+                            <tr>
+                                <td colspan="7" class="p-6 text-center text-rose-800 dark:text-gray-400">Loading user database...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB 3: PAYMENTS & TICKET SALES
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="pane-payments" class="admin-tab-pane space-y-6">
+            <div class="glass-card p-6 border-t-2 border-t-accent-magenta">
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-black text-rose-950 dark:text-white">Payment &amp; Transaction Ledger</h3>
+                        <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">View all completed ticket orders, mobile wallet transactions, and card payments.</p>
+                    </div>
+                    <button onclick="loadOrdersTable()" class="btn-primary py-2 px-4 text-xs">Refresh Ledger 🔄</button>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-rose-950 dark:text-gray-300">
+                        <thead class="bg-rose-100/80 dark:bg-white/5 uppercase text-[10px] font-black text-rose-900 dark:text-gray-400 tracking-wider">
+                            <tr>
+                                <th class="p-3">Order Code</th>
+                                <th class="p-3">Buyer Name</th>
+                                <th class="p-3">Email</th>
+                                <th class="p-3">Ticket Tier</th>
+                                <th class="p-3">Amount</th>
+                                <th class="p-3">Payment Method</th>
+                                <th class="p-3">Check-in Status</th>
+                                <th class="p-3 text-right">Date</th>
+                                <th class="p-3 text-right">Ticket Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-rose-200 dark:divide-white/5 font-bold">
+                            <tr>
+                                <td colspan="8" class="p-6 text-center text-rose-800 dark:text-gray-400">Loading order records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        {% endif %}
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TAB 4: LIVE CAMERA QR CODE SCANNER & ATTENDANCE
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="pane-scanner" class="admin-tab-pane {% if current_user.role != 'admin' %}active-pane{% endif %} space-y-6">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Left: Live Scanner Viewport & Manual Code Input -->
+                <div class="glass-card p-6 border-t-2 border-t-accent-cyan space-y-6">
+                    <div>
+                        <span class="holo-badge mb-2">✦ Volunteer Check-in Tool ✦</span>
+                        <h3 class="text-2xl font-black text-rose-950 dark:text-white">Live Camera QR Scanner</h3>
+                        <p class="text-xs text-rose-800 dark:text-gray-400 font-bold mt-1">Point device camera at attendee ticket QR code or type ticket ID manually.</p>
+                    </div>
+
+                    <!-- Live Camera Feed Container -->
+                    <div class="relative w-full h-64 md:h-72 rounded-2xl bg-black overflow-hidden border-2 border-rose-300 dark:border-white/20 flex flex-col items-center justify-center">
+                        <video id="qr-video" class="w-full h-full object-cover hidden" playsinline></video>
+                        <canvas id="qr-canvas" class="hidden"></canvas>
+
+                        <!-- Camera Placeholder & Overlay -->
+                        <div id="camera-placeholder" class="text-center p-6 space-y-3">
+                            <div class="w-16 h-16 rounded-full bg-rose-100 dark:bg-white/10 flex items-center justify-center text-3xl mx-auto">📷</div>
+                            <p class="text-xs text-gray-400 font-bold">Camera is currently stopped.</p>
+                            <button onclick="startCameraScanner()" class="btn-primary py-2.5 px-6 text-xs font-black">
+                                Start Live Camera Feed 🎥
+                            </button>
+                        </div>
+
+                        <!-- Target Frame Overlay -->
+                        <div id="scan-frame-overlay" class="hidden absolute inset-8 border-2 border-dashed border-accent-cyan/80 rounded-xl pointer-events-none flex items-center justify-center animate-pulse">
+                            <span class="text-[10px] uppercase font-black tracking-widest text-accent-cyan bg-black/60 px-3 py-1 rounded-full">Position QR Code Here</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-3">
+                        <button id="btn-stop-cam" onclick="stopCameraScanner()" class="btn-outline py-2 px-4 text-xs hidden">Stop Camera ⏹️</button>
+                    </div>
+
+                    <!-- Manual Ticket Code Input Fallback -->
+                    <div class="pt-4 border-t border-rose-200 dark:border-white/10 space-y-3">
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-900 dark:text-gray-300">Manual Ticket Code or Order ID *</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="manual-ticket-code" class="input-field uppercase font-mono tracking-widest text-sm"
+                                   placeholder="MH-ORD-00042 or 42">
+                            <button onclick="submitManualCheckin()" class="btn-primary py-3 px-6 text-xs font-black shrink-0">
+                                Verify &amp; Check-In 🔍
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Real-Time Result Alert Box -->
+                    <div id="scanner-result-box" class="hidden p-5 rounded-2xl transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <span id="scan-result-icon" class="text-3xl">--</span>
+                            <div>
+                                <h4 class="font-extrabold text-base" id="scan-result-title">Check-in Result</h4>
+                                <p class="text-xs font-bold leading-relaxed mt-0.5" id="scan-result-msg">Result description...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Live Attendance Log Feed -->
+                <div class="glass-card p-6 border-t-2 border-t-emerald-500 space-y-4">
+                    <div class="flex justify-between items-center border-b border-rose-200 dark:border-white/10 pb-3">
+                        <div>
+                            <h3 class="text-xl font-black text-rose-950 dark:text-white">Live Check-in Feed</h3>
+                            <p class="text-xs text-rose-800 dark:text-gray-400 font-bold">Real-time attendance log verified on-site.</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300" id="live-checkin-badge">
+                            0 Checked In
+                        </span>
+                    </div>
+
+                    <div class="max-h-[420px] overflow-y-auto custom-scrollbar space-y-3" id="checkin-feed-list">
+                        <div class="text-center py-10 text-rose-800 dark:text-gray-400 text-xs font-bold">
+                            No check-ins logged yet for this session.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
-</section>
+</div>
 {% endblock %}
 
 {% block scripts %}
+<!-- Load jsQR library for live camera QR scanning -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
 <script>
-    window.ADMIN_URLS = {
-        stats: "{{ url_for('admin_stats') }}",
-        chart: "{{ url_for('admin_registrations_chart') }}",
-        users: "{{ url_for('admin_users') }}",
-        ticketTypes: "{{ url_for('admin_ticket_types') }}"
-    };
+    var videoStream = null;
+    var isScanningCam = false;
+
+    function switchAdminTab(tabName) {
+        var tabs = ['overview', 'users', 'payments', 'scanner'];
+        tabs.forEach(function(t) {
+            var btn = document.getElementById('tab-btn-' + t);
+            var pane = document.getElementById('pane-' + t);
+            if (!btn || !pane) return;
+
+            if (t === tabName) {
+                btn.classList.add('active-tab');
+                pane.classList.add('active-pane');
+            } else {
+                btn.classList.remove('active-tab');
+                pane.classList.remove('active-pane');
+            }
+        });
+
+        if (tabName === 'users') loadUsersTable();
+        if (tabName === 'payments') loadOrdersTable();
+        if (tabName === 'scanner') loadCheckinFeed();
+        if (tabName === 'overview') loadOverviewStats();
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       TAB 1: OVERVIEW STATS FETCH
+       ══════════════════════════════════════════════════════════════ */
+    function loadOverviewStats() {
+        fetch('/admin/api/stats')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            document.getElementById('stat-total-users').innerText = data.total_users || 0;
+            document.getElementById('stat-total-orders').innerText = data.total_orders || 0;
+            document.getElementById('stat-total-revenue').innerText = (data.total_revenue || 0).toLocaleString();
+        });
+
+        fetch('/admin/api/checkins')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            document.getElementById('stat-total-checkins').innerText = data.total_checked_in || 0;
+        });
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       TAB 2: USERS & VOLUNTEER ROLE MANAGEMENT
+       ══════════════════════════════════════════════════════════════ */
+    var availableTicketTypes = [];
+
+    function fetchTicketTypes() {
+        fetch('/admin/api/ticket-types')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            availableTicketTypes = data.ticket_types || [];
+        });
+    }
+
+    function loadUsersTable() {
+        if (availableTicketTypes.length === 0) {
+            fetchTicketTypes();
+        }
+
+        fetch('/admin/api/users')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = '';
+
+            if (!data.users || data.users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-rose-800 dark:text-gray-400">No users found.</td></tr>';
+                return;
+            }
+
+            data.users.forEach(function(u) {
+                var tr = document.createElement('tr');
+                tr.className = "hover:bg-rose-100/50 dark:hover:bg-white/5 transition-colors";
+                
+                var isVol = u.role === 'volunteer' || u.role === 'admin';
+                var volBadge = isVol
+                    ? '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-cyan-100 text-cyan-800 border border-cyan-300 dark:bg-cyan-950 dark:text-cyan-300">VOLUNTEER ✓</span>'
+                    : '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-950 dark:text-rose-300">ATTENDEE</span>';
+
+                var toggleBtnText = u.role === 'volunteer' ? 'Remove Volunteer' : 'Make Volunteer ✦';
+                var toggleBtnClass = u.role === 'volunteer'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-rose-200 text-rose-900 border border-rose-300 hover:bg-rose-300'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-cyan-500 text-white hover:bg-cyan-600';
+
+                var ticketOptionsHtml = '<option value="">No ticket assigned</option>';
+                availableTicketTypes.forEach(function(t) {
+                    var selected = u.ticket_type_id === t.id ? 'selected' : '';
+                    ticketOptionsHtml += `<option value="${t.id}" ${selected}>${t.name} (${t.price} EGP)</option>`;
+                });
+
+                tr.innerHTML = `
+                    <td class="p-3 font-extrabold text-rose-950 dark:text-white">${u.name}</td>
+                    <td class="p-3 text-rose-900 dark:text-gray-300">${u.email}</td>
+                    <td class="p-3 text-rose-800 dark:text-gray-400">${u.phone}</td>
+                    <td class="p-3">${volBadge}</td>
+                    <td class="p-3">
+                        <select onchange="changeUserTicket(${u.id}, this.value)" class="input-field py-1 px-2 text-xs w-36 font-bold text-rose-700 dark:text-accent-cyan">
+                            ${ticketOptionsHtml}
+                        </select>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button onclick="toggleVolunteerRole(${u.id})" class="${toggleBtnClass}">${toggleBtnText}</button>
+                    </td>
+                    <td class="p-3 text-right">
+                        <select onchange="changeUserRole(${u.id}, this.value)" class="input-field py-1 px-2 text-xs w-28">
+                            <option value="user" ${u.role === 'user' ? 'selected' : ''}>User</option>
+                            <option value="volunteer" ${u.role === 'volunteer' ? 'selected' : ''}>Volunteer</option>
+                            <option value="speaker" ${u.role === 'speaker' ? 'selected' : ''}>Speaker</option>
+                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                        </select>
+                    </td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteUser(${u.id})" class="btn-outline border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white px-2 py-1 text-[10px]">🗑️ Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    }
+
+    function changeUserTicket(userId, ticketTypeId) {
+        if (!ticketTypeId) return;
+        fetch('/admin/api/users/' + userId + '/ticket', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ticket_type_id: parseInt(ticketTypeId) })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.success) {
+                loadUsersTable();
+                loadOverviewStats();
+            } else {
+                alert(data.error || 'Failed to update user ticket type.');
+            }
+        });
+    }
+
+    function toggleVolunteerRole(userId) {
+        fetch('/admin/api/users/' + userId + '/toggle-volunteer', { method: 'POST' })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.success) {
+                loadUsersTable();
+            } else {
+                alert(data.error || 'Failed to update volunteer status.');
+            }
+        });
+    }
+
+    function changeUserRole(userId, newRole) {
+        fetch('/admin/api/users/' + userId + '/role', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ role: newRole })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.success) {
+                loadUsersTable();
+            } else {
+                alert(data.error || 'Failed to update user role.');
+            }
+        });
+    }
+
+    function deleteUser(userId) {
+        if (!confirm('Are you sure you want to delete this user? This cannot be undone.')) return;
+        fetch('/admin/api/users/' + userId, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                loadUsersTable();
+            } else {
+                alert('Error deleting user: ' + (data.error || 'Unknown error'));
+            }
+        });
+    }
+
+    function filterUsersTable() {
+        var query = document.getElementById('user-search-input').value.toLowerCase();
+        var rows = document.querySelectorAll('#users-table-body tr');
+        rows.forEach(function(row) {
+            var text = row.innerText.toLowerCase();
+            row.style.display = text.indexOf(query) > -1 ? '' : 'none';
+        });
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       TAB 3: PAYMENTS & ORDERS
+       ══════════════════════════════════════════════════════════════ */
+    function loadOrdersTable() {
+        fetch('/admin/api/orders')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var tbody = document.getElementById('orders-table-body');
+            tbody.innerHTML = '';
+
+            if (!data.orders || data.orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-800 dark:text-gray-400">No orders logged yet.</td></tr>';
+                return;
+            }
+
+            data.orders.forEach(function(o) {
+                var tr = document.createElement('tr');
+                tr.className = "hover:bg-rose-100/50 dark:hover:bg-white/5 transition-colors";
+                
+                var checkinBadge = o.is_checked_in
+                    ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300">ATTENDED ✓</span>'
+                    : '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950 dark:text-amber-300">NOT CHECKED IN</span>';
+
+                tr.innerHTML = `
+                    <td class="p-3 font-mono font-bold text-rose-600 dark:text-rose-400">${o.order_code}</td>
+                    <td class="p-3 font-extrabold text-rose-950 dark:text-white">${o.user_name}</td>
+                    <td class="p-3 text-rose-900 dark:text-gray-300">${o.user_email}</td>
+                    <td class="p-3 font-bold text-rose-700 dark:text-accent-cyan">${o.ticket_name}</td>
+                    <td class="p-3 font-extrabold">${o.amount} EGP</td>
+                    <td class="p-3">${o.payment_method} (${o.last_four})</td>
+                    <td class="p-3">${checkinBadge}</td>
+                    <td class="p-3 text-right text-xs text-rose-800 dark:text-gray-400">${o.date}</td>
+                    <td class="p-3 text-right">
+                        <select onchange="changeOrderStatus(${o.id}, this.value)" class="input-field py-1 px-2 text-xs w-28">
+                            <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>Completed</option>
+                            <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    }
+
+    function changeOrderStatus(orderId, newStatus) {
+        fetch('/admin/api/orders/' + orderId + '/status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.success) {
+                loadOrdersTable();
+            } else {
+                alert(data.error || 'Failed to update order status.');
+            }
+        });
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       TAB 4: LIVE CAMERA QR SCANNER & REAL-TIME CHECK-IN
+       ══════════════════════════════════════════════════════════════ */
+    function loadCheckinFeed() {
+        fetch('/admin/api/checkins')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            document.getElementById('live-checkin-badge').innerText = (data.total_checked_in || 0) + ' Checked In';
+            var feedList = document.getElementById('checkin-feed-list');
+            feedList.innerHTML = '';
+
+            if (!data.logs || data.logs.length === 0) {
+                feedList.innerHTML = '<div class="text-center py-10 text-rose-800 dark:text-gray-400 text-xs font-bold">No check-ins logged yet.</div>';
+                return;
+            }
+
+            data.logs.forEach(function(l) {
+                var card = document.createElement('div');
+                card.className = "p-3.5 rounded-xl border border-rose-200 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-rose-950 dark:text-white text-sm">${l.attendee_name}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">VERIFIED ✓</span>
+                        </div>
+                        <p class="text-[11px] text-rose-800 dark:text-gray-400 font-bold mt-0.5">${l.ticket_name} ✦ ${l.attendee_email}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-mono font-bold text-rose-600 dark:text-rose-400 block">${l.checked_in_at}</span>
+                        <span class="text-[9px] text-rose-700 dark:text-gray-400 font-bold">By: ${l.checked_in_by}</span>
+                    </div>
+                `;
+                feedList.appendChild(card);
+            });
+        });
+    }
+
+    function submitManualCheckin() {
+        var input = document.getElementById('manual-ticket-code');
+        var code = input.value.trim();
+        if (!code) {
+            alert('Please enter a ticket code or order ID.');
+            input.focus();
+            return;
+        }
+        processTicketVerification(code);
+    }
+
+    function processTicketVerification(ticketCode) {
+        fetch('/api/verify-ticket', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ticket_code: ticketCode })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var box = document.getElementById('scanner-result-box');
+            var icon = document.getElementById('scan-result-icon');
+            var title = document.getElementById('scan-result-title');
+            var msg = document.getElementById('scan-result-msg');
+
+            box.classList.remove('hidden', 'bg-emerald-100', 'border-emerald-400', 'text-emerald-900', 'bg-amber-100', 'border-amber-400', 'text-amber-900', 'bg-rose-100', 'border-rose-400', 'text-rose-900', 'dark:bg-emerald-950', 'dark:bg-amber-950', 'dark:bg-rose-950');
+
+            if (data.status === 'success') {
+                box.className = "p-5 rounded-2xl border-2 bg-emerald-100 border-emerald-400 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-500 shadow-xl";
+                icon.innerText = "✅";
+                title.innerText = "CHECK-IN SUCCESSFUL!";
+                msg.innerText = data.message;
+            } else if (data.status === 'already_used') {
+                box.className = "p-5 rounded-2xl border-2 bg-amber-100 border-amber-400 text-amber-900 dark:bg-amber-950 dark:text-amber-200 dark:border-amber-500 shadow-xl";
+                icon.innerText = "⚠️";
+                title.innerText = "TICKET ALREADY USED!";
+                msg.innerText = data.message;
+            } else {
+                box.className = "p-5 rounded-2xl border-2 bg-rose-100 border-rose-400 text-rose-900 dark:bg-rose-950 dark:text-rose-200 dark:border-rose-500 shadow-xl";
+                icon.innerText = "❌";
+                title.innerText = "INVALID TICKET CODE";
+                msg.innerText = data.message || "Ticket code not found.";
+            }
+
+            document.getElementById('manual-ticket-code').value = '';
+            loadCheckinFeed();
+            loadOverviewStats();
+        });
+    }
+
+    /* Live Camera Stream Implementation using Canvas & jsQR */
+    function startCameraScanner() {
+        var video = document.getElementById('qr-video');
+        var placeholder = document.getElementById('camera-placeholder');
+        var stopBtn = document.getElementById('btn-stop-cam');
+        var overlay = document.getElementById('scan-frame-overlay');
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert('Camera access is not supported on this browser or connection.');
+            return;
+        }
+
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function(stream) {
+            videoStream = stream;
+            video.srcObject = stream;
+            video.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            stopBtn.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+            video.play();
+            isScanningCam = true;
+            requestAnimationFrame(tickScanner);
+        })
+        .catch(function(err) {
+            alert('Could not access camera feed: ' + err.message);
+        });
+    }
+
+    function stopCameraScanner() {
+        if (videoStream) {
+            videoStream.getTracks().forEach(function(track) { track.stop(); });
+            videoStream = null;
+        }
+        isScanningCam = false;
+        document.getElementById('qr-video').classList.add('hidden');
+        document.getElementById('camera-placeholder').classList.remove('hidden');
+        document.getElementById('btn-stop-cam').classList.add('hidden');
+        document.getElementById('scan-frame-overlay').classList.add('hidden');
+    }
+
+    function tickScanner() {
+        if (!isScanningCam) return;
+        var video = document.getElementById('qr-video');
+        var canvas = document.getElementById('qr-canvas');
+        var ctx = canvas.getContext('2d');
+
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            if (typeof jsQR !== 'undefined') {
+                var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                if (code && code.data) {
+                    processTicketVerification(code.data);
+                    // Pause briefly to prevent rapid duplicate scans
+                    isScanningCam = false;
+                    setTimeout(function() { isScanningCam = true; requestAnimationFrame(tickScanner); }, 3000);
+                    return;
+                }
+            }
+        }
+        requestAnimationFrame(tickScanner);
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadOverviewStats();
+    });
 </script>
-<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 {% endblock %}

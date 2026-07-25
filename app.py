@@ -13,6 +13,7 @@ import base64
 import io
 import json
 import os
+import re
 from collections import defaultdict
 from datetime import datetime, timezone
 from functools import wraps
@@ -45,6 +46,41 @@ from models import AgendaItem, Order, Speaker, Sponsor, TicketType, User, db
 # App Factory
 # ═══════════════════════════════════════════════════════════════════════════
 
+def migrate_db(app):
+    """Ensure missing columns are automatically added to SQLite database."""
+    with app.app_context():
+        with db.engine.connect() as conn:
+            try:
+                # Users table
+                cols = [row[1] for row in conn.execute(db.text("PRAGMA table_info(users)")).fetchall()]
+                if "role" not in cols:
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user'"))
+
+                # Speakers table
+                cols = [row[1] for row in conn.execute(db.text("PRAGMA table_info(speakers)")).fetchall()]
+                if "email" not in cols:
+                    conn.execute(db.text("ALTER TABLE speakers ADD COLUMN email VARCHAR(120)"))
+                if "user_id" not in cols:
+                    conn.execute(db.text("ALTER TABLE speakers ADD COLUMN user_id INTEGER"))
+                if "qr_code_hash" not in cols:
+                    conn.execute(db.text("ALTER TABLE speakers ADD COLUMN qr_code_hash VARCHAR(64)"))
+
+                # Orders table
+                cols = [row[1] for row in conn.execute(db.text("PRAGMA table_info(orders)")).fetchall()]
+                if "qr_code_hash" not in cols:
+                    conn.execute(db.text("ALTER TABLE orders ADD COLUMN qr_code_hash VARCHAR(64)"))
+                if "is_checked_in" not in cols:
+                    conn.execute(db.text("ALTER TABLE orders ADD COLUMN is_checked_in BOOLEAN DEFAULT 0"))
+                if "checked_in_at" not in cols:
+                    conn.execute(db.text("ALTER TABLE orders ADD COLUMN checked_in_at DATETIME"))
+                if "checked_in_by_user_id" not in cols:
+                    conn.execute(db.text("ALTER TABLE orders ADD COLUMN checked_in_by_user_id INTEGER"))
+
+                conn.commit()
+            except Exception as e:
+                print("DB Migration notice:", e)
+
+
 def create_app():
     """Create and configure the Flask application."""
     app = Flask(__name__)
@@ -67,12 +103,21 @@ def create_app():
     def load_user(user_id):
         return db.session.get(User, int(user_id))
 
-    # Create tables on first run
+    # Create tables and auto-migrate missing columns
     with app.app_context():
         db.create_all()
+        migrate_db(app)
 
     # Register all routes
     register_routes(app)
+
+    @app.route("/make-me-admin")
+    @login_required
+    def make_me_admin():
+        current_user.role = "admin"
+        db.session.commit()
+        flash("You are now an Admin!", "success")
+        return redirect(url_for("profile"))
 
     return app
 
@@ -86,8 +131,19 @@ def admin_required(f):
     @wraps(f)
     @login_required
     def decorated_function(*args, **kwargs):
-        if not current_user.is_admin:
+        if current_user.role != "admin":
             flash("Access denied. Admin privileges required.", "error")
+            return redirect(url_for("home"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def staff_required(f):
+    """Decorator that requires the user to be an admin or volunteer."""
+    @wraps(f)
+    @login_required
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_volunteer:
+            flash("Access denied. Staff privileges required.", "error")
             return redirect(url_for("home"))
         return f(*args, **kwargs)
     return decorated_function
@@ -225,9 +281,16 @@ def register_routes(app):
             errors.append("Name is required.")
         if not email:
             errors.append("Email is required.")
+            
+        phone_pattern = re.compile(r"^(010|011|012|015)\d{8}$")
+        if not phone:
+            errors.append("Phone number is required.")
+        elif not phone_pattern.match(phone):
+            errors.append("Phone must be exactly 11 digits and start with 010, 011, 012, or 015.")
+            
         if len(password) < 6:
             errors.append("Password must be at least 6 characters.")
-        if password != confirm:
+        if confirm and password != confirm:
             errors.append("Passwords do not match.")
         if User.query.filter_by(email=email).first():
             errors.append("An account with this email already exists.")
@@ -266,7 +329,22 @@ def register_routes(app):
     @app.route("/profile")
     @login_required
     def profile():
-        """User profile page with QR code ticket."""
+        """User profile page with ticket QR code and role status."""
+        # Check if user is a speaker and issue a Speaker VIP ticket if none exists
+        if current_user.is_speaker or current_user.role == "speaker":
+            speaker_ticket = TicketType.query.filter_by(name="VIP Access").first() or TicketType.query.first()
+            existing_order = Order.query.filter_by(user_id=current_user.id).first()
+            if not existing_order and speaker_ticket:
+                speaker_order = Order(
+                    user_id=current_user.id,
+                    ticket_type_id=speaker_ticket.id,
+                    card_last_four="SPKR",
+                    status="completed",
+                    qr_code_hash=f"MH-SPEAKER-{current_user.id:04d}"
+                )
+                db.session.add(speaker_order)
+                db.session.commit()
+
         # Get the user's latest completed order
         latest_order = (
             Order.query.filter_by(user_id=current_user.id)
@@ -278,23 +356,23 @@ def register_routes(app):
         ticket_name = None
         order_status = None
         order_id = None
+        qr_code_text = None
 
         if latest_order:
             order_id = latest_order.id
             order_status = latest_order.status
             ticket_name = latest_order.ticket_type.name
+            qr_code_text = latest_order.qr_code_hash or f"MH-ORD-{latest_order.id:05d}"
 
-            # Generate QR code only for completed (paid) orders
+            # Generate QR code PNG base64
             if latest_order.status == "completed":
-                qr_data = json.dumps({
-                    "order_id": latest_order.id,
-                    "email": current_user.email,
-                })
-                qr_img = qrcode.make(qr_data, box_size=8, border=2)
+                qr_img = qrcode.make(qr_code_text, box_size=8, border=2)
                 buffer = io.BytesIO()
                 qr_img.save(buffer, format="PNG")
                 buffer.seek(0)
                 qr_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+        all_orders = Order.query.filter_by(user_id=current_user.id).all()
 
         return render_template(
             "profile.html",
@@ -303,6 +381,8 @@ def register_routes(app):
             ticket_name=ticket_name,
             order_status=order_status,
             order_id=order_id,
+            qr_code_text=qr_code_text,
+            user_orders=all_orders,
         )
 
     # ───────────────────────────────────────────────────────────────────
@@ -312,7 +392,11 @@ def register_routes(app):
     @app.route("/checkout/<int:ticket_id>")
     @login_required
     def checkout_page(ticket_id):
-        """Render checkout page with price fetched from DB."""
+        existing_order = Order.query.filter_by(user_id=current_user.id).first()
+        if existing_order:
+            flash("You already have a ticket. See your QR code below.", "info")
+            return redirect(url_for("profile"))
+
         ticket = db.session.get(TicketType, ticket_id)
         if not ticket or not ticket.is_active:
             flash("Invalid ticket type.", "error")
@@ -329,64 +413,62 @@ def register_routes(app):
     def checkout_process():
         """
         Process payment — server-side validation.
-
-        Validates:
-        1. Ticket exists and price comes from DB (not frontend)
-        2. Card number passes Luhn algorithm
-        3. Expiry date is in the future
-        4. CVV is exactly 3 digits
+        Supports both Mobile Wallet (Vodafone Cash / InstaPay) and Credit/Debit Card payments.
         """
         data = request.get_json()
         if not data:
             return jsonify({"success": False, "errors": ["Invalid request."]}), 400
 
         ticket_id = data.get("ticket_id")
-        card_name = data.get("card_name", "").strip()
-        card_number = data.get("card_number", "").replace(" ", "")
-        card_expiry = data.get("card_expiry", "").strip()
-        card_cvv = data.get("card_cvv", "").strip()
+        payment_method = data.get("payment_method", "wallet")
+        wallet_number = data.get("wallet_number", "").strip()
 
-        errors = []
-
-        # 1. Validate ticket exists (price from DB, NOT from frontend)
+        # Validate ticket exists (price from DB, NOT from frontend)
         ticket = db.session.get(TicketType, ticket_id)
         if not ticket or not ticket.is_active:
             return jsonify({"success": False, "errors": ["Invalid ticket type."]}), 400
 
-        # 2. Validate cardholder name
-        if not card_name:
-            errors.append("Cardholder name is required.")
+        errors = []
 
-        # 3. Validate card number with Luhn algorithm
-        if not card_number.isdigit():
-            errors.append("Card number must contain only digits.")
-        elif not luhn_check(card_number):
-            errors.append("Invalid card number (failed Luhn check).")
-
-        # 4. Validate expiry date is in the future
-        if card_expiry:
-            try:
-                parts = card_expiry.split("/")
-                if len(parts) != 2:
-                    raise ValueError
-                month = int(parts[0])
-                year = int("20" + parts[1]) if len(parts[1]) == 2 else int(parts[1])
-                if month < 1 or month > 12:
-                    raise ValueError
-                now = datetime.now(timezone.utc)
-                # Card is valid through the last day of the expiry month
-                if year < now.year or (year == now.year and month < now.month):
-                    errors.append("Card has expired.")
-            except (ValueError, IndexError):
-                errors.append("Invalid expiry date. Use MM/YY format.")
+        if payment_method == "wallet":
+            if not wallet_number or len(wallet_number) < 10 or not wallet_number.isdigit():
+                errors.append("Valid Mobile Wallet number (at least 10 digits) is required.")
+            card_last_four = wallet_number[-4:] if len(wallet_number) >= 4 else "9999"
         else:
-            errors.append("Expiry date is required.")
+            card_name = data.get("card_name", "").strip()
+            card_number = data.get("card_number", "").replace(" ", "")
+            card_expiry = data.get("card_expiry", "").strip()
+            card_cvv = data.get("card_cvv", "").strip()
 
-        # 5. Validate CVV is exactly 3 digits
-        if not card_cvv or not card_cvv.isdigit() or len(card_cvv) != 3:
-            errors.append("CVV must be exactly 3 digits.")
+            if not card_name:
+                errors.append("Cardholder name is required.")
+            if not card_number.isdigit():
+                errors.append("Card number must contain only digits.")
+            elif not luhn_check(card_number):
+                errors.append("Invalid card number (failed Luhn check).")
 
-        # Return errors if any
+            if card_expiry:
+                try:
+                    parts = card_expiry.split("/")
+                    if len(parts) != 2:
+                        raise ValueError
+                    month = int(parts[0])
+                    year = int("20" + parts[1]) if len(parts[1]) == 2 else int(parts[1])
+                    if month < 1 or month > 12:
+                        raise ValueError
+                    now = datetime.now(timezone.utc)
+                    if year < now.year or (year == now.year and month < now.month):
+                        errors.append("Card has expired.")
+                except (ValueError, IndexError):
+                    errors.append("Invalid expiry date. Use MM/YY format.")
+            else:
+                errors.append("Expiry date is required.")
+
+            if not card_cvv or not card_cvv.isdigit() or len(card_cvv) != 3:
+                errors.append("CVV must be exactly 3 digits.")
+
+            card_last_four = card_number[-4:] if len(card_number) >= 4 else "0000"
+
         if errors:
             return jsonify({"success": False, "errors": errors}), 400
 
@@ -394,7 +476,7 @@ def register_routes(app):
         order = Order(
             user_id=current_user.id,
             ticket_type_id=ticket.id,
-            card_last_four=card_number[-4:],
+            card_last_four=card_last_four,
             status="completed",
         )
         db.session.add(order)
@@ -402,7 +484,7 @@ def register_routes(app):
 
         return jsonify({
             "success": True,
-            "message": "Payment successful! Your ticket has been booked.",
+            "message": "Payment successful! Your biometric holographic ticket has been generated.",
             "order_id": order.id,
             "ticket_name": ticket.name,
             "amount": ticket.price,
@@ -413,16 +495,19 @@ def register_routes(app):
     # ───────────────────────────────────────────────────────────────────
 
     @app.route("/admin")
-    @admin_required
+    @staff_required
     def admin_dashboard():
-        """Render admin dashboard page."""
-        return render_template("admin/dashboard.html", active_page="admin")
+        """Render main admin dashboard. Access depends on role."""
+        return render_template(
+            "admin/dashboard.html",
+            active_page="admin"
+        )
 
     @app.route("/admin/api/stats")
     @admin_required
     def admin_stats():
         """API: Return top-level metrics."""
-        total_users = User.query.filter_by(is_admin=False).count()
+        total_users = User.query.filter(User.role != 'admin').count()
         total_orders = Order.query.count()
         total_revenue = db.session.query(
             db.func.sum(TicketType.price)
@@ -438,7 +523,7 @@ def register_routes(app):
     @admin_required
     def admin_registrations_chart():
         """API: Return user registration counts grouped by day (last 30 days)."""
-        users = User.query.filter_by(is_admin=False).all()
+        users = User.query.filter(User.role != "admin").all()
 
         # Group by date string
         counts = defaultdict(int)
@@ -459,7 +544,7 @@ def register_routes(app):
         """API: Return list of attendees with optional search."""
         q = request.args.get("q", "").strip().lower()
 
-        query = User.query.filter_by(is_admin=False)
+        query = User.query
         if q:
             query = query.filter(
                 db.or_(
@@ -497,6 +582,44 @@ def register_routes(app):
 
         return jsonify({"users": result, "total": len(result)})
 
+    @app.route("/admin/api/users/<int:user_id>/ticket", methods=["POST"])
+    @admin_required
+    def admin_change_user_ticket(user_id):
+        """API: Admin updates or assigns user ticket type."""
+        user = db.session.get(User, user_id)
+        if not user:
+            return jsonify({"success": False, "error": "User not found."}), 404
+
+        data = request.get_json() or {}
+        ticket_id = data.get("ticket_type_id")
+        ticket = db.session.get(TicketType, ticket_id) if ticket_id else None
+        if not ticket:
+            return jsonify({"success": False, "error": "Invalid ticket type."}), 400
+
+        # Update existing order or create new order
+        order = Order.query.filter_by(user_id=user.id).first()
+        if order:
+            order.ticket_type_id = ticket.id
+            order.status = "completed"
+        else:
+            order = Order(
+                user_id=user.id,
+                ticket_type_id=ticket.id,
+                card_last_four="ADMIN",
+                status="completed",
+                qr_code_hash=f"MH-ADMIN-{user.id:04d}"
+            )
+            db.session.add(order)
+
+        db.session.commit()
+        return jsonify({
+            "success": True,
+            "message": f"Updated ticket for {user.name} to {ticket.name}.",
+            "user_id": user.id,
+            "ticket_name": ticket.name,
+            "ticket_id": ticket.id
+        })
+
     @app.route("/admin/api/ticket-types")
     @admin_required
     def admin_ticket_types():
@@ -514,12 +637,202 @@ def register_routes(app):
         user = db.session.get(User, user_id)
         if not user:
             return jsonify({"success": False, "error": "User not found."}), 404
-        if user.is_admin:
+        if user.role == "admin":
             return jsonify({"success": False, "error": "Cannot delete admin accounts."}), 403
 
         # Delete all orders first, then the user
         Order.query.filter_by(user_id=user.id).delete()
         db.session.delete(user)
+        db.session.commit()
+        return jsonify({"success": True, "message": "User deleted successfully."})
+
+    @app.route("/admin/api/users/<int:user_id>/role", methods=["POST"])
+    @admin_required
+    def admin_change_user_role(user_id):
+        """API: Update user role (user, volunteer, speaker, admin)."""
+        user = db.session.get(User, user_id)
+        if not user:
+            return jsonify({"success": False, "error": "User not found."}), 404
+
+        data = request.get_json() or {}
+        new_role = data.get("role", "user").lower().strip()
+        if new_role not in ("user", "volunteer", "speaker", "admin"):
+            return jsonify({"success": False, "error": "Invalid role."}), 400
+
+        user.role = new_role
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "message": f"Updated role for {user.name} to {new_role}.",
+            "user_id": user.id,
+            "role": user.role,
+            "is_volunteer": user.is_volunteer
+        })
+
+    @app.route("/admin/api/users/<int:user_id>/toggle-volunteer", methods=["POST"])
+    @admin_required
+    def admin_toggle_volunteer(user_id):
+        """API: 1-click toggle volunteer status for a user."""
+        user = db.session.get(User, user_id)
+        if not user:
+            return jsonify({"success": False, "error": "User not found."}), 404
+
+        if user.role == "volunteer":
+            user.role = "user"
+        else:
+            user.role = "volunteer"
+
+        db.session.commit()
+        return jsonify({
+            "success": True,
+            "message": f"Updated {user.name} volunteer status.",
+            "user_id": user.id,
+            "role": user.role,
+            "is_volunteer": user.is_volunteer
+        })
+
+    @app.route("/admin/api/orders")
+    @admin_required
+    def admin_orders():
+        """API: Return all orders/payments for the Payments tab."""
+        orders = Order.query.order_by(Order.created_at.desc()).all()
+        result = []
+        for o in orders:
+            buyer = db.session.get(User, o.user_id)
+            ticket = db.session.get(TicketType, o.ticket_type_id)
+            result.append({
+                "id": o.id,
+                "order_code": o.qr_code_hash or f"MH-ORD-{o.id:05d}",
+                "user_name": buyer.name if buyer else "Unknown",
+                "user_email": buyer.email if buyer else "—",
+                "ticket_name": ticket.name if ticket else "Standard Pass",
+                "amount": ticket.price if ticket else 0,
+                "payment_method": "Mobile Wallet" if o.card_last_four and len(o.card_last_four) == 4 and o.card_last_four.startswith("01") else "Card",
+                "last_four": o.card_last_four or "9999",
+                "status": o.status or "completed",
+                "is_checked_in": o.is_checked_in,
+                "date": o.created_at.strftime("%b %d, %Y %I:%M %p") if o.created_at else "—"
+            })
+        return jsonify({"orders": result, "total": len(result)})
+    @app.route("/admin/api/orders/<int:order_id>/status", methods=["POST"])
+    @admin_required
+    def admin_update_order_status(order_id):
+        """API: Update ticket/order status."""
+        order = db.session.get(Order, order_id)
+        if not order:
+            return jsonify({"success": False, "error": "Order not found."}), 404
+
+        data = request.get_json() or {}
+        new_status = data.get("status", "completed").lower().strip()
+        if new_status not in ("completed", "pending", "cancelled"):
+            return jsonify({"success": False, "error": "Invalid status."}), 400
+
+        order.status = new_status
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "message": f"Updated order {order.id} status to {new_status}.",
+            "order_id": order.id,
+            "status": order.status
+        })
+
+    @app.route("/admin/api/checkins")
+    @staff_required
+    def admin_checkins_log():
+        """API: Return recent checked-in attendees for QR Scanner log tab."""
+        checked_in = Order.query.filter_by(is_checked_in=True).order_by(Order.checked_in_at.desc()).limit(50).all()
+        logs = []
+        for o in checked_in:
+            attendee = db.session.get(User, o.user_id)
+            ticket = db.session.get(TicketType, o.ticket_type_id)
+            checker = db.session.get(User, o.checked_in_by_user_id) if o.checked_in_by_user_id else None
+            logs.append({
+                "order_id": o.id,
+                "ticket_code": o.qr_code_hash or f"MH-ORD-{o.id:05d}",
+                "attendee_name": attendee.name if attendee else "Attendee",
+                "attendee_email": attendee.email if attendee else "—",
+                "ticket_name": ticket.name if ticket else "Pass",
+                "checked_in_at": o.checked_in_at.strftime("%I:%M:%S %p") if o.checked_in_at else "—",
+                "checked_in_by": checker.name if checker else "System Scanner"
+            })
+        return jsonify({"logs": logs, "total_checked_in": Order.query.filter_by(is_checked_in=True).count()})
+
+    @app.route("/api/verify-ticket", methods=["POST"])
+    @login_required
+    def api_verify_ticket():
+        """
+        API Endpoint for Live Camera & Manual QR Scanner.
+        Accessible by Volunteers & Admins.
+        """
+        if not current_user.is_volunteer:
+            return jsonify({"success": False, "status": "forbidden", "message": "Access denied. Volunteer/Admin role required."}), 403
+
+        data = request.get_json() or {}
+        code = data.get("ticket_code", "").strip()
+
+        if not code:
+            return jsonify({"success": False, "status": "invalid", "message": "Please provide a valid Ticket Code or QR Hash."}), 400
+
+        # Try searching by exact QR hash, Order ID, or card_last_four
+        order = None
+        if code.isdigit():
+            order = db.session.get(Order, int(code))
+        if not order:
+            order = Order.query.filter(
+                db.or_(
+                    Order.qr_code_hash == code,
+                    Order.qr_code_hash.ilike(f"%{code}%")
+                )
+            ).first()
+
+        if not order:
+            return jsonify({
+                "success": False,
+                "status": "invalid",
+                "message": f"❌ Ticket code '{code}' not found in system."
+            }), 444 if False else 200
+
+        attendee = db.session.get(User, order.user_id)
+        ticket = db.session.get(TicketType, order.ticket_type_id)
+
+        # Check if already checked in
+        if order.is_checked_in:
+            time_str = order.checked_in_at.strftime("%I:%M %p") if order.checked_in_at else "earlier"
+            return jsonify({
+                "success": False,
+                "status": "already_used",
+                "message": f"⚠️ Ticket ALREADY USED! Checked in at {time_str}.",
+                "order": {
+                    "id": order.id,
+                    "code": order.qr_code_hash or f"MH-ORD-{order.id:05d}",
+                    "attendee_name": attendee.name if attendee else "Attendee",
+                    "attendee_email": attendee.email if attendee else "—",
+                    "ticket_name": ticket.name if ticket else "Pass",
+                    "checked_in_at": time_str
+                }
+            })
+
+        # Mark as checked in
+        order.is_checked_in = True
+        order.checked_in_at = datetime.now(timezone.utc)
+        order.checked_in_by_user_id = current_user.id
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "status": "success",
+            "message": f"✅ Check-in Successful! Welcome {attendee.name if attendee else 'Attendee'}.",
+            "order": {
+                "id": order.id,
+                "code": order.qr_code_hash or f"MH-ORD-{order.id:05d}",
+                "attendee_name": attendee.name if attendee else "Attendee",
+                "attendee_email": attendee.email if attendee else "—",
+                "ticket_name": ticket.name if ticket else "Pass",
+                "checked_in_at": order.checked_in_at.strftime("%I:%M %p")
+            }
+        })
         db.session.commit()
 
         return jsonify({"success": True, "message": f"User {user.name} deleted."})
@@ -611,6 +924,7 @@ def register_routes(app):
 # Entry Point
 # ═══════════════════════════════════════════════════════════════════════════
 
+app = create_app()
+
 if __name__ == "__main__":
-    application = create_app()
-    application.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)

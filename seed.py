@@ -69,9 +69,8 @@ def seed():
         admin = User(
             name="Admin",
             email="admin@momken.com",
-            phone="01000000000",
             password_hash=hash_password("admin123"),
-            is_admin=True,
+            role="admin",
             created_at=datetime.now(timezone.utc) - timedelta(days=30),
         )
         db.session.add(admin)

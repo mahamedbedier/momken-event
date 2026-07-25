@@ -1,0 +1,630 @@
+
+
+
+
+
+
+
+<!-- Home - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Momken For Her | 3rd Edition - 2026 Summit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#131313",
+                    "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                    "secondary": "#4cd7f6",
+                    "tertiary-fixed-dim": "#fda9ff",
+                    "inverse-surface": "#e5e2e1",
+                    "on-surface-variant": "#e5bdbe",
+                    "primary-fixed": "#ffdada",
+                    "on-primary": "#68001a",
+                    "on-tertiary": "#580063",
+                    "surface-container-highest": "#353534",
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-low": "#1c1b1b",
+                    "inverse-primary": "#be0037",
+                    "primary-container": "#e11d48",
+                    "surface-bright": "#3a3939",
+                    "secondary-container": "#03b5d3",
+                    "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                    "on-tertiary-fixed": "#36003d",
+                    "on-secondary": "#003640",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00424e",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "tertiary-container": "#c026d3",
+                    "surface-tint": "#ffb3b6",
+                    "outline-variant": "#5c3f40",
+                    "secondary-fixed": "#acedff",
+                    "on-error": "#690005",
+                    "tertiary": "#fda9ff",
+                    "outline": "#ac8889",
+                    "on-tertiary-container": "#fffafa",
+                    "on-primary-fixed": "#40000c",
+                    "error-container": "#93000a",
+                    "surface-container": "#201f1f",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "surface-glass": "rgba(255, 255, 255, 0.03)",
+                    "background": "#131313",
+                    "tertiary-fixed": "#ffd6fb",
+                    "on-secondary-fixed": "#001f26",
+                    "on-primary-container": "#fffaf9",
+                    "on-tertiary-fixed-variant": "#7d008c",
+                    "on-surface": "#e5e2e1",
+                    "primary": "#ffb3b6",
+                    "surface": "#131313",
+                    "accent-yellow": "#facc15",
+                    "surface-variant": "#353534",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-primary-fixed-variant": "#920028",
+                    "primary-fixed-dim": "#ffb3b6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "stack-md": "1.5rem",
+                    "card-padding": "2.5rem",
+                    "section-gap-md": "5rem",
+                    "section-gap-lg": "8rem",
+                    "grid-gutter": "2rem",
+                    "stack-sm": "0.75rem"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "hero-xl": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "body-base": ["Outfit"],
+                    "hero-xl-mobile": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "label-caps": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "1.6", "letterSpacing": "normal", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "normal", "fontWeight": "900"}],
+                    "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "normal", "fontWeight": "800"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "normal", "fontWeight": "400"}],
+                    "hero-xl-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                    "label-sm": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 30px rgba(225, 29, 72, 0.15);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffb3b6 0%, #e11d48 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #e11d48 0%, #c026d3 100%);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-btn:hover {
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .atmospheric-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .orb-1 { background: #e11d48; top: -100px; right: -100px; }
+        .orb-2 { background: #4cd7f6; bottom: 20%; left: -200px; }
+        .orb-3 { background: #c026d3; top: 40%; right: -200px; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .sticky-card {
+            position: sticky;
+            top: 120px;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(225, 29, 72, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(225, 29, 72, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(225, 29, 72, 0.2); }
+        }
+
+        .live-indicator {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary selection:text-on-primary">
+<!-- NAVIGATION SHELL -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-2xl border-b border-surface-glass-border shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-black text-primary dark:text-primary tracking-tighter">
+                Momken For Her
+            </div>
+<div class="hidden md:flex gap-8 font-body-base text-body-base font-bold">
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Speakers</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Agenda</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Empowerment</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sponsors</a>
+</div>
+<button class="gradient-btn px-6 py-2 rounded-xl text-white font-bold scale-95 active:scale-90 transition-transform">
+                Get Tickets
+            </button>
+</div>
+</nav>
+<!-- ATMOSPHERIC BACKGROUND -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+<div class="atmospheric-orb orb-1"></div>
+<div class="atmospheric-orb orb-2"></div>
+<div class="atmospheric-orb orb-3"></div>
+
+</div>
+<!-- HERO SECTION -->
+<section class="relative pt-40 pb-24 md:pt-60 md:pb-section-gap-lg px-8">
+<div class="max-w-container-max mx-auto text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-primary/20 mb-8">
+<span class="live-indicator w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-caps text-label-caps text-primary uppercase">3rd Edition Summit</span>
+</div>
+<h1 class="font-hero-xl-mobile md:font-hero-xl text-hero-xl-mobile md:text-hero-xl text-white mb-8">
+                THE FUTURE IS <span class="gradient-text italic">MOMKEN</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                Join Egypt's premier Employment Fair &amp; Empowerment Summit for women. Bridging the gap between ambition and opportunity in 2060.
+            </p>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">calendar_today</span>
+<div class="text-left">
+<p class="font-label-caps text-label-caps text-on-surface-variant">DATE</p>
+<p class="font-body-base text-body-base font-bold text-white">August 8, 2026</p>
+</div>
+</div>
+<div class="w-px h-12 bg-surface-glass-border hidden md:block"></div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">location_on</span>
+<div class="text-left">
+<p class="font-label-caps text-label-caps text-on-surface-variant">VENUE</p>
+<p class="font-body-base text-body-base font-bold text-white">Grand Egyptian Museum</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="gradient-btn px-10 py-5 rounded-xl text-white font-black text-body-lg">REGISTER NOW</button>
+<button class="glass-card px-10 py-5 rounded-xl text-white font-bold text-body-lg hover:bg-white/10">VIEW AGENDA</button>
+</div>
+</div>
+</section>
+<!-- COUNTDOWN SECTION -->
+<section class="py-12 bg-surface-container-low/50 backdrop-blur-md border-y border-surface-glass-border">
+<div class="max-w-container-max mx-auto px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div>
+<div class="font-headline-lg text-headline-lg text-primary" id="days">154</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">DAYS</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-primary" id="hours">12</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">HOURS</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-primary" id="minutes">45</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">MINUTES</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-primary" id="seconds">09</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">SECONDS</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ABOUT SECTION (CORE OBJECTIVES) -->
+<section class="py-section-gap-lg px-8">
+<div class="max-w-container-max mx-auto">
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<div>
+<span class="font-label-caps text-label-caps text-secondary tracking-widest block mb-4 uppercase">OUR MISSION</span>
+<h2 class="font-headline-lg text-headline-lg text-white mb-8">Empowering the <br/><span class="text-secondary">Egyptian Workforce</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+                        Momken For Her is more than a career fair. It's a transformative ecosystem designed to accelerate professional growth, dismantle barriers, and celebrate female leadership across all industries.
+                    </p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">work</span>
+</div>
+<div>
+<h4 class="font-body-base text-body-base font-bold text-white">Employment Bridges</h4>
+<p class="text-on-surface-variant">Connecting top-tier talent with inclusive global employers.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container">psychology</span>
+</div>
+<div>
+<h4 class="font-body-base text-body-base font-bold text-white">Skill Acceleration</h4>
+<p class="text-on-surface-variant">Workshops focusing on high-demand tech and leadership skills.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square rounded-3xl overflow-hidden glass-card p-2">
+<img class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-700" data-alt="A cinematic, high-quality photograph of a modern Egyptian woman professional leading a presentation in a futuristic conference room. Soft pink and cyan neon lighting accents the scene, creating a cyber-premium aesthetic. The focus is sharp on her confident expression, while the background features blurred glass architecture and holographic data displays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6B4SOqDinnWlfSQ0AT_vHQKXqasTvq_tATrW5FPptMPNgsAZUe0crmuVwbduK0ZKrUy0Ny6gev01Fa_hqlPsmcwSdLsuwpJXyT7IYR504Iv1c5fhF02TVgUQr2Pf9yXNdz6NOvITuAdAnlwhxoywDVxfBMkP7cY-2QRbxSSYkPKkQU8AwvsXUHnJm_x478b4Wqa77eFn2lgG2fjJVDUdts0Lb4OctLYIquQP_egWKD3dR02NyN3oFV0zDI6J9pPQjRQL9GhgWqiSl"/>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 glass-card rounded-2xl p-6 hidden md:block">
+<div class="text-secondary font-headline-md text-headline-md font-black">200+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">PARTNER COMPANIES</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FEATURES BENTO GRID -->
+<section class="py-section-gap-lg px-8 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-white">Summit <span class="gradient-text">Experiences</span></h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Large Card -->
+<div class="md:col-span-8 glass-card rounded-3xl p-card-padding relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-5xl text-primary mb-6">diversity_3</span>
+<h3 class="font-headline-md text-headline-md text-white mb-4">Corporate Matchmaking</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">Real-time interviews and career consultations with recruitment leaders from the region's top 500 firms.</p>
+</div>
+<div class="absolute right-[-10%] top-[-10%] w-64 h-64 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-all"></div>
+</div>
+<!-- Small Card -->
+<div class="md:col-span-4 glass-card rounded-3xl p-card-padding flex flex-col justify-end bg-gradient-to-br from-tertiary-container/10 to-transparent">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-6">school</span>
+<h3 class="font-body-lg text-body-lg font-bold text-white mb-2">Masterclass Series</h3>
+<p class="text-on-surface-variant">Deep-dive technical sessions in AI, Fintech, and Creative Leadership.</p>
+</div>
+<!-- Medium Card -->
+<div class="md:col-span-4 glass-card rounded-3xl p-card-padding border-secondary/20">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6">handshake</span>
+<h3 class="font-body-lg text-body-lg font-bold text-white mb-2">1:1 Mentorship</h3>
+<p class="text-on-surface-variant">Private 15-minute speed-mentoring with industry icons.</p>
+</div>
+<!-- Large Card -->
+<div class="md:col-span-8 glass-card rounded-3xl p-card-padding group overflow-hidden">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-white mb-4">The Innovation Hub</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A dedicated space for women-led startups to pitch to angel investors and venture capitalists.</p>
+</div>
+<div class="w-48 h-48 rounded-full glass-card flex items-center justify-center shrink-0 border-primary/40">
+<span class="material-symbols-outlined text-6xl text-primary">rocket_launch</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- WHO SHOULD ATTEND (STICKY SCROLL STYLE) -->
+<section class="py-section-gap-lg px-8">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row gap-16">
+<div class="md:w-1/3">
+<div class="sticky top-32">
+<h2 class="font-headline-lg text-headline-lg text-white mb-6">Who Should <span class="text-primary">Attend?</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Momken For Her is designed for every stage of the professional journey.</p>
+<div class="mt-12 hidden md:block">
+
+</div>
+</div>
+</div>
+<div class="md:w-2/3 space-y-24">
+<div class="glass-card rounded-3xl p-card-padding border-l-4 border-l-primary">
+<h3 class="font-headline-md text-headline-md text-white mb-4">Graduates &amp; Entry-Level</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Find your first career move, learn resume-building in the age of AI, and build your foundational network.</p>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-primary uppercase">Internships</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-primary uppercase">Junior Roles</span>
+</div>
+</div>
+<div class="glass-card rounded-3xl p-card-padding border-l-4 border-l-secondary">
+<h3 class="font-headline-md text-headline-md text-white mb-4">Mid-Career Professionals</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Strategize your pivot into leadership, explore hybrid-work opportunities, and master negotiation skills.</p>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-secondary uppercase">Leadership</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-secondary uppercase">Strategy</span>
+</div>
+</div>
+<div class="glass-card rounded-3xl p-card-padding border-l-4 border-l-tertiary">
+<h3 class="font-headline-md text-headline-md text-white mb-4">Entrepreneurs &amp; Founders</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Access funding opportunities, find technical co-founders, and join a circle of high-impact female CEOs.</p>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-tertiary uppercase">Investment</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-high text-label-sm font-label-sm text-tertiary uppercase">Scaling</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- IMPACT STATS -->
+<section class="py-24 bg-primary-container">
+<div class="max-w-container-max mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center text-on-primary-container">
+<div>
+<div class="font-hero-xl-mobile text-hero-xl-mobile font-black mb-2">15K+</div>
+<p class="font-label-caps text-label-caps opacity-80 uppercase">Attendees Expected</p>
+</div>
+<div>
+<div class="font-hero-xl-mobile text-hero-xl-mobile font-black mb-2">400</div>
+<p class="font-label-caps text-label-caps opacity-80 uppercase">Participating Entities</p>
+</div>
+<div>
+<div class="font-hero-xl-mobile text-hero-xl-mobile font-black mb-2">85%</div>
+<p class="font-label-caps text-label-caps opacity-80 uppercase">Hire Rate from 2024</p>
+</div>
+</div>
+</div>
+</section>
+<!-- SPEAKERS GRID -->
+<section class="py-section-gap-lg px-8">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">VOICES OF POWER</span>
+<h2 class="font-headline-lg text-headline-lg text-white">Featured <span class="gradient-text">Experts</span></h2>
+</div>
+<button class="font-body-base text-body-base text-secondary flex items-center gap-2 hover:underline">
+                    View All 120 Speakers <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-grid-gutter">
+<!-- Speaker Card 1 -->
+<div class="group">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden glass-card mb-6 relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Professional portrait of a high-ranking female executive in the technology sector. She has a minimalist, high-fashion look and is photographed against a deep charcoal background with subtle red ambient light. The photography style is sharp, premium, and futuristic, conveying authority and vision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFtJKb7wR1n74idS-YqiKHsl43lrLozJFliInt6JBmmfc_oWI29L4nnN1lARdtj3e_M2gUtlgKLSXXCm-EEy899pgqxsntVCDYBcmND9Lvm2D_yflS3rS_fKzEyaVQV2LKc4q36oD0Pok9EmESjtqicM4KeIuQdjebxniTfMbb9dP5pwcrF0x1KGTOpbDNfFYfa8aqmHRHncvaRlC7i7jmMxK9uEbpSU7gNsKAi708RJ9GFmeuRaM82_tuwj73QjlNn48MZ7DU24-2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<h3 class="font-body-lg text-body-lg font-bold text-white">Dr. Sarah Mansour</h3>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-2">Minister of Innovation</p>
+</div>
+<!-- Speaker Card 2 -->
+<div class="group">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden glass-card mb-6 relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Portrait of a young, vibrant female entrepreneur with a creative and edgy style. She is set against a dark background illuminated by soft cyan neon tubes. The aesthetic is cyber-professional, high-energy, and modern, representing the next generation of leadership." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6cfiqleav2hyzKlmdihRUiDYuWV1xPe7DkDBGemnRLIj52D_tSChoiw8f59GxjdSMdan-7xYrdyl3fd0umSS6RlzDd5VwbY0b-LPfwQSxofmy4b_6_Ged7qXGlCjcRAKENhfONn7KJWPoR4MJYEQpY4aiEPfcZ4SQXBFKmfehkDy_3xgWoI59kepJhJkSNBgCbnjCqWKt8wyKXAh5ngVpfRBZjOGez-zeNGVpt1_-648JKrJC7OvgQjFb_TZIlaNSH4Qbxzj7du5G"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<h3 class="font-body-lg text-body-lg font-bold text-white">Nour El Din</h3>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-2">CEO, FinTech Egypt</p>
+</div>
+<!-- Speaker Card 3 -->
+<div class="group">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden glass-card mb-6 relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Headshot of a sophisticated woman leader in a corporate setting. The lighting is dramatic, with high-contrast shadows and a subtle purple glow reflecting off her professional attire. The image captures a sense of futuristic elegance and unwavering professional confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrald4iaNrE0mTn9hrepLuysFuCDep-wOYTcELAsuUumW9bzIREvCOkdHpGytOrXvTjBRFEcp1c3CiqM_pYmKFkIeHzF0_VNmFdudsAYrIKZPpPMyKxNqPSx2HVMoJDxdwh1ldvd1u86RjDOaxmYgYtZMJbxirQBAt6y6W0UIdSYetjVrcC9VqFW36gt78JYhhuyMzn6Sab9cjiME1oUpVlEh4uZQwnMy3HAybqRGZDvMrgrqGTXn4bk_1Rk6pFssT2Sqk3zfBH_KL"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<h3 class="font-body-lg text-body-lg font-bold text-white">Laila Hassan</h3>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-2">Global HR Lead, Meta</p>
+</div>
+<!-- Speaker Card 4 -->
+<div class="group">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden glass-card mb-6 relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Portrait of a prominent female scientist with a background featuring abstract digital light patterns in red and magenta. She exudes intelligence and visionary thinking. The overall look is polished, high-end, and technologically advanced, fitting a 2060 summit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTAwnyuJGU5r54wihtD32VJROsBXWyTXTaMpOx9KkzGRO65ZEtHGsw-gueYIgLOdYaDlP_frMmfro7VPzC1PupmYccyxsnDjOOTLlMP0Rmgo_G1hm18cPxu0NAq-AnfV8369qeeWQOU-leJ_L3KtamFa3T-RT699ncw5XiLuW69YgLpi5jWMBHkfjPV8FeJJ4jeA_xg_0Id4cz0jBisQC7S08l7G3dbcS1b8GBrBb8ROYEdIuz-2aEx3xa8iP3gOtgqYDUHp8Mex-T"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<h3 class="font-body-lg text-body-lg font-bold text-white">Dr. Amina Farid</h3>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-2">AI Ethics Researcher</p>
+</div>
+</div>
+</div>
+</section>
+<!-- TICKETS / CTA SECTION -->
+<section class="py-section-gap-lg px-8 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-white mb-4">Secure Your <span class="text-secondary">Future</span></h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Early bird registrations are now open for the 2060 edition.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Standard -->
+<div class="glass-card rounded-3xl p-card-padding border-surface-glass-border">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2 uppercase">VISITOR</div>
+<div class="font-headline-md text-headline-md text-white mb-6">FREE</div>
+<ul class="space-y-4 mb-10 text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span> Access to Job Fair</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span> Keynote Sessions</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span> Career Roadmap Tool</li>
+</ul>
+<button class="w-full py-4 rounded-xl border border-white/20 font-bold hover:bg-white/5 transition-all">Claim Pass</button>
+</div>
+<!-- Pro -->
+<div class="glass-card rounded-3xl p-card-padding border-primary/50 relative overflow-hidden ring-2 ring-primary/20">
+<div class="absolute top-4 right-4 bg-primary text-on-primary text-[10px] font-bold px-2 py-1 rounded">MOST POPULAR</div>
+<div class="font-label-caps text-label-caps text-primary mb-2 uppercase">PROFESSIONAL</div>
+<div class="font-headline-md text-headline-md text-white mb-6">EGP 1,200</div>
+<ul class="space-y-4 mb-10 text-on-surface-variant">
+<li class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> All Visitor Perks</li>
+<li class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Workshop Access</li>
+<li class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> 1:1 Mentorship</li>
+<li class="flex items-center gap-2 font-bold text-white"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Digital Certificate</li>
+</ul>
+<button class="w-full py-4 rounded-xl gradient-btn text-white font-black">Buy Professional</button>
+</div>
+<!-- VIP -->
+<div class="glass-card rounded-3xl p-card-padding border-secondary/50">
+<div class="font-label-caps text-label-caps text-secondary mb-2 uppercase">EXECUTIVE</div>
+<div class="font-headline-md text-headline-md text-white mb-6">EGP 3,500</div>
+<ul class="space-y-4 mb-10 text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> All Pro Perks</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> VIP Lounge Access</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Speaker Dinner</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Fast-Track Entry</li>
+</ul>
+<button class="w-full py-4 rounded-xl border border-secondary text-secondary font-bold hover:bg-secondary/10 transition-all">Go Executive</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SPONSORS LOGO GRID -->
+<section class="py-section-gap-lg px-8">
+<div class="max-w-container-max mx-auto text-center">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.3em] mb-16 uppercase">DIAMOND PARTNERS</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-700 mb-24">
+<img class="h-12 mx-auto object-contain" data-alt="A clean, minimalist logo of a global technology corporation like Microsoft or Google, presented in a sleek white monochrome version. The design is modern, professional, and high-contrast, optimized for a dark-mode UI background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbaDYyvma9T9TONlu5oDsrL6erM0YC2HmdXqyxXC9fhg5xjMySPp83VU9W66-twRX_C5tms7F5jPyjY4qlIJdJRPhAk0kqsqkuBBX3cBztOab_u5hsdLJPOQxFklKcqlO4dI24gCD1DoSEyDeG53kiY-YSNWB7s0Jl2P4CGejU1alfdpMiSQGWpz2nR0EvceNfmmCX_wPYpgGbw1p-BVyjQuJ7-oW5N7tarieaL8m8yd7sSycN2CXFYLJGyR_u3Iua9NkNrQ5WijDA"/>
+<img class="h-10 mx-auto object-contain" data-alt="A professional white logo of a major financial institution or banking group. The lines are clean and geometric, conveying stability and global presence. The logo is displayed in high resolution on a dark charcoal backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUUYuvSZJWorxQ2eL-t-qa_jEx94XeaGPhTbDsCUdsGelnO_UqTq6fBm4FCyyx-cat85ndB5o7FMRtzjXIqVb9d27gdDL8Gi6meAZQ7SphbMU33m3ViD2NxF9TGcNXe-TuQ_dqlv8TSVQg00l6ySEPQtjtnvDk3lqYIC6fjal3XwPSCzhT4Iwq1nklJeddW4vauhTnVQ0lh2CG1sdcHnzLdHZI3UcbVL_9eFmnYCqp5AfmBtqYvVOy6WJew1AjXyxHgrJXHhN2spLW"/>
+<img class="h-14 mx-auto object-contain" data-alt="A minimalist logo for a world-renowned telecommunications company. The branding is iconic and rendered in a flat white style that perfectly complements a luxury futuristic interface. Sharp edges and modern typography are prominent." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeixU14eGtXi3CZetn5l326hFh249RCOX5YeoVMgvc3rPnKnEsM_0rUAi1J1WeRKt1j0-nBkM-IwQZROouHC-wZ5m7lEp_klNYCpUC9RHkTiNDnv5grQPKQ6bc4mSSwxtkxPZGYoNT1mVwzmNA8-bPNmxd6xbwOmEkHq7m-f-Dvt8qmvXLQjIAaANl7PE5Om7f04H9eZZGee6OkSsDjH0c_e6iFIxzAIAZ8LVHBJSWC7EFQQUpsmdEyQCZ3RwoDSHZU-ZKIxHVcOec"/>
+<img class="h-12 mx-auto object-contain" data-alt="A high-end fashion or retail conglomerate logo in a white monochrome format. The design is elegant and sophisticated, fitting for a premier summit about empowerment and excellence. It sits cleanly on a deep, blurred background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQaOBn_fnak2MkgwGTk21EwM-OSmQ0KSZ4ni9LsRWttcg44PalInySCJ4UN28fB_f4b2wqLDQkp0-xMWvwHXQuXRaYcFOz6ylHBf14pzbMyDYyLnU8CJQngfBX-aqxsYfuCmtK8-NzXbVZAIc-xlPQDnDm2NyjbLv6saDY7V2-xgYQfjJCh7GscDMlZkqZs6m-9jiJf4XOZpHUW0CvKGBROSBuci9BBPB0O6nG-krE4a3IPGUEX6vhqSGx74--kleKnA5tf9OfHaua"/>
+</div>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.3em] mb-12 uppercase">GOLD SPONSORS</h2>
+<div class="flex flex-wrap justify-center gap-16 opacity-40 grayscale">
+<img class="h-8 object-contain" data-alt="Logo placeholder for a major consumer goods brand, presented as a simple white silhouette. The style is modern and minimalist, designed to sit unobtrusively in a sponsor grid on a dark website." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWpTHxb-E3HfungRN10HkuIfcjXUBJbCp-A6_L7OGHs9pF66HTdgjijjPd-yfWUI2vf-ttyoeSx_4uOY1Ls2ZtH5SuqADqsM0_5HazuIEEZCtsvj6eCQkowpfbsiV0x5iPUMDpi2mwkpeOhqBqOWlqK5G1ClxTduZrZenerk9cfvT5YSmoNNVmUB0vwuJ0oKjGP0zmE9e177a6Pd6An0ZwjMvDw1loLGZ_pEgp9xyppGZj2ISH4SwiTB6Jeqh38vsQplOX_epvYNVu"/>
+<img class="h-8 object-contain" data-alt="Corporate logo for an international consultancy firm in a white vector style. High-quality professional branding that feels integrated into a premium tech conference aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr6xKSKfM_IO6tr7Amyz_RCZZVBxZuE6Rq6meFnSi6i2iwKFD2y7c7iv9S1GitX5ZrryLtQ83KZTJOLrK_QaZV3--816ipVtlhNwleDDukaHKAa0OvQvw6Sr5gTbmiy8Xo-VzU3kmDc1Xej0N-NPtCFrdzqhv89hG2zAZFMfZZt4RK1Rvc2d7eY7lbXLqcxRnuNBc5DKMkaaY8KIkdszbFsrhvZcLXKiPwrhZvDyLPSD5WlVxidpsaKQ5W4CCKToBKA6EZbWCLsA9Y"/>
+<img class="h-8 object-contain" data-alt="Logo for a prominent pharmaceutical or health-tech company. The logo is rendered in a clean, flat white design with a professional and reliable visual feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADt058wM6DIc22G9JfG5209bx9LCxMYG7RpY5REwiYqbqQkC7IBYU5XMTpi5qlN_1eDicv-F-AW9QHNfQdXdFesB5aQAeMZGusjU1COoYMeC9fRTFMieL_YARRe9z0hTD85lfsR5mLu6UhAtD90d0RFhQwqF6vKZhCPSg2h0qlAv2RP5Ur_2fRPLaRQMSGruGnQ9QyyZ1Zz_NMFR7QwU-EUgCqCU-2Nor7M2mW662UeHrI7S90nh5OlbJJRKu29RyZZ3h1D7-tlzqf"/>
+<img class="h-8 object-contain" data-alt="Minimalist logo of a leading energy or sustainability corporation. The branding is simple, white, and geometric, fitting the futuristic theme of the 2060 summit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdLDndghHbYfB-RUeMq7LlYsTGEy0xi712I6p0SS14wAVf1qokqf_1VOh2DYTqfbETgflynpAzXQHuoqD4glnIY1cugfy7D1Z6vUSOJ1oAXd5xbozDkBd8YfzTZbhkdN-Qd8dv7VIA7nhFJtT5yaNgO-oGRofD-rN5X5aYbSNc7MAFK00QZhFWuDisTznbhdRP0SfYpeMdkkS8UIeOXiIpBuj3l8ZJvZD-VVpW0T2pwjbnIDuH0VGUKA9RgTwnZJmMfcWOL8ltOV_q"/>
+<img class="h-8 object-contain" data-alt="Logo for a major media organization or news group. The typography is bold and modern, presented in a crisp white monochrome version for a sophisticated dark-mode UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD25tdPXKn-zcibbkOMSnCFo8ioVxv7NgZmOrcdyU90l1EjE8DtZQpCw_nEdsWxZDrhNvgbUdGNsTHAHQN0T_pnRPMvP7CSIzzhKE49b1UGv4fKqqbcQnybKaHxDJPuNo_K9ChXu90IETcT4aFlZFUYS9B1poeJDKgUPl0cFUhRBpt9i-JPxiYnRai6OWaW5Sd6Do7768hgmYUj66z77FZ0zc4Y4iAqGDSI8nENDfzAzbAHoPa63bWvy9R4BdHfx1jFUkyr0Sy7Bcn"/>
+</div>
+</div>
+</section>
+<!-- FOOTER COMPREHENSIVE -->
+<footer class="w-full mt-section-gap-lg border-t border-surface-glass-border bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter px-8 py-section-gap-md max-w-container-max mx-auto">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md font-black text-primary">Momken For Her</div>
+<p class="font-body-base text-body-base text-on-surface-variant">The 3rd edition of the most impactful women's summit in the MENA region. Empowering voices, creating futures.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:text-primary" href="#"><span class="material-symbols-outlined text-sm">language</span></a>
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:text-primary" href="#"><span class="material-symbols-outlined text-sm">share</span></a>
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:text-primary" href="#"><span class="material-symbols-outlined text-sm">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-body-base text-body-base font-bold text-white mb-6">Summit</h4>
+<ul class="space-y-4 text-on-surface-variant font-body-base">
+<li><a class="hover:text-primary transition-all" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Speakers</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Agenda</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Sponsors</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-body-base text-body-base font-bold text-white mb-6">Support</h4>
+<ul class="space-y-4 text-on-surface-variant font-body-base">
+<li><a class="hover:text-primary transition-all" href="#">Contact Support</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Press Kit</a></li>
+<li><a class="hover:text-primary transition-all" href="#">FAQs</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Safety Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-body-base text-body-base font-bold text-white mb-6">Legal</h4>
+<ul class="space-y-4 text-on-surface-variant font-body-base">
+<li><a class="hover:text-primary transition-all" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary transition-all" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-surface-glass-border py-8 text-center">
+<p class="font-body-base text-body-base text-on-surface-variant opacity-80">© 2060 Momken For Her. Empowering the Future.</p>
+</div>
+</footer>
+<script>
+        // Simple countdown logic
+        function updateCountdown() {
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minsEl = document.getElementById('minutes');
+            const secsEl = document.getElementById('seconds');
+
+            let days = parseInt(daysEl.innerText);
+            let hours = parseInt(hoursEl.innerText);
+            let mins = parseInt(minsEl.innerText);
+            let secs = parseInt(secsEl.innerText);
+
+            secs--;
+            if (secs < 0) {
+                secs = 59;
+                mins--;
+                if (mins < 0) {
+                    mins = 59;
+                    hours--;
+                    if (hours < 0) {
+                        hours = 23;
+                        days--;
+                    }
+                }
+            }
+
+            daysEl.innerText = days.toString().padStart(2, '0');
+            hoursEl.innerText = hours.toString().padStart(2, '0');
+            minsEl.innerText = mins.toString().padStart(2, '0');
+            secsEl.innerText = secs.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+    </script>
+</body></html>

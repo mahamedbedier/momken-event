@@ -13,7 +13,7 @@ db = SQLAlchemy()
 
 
 class User(UserMixin, db.Model):
-    """Registered attendee or admin user."""
+    """Registered attendee, volunteer, speaker, or admin user."""
 
     __tablename__ = "users"
 
@@ -22,13 +22,28 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone = db.Column(db.String(20), nullable=True)
     password_hash = db.Column(db.String(255), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
+    role = db.Column(db.String(20), default="user")  # "user", "volunteer", "speaker", "admin"
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
-    orders = db.relationship("Order", backref="user", lazy=True)
+    orders = db.relationship("Order", foreign_keys="Order.user_id", backref="user", lazy=True)
+
+    @property
+    def is_admin(self):
+        """Check if user is an admin."""
+        return self.role == "admin"
+
+    @property
+    def is_volunteer(self):
+        """Check if user has volunteer permissions."""
+        return self.role in ("volunteer", "admin")
+
+    @property
+    def is_speaker(self):
+        """Check if user is a speaker."""
+        return self.role == "speaker"
 
     def __repr__(self):
-        return f"<User {self.email}>"
+        return f"<User {self.email} ({self.role})>"
 
 
 class TicketType(db.Model):
@@ -50,7 +65,7 @@ class TicketType(db.Model):
 
 
 class Order(db.Model):
-    """A completed ticket purchase."""
+    """A completed ticket purchase or speaker pass."""
 
     __tablename__ = "orders"
 
@@ -59,7 +74,13 @@ class Order(db.Model):
     ticket_type_id = db.Column(db.Integer, db.ForeignKey("ticket_types.id"), nullable=False)
     card_last_four = db.Column(db.String(4), nullable=True)
     status = db.Column(db.String(20), default="completed")
+    qr_code_hash = db.Column(db.String(64), unique=True, nullable=True)
+    is_checked_in = db.Column(db.Boolean, default=False)
+    checked_in_at = db.Column(db.DateTime, nullable=True)
+    checked_in_by_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    checked_in_by = db.relationship("User", foreign_keys=[checked_in_by_user_id])
 
     def __repr__(self):
         return f"<Order #{self.id} - User {self.user_id}>"
@@ -73,8 +94,11 @@ class Speaker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(200), nullable=True)
+    email = db.Column(db.String(120), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     image_url = db.Column(db.String(500), nullable=True)
-    is_featured = db.Column(db.Boolean, default=False)  # Show on homepage
+    qr_code_hash = db.Column(db.String(64), unique=True, nullable=True)
+    is_featured = db.Column(db.Boolean, default=False)
     sort_order = db.Column(db.Integer, default=0)
 
     def __repr__(self):

@@ -1,0 +1,324 @@
+
+<!-- My Ticket - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Momken For Her | My Ticket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#131313",
+                    "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                    "secondary": "#4cd7f6",
+                    "tertiary-fixed-dim": "#fda9ff",
+                    "inverse-surface": "#e5e2e1",
+                    "on-surface-variant": "#e5bdbe",
+                    "primary-fixed": "#ffdada",
+                    "on-primary": "#68001a",
+                    "on-tertiary": "#580063",
+                    "surface-container-highest": "#353534",
+                    "secondary-container": "#03b5d3",
+                    "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                    "surface-glass": "rgba(255, 255, 255, 0.03)",
+                    "background": "#131313",
+                    "primary": "#ffb3b6",
+                    "primary-container": "#e11d48",
+                    "surface": "#131313",
+                    "on-surface": "#e5e2e1",
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "hero-xl": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "body-base": ["Outfit"],
+                    "label-caps": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "900"}],
+                    "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "800"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ticket-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .ticket-perforation {
+            background-image: radial-gradient(circle, transparent 70%, #131313 75%);
+            background-size: 20px 20px;
+        }
+        .glow-pulse {
+            animation: glow 4s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(225, 29, 72, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(225, 29, 72, 0.3); }
+        }
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body class="dark selection:bg-primary/30">
+<!-- Atmospheric Background Orbs -->
+<div class="orb w-[500px] h-[500px] bg-primary-container -top-48 -left-24"></div>
+<div class="orb w-[400px] h-[400px] bg-secondary -bottom-24 -right-24"></div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-2xl border-b border-surface-glass-border shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-[1280px] mx-auto w-full">
+<div class="font-headline-md text-headline-md font-black text-primary dark:text-primary tracking-tighter">
+                MOMKEN FOR HER
+            </div>
+<div class="hidden md:flex items-center gap-8 font-body-base text-body-base font-bold">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Speakers</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Agenda</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Profile</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sponsors</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform">
+                Get Tickets
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-[1280px] mx-auto min-h-screen">
+<header class="mb-12">
+<h1 class="font-hero-xl text-hero-xl text-primary mb-2">My Profile</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Attendee ID: #MFH-2060-8842</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+<!-- Left: User Details Card -->
+<div class="lg:col-span-1 space-y-6">
+<div class="glass-card rounded-3xl p-8 border border-white/10">
+<div class="flex flex-col items-center text-center mb-8">
+<div class="w-32 h-32 rounded-full border-4 border-primary p-1 mb-4">
+<img class="w-full h-full rounded-full object-cover" data-alt="A professional high-fidelity studio portrait of a visionary woman leader for a futuristic tech summit. She is wearing sleek, modern charcoal business attire with subtle magenta glowing elements. The lighting is sophisticated, using deep shadows and cinematic magenta rim light against a dark, minimalist architectural background to evoke strength and innovation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7gM3DhCaapx3X_71xmfbnbR1X4PWsVySvXuFXGaY0fa1e9x3F_cgwx4YOUi0v1NvP1I6sYPqxJ47LYLCPKQji-7LucAdookrLB6WbzULhiQJlvjDIF9YaTU7jdzkTWG5gsMNCbLIpKZ6atu3WFp1tIMLHDvdrVOwtuDWonYtz-T3kRXPBhXkgdgl94msf8N0kKXRcYH7-SgvK7NCSDK_EE_yrtJnBFBv4f6rJxZKW3zuOfKgT6YBDtsglttRh7lvU0TO2gVVwGupb"/>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Amara Vance</h2>
+<p class="font-body-base text-body-base text-secondary">Lead AI Architect @ CyberDyne</p>
+</div>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-white/5 border border-white/5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">EMAIL ADDRESS</label>
+<p class="font-body-base text-body-base">a.vance@futuretech.com</p>
+</div>
+<div class="p-4 rounded-xl bg-white/5 border border-white/5">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">MEMBERSHIP LEVEL</label>
+<p class="font-body-base text-body-base flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+                                Executive Tier
+                            </p>
+</div>
+</div>
+<button class="w-full mt-8 py-3 border border-white/20 rounded-xl font-bold hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">settings</span>
+                        Edit Settings
+                    </button>
+</div>
+<!-- Fast Info Bento -->
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-card rounded-2xl p-6 text-center">
+<p class="font-hero-xl text-[32px] text-primary">12</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SESSIONS SAVED</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<p class="font-hero-xl text-[32px] text-secondary">03</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">WORKSHOPS</p>
+</div>
+</div>
+</div>
+<!-- Right: The Premium Ticket -->
+<div class="lg:col-span-2">
+<div class="relative group">
+<!-- Ticket Outer Glow -->
+<div class="absolute -inset-1 bg-gradient-to-r from-primary-container to-secondary rounded-[40px] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+<div class="relative ticket-gradient rounded-[32px] overflow-hidden border border-white/10 flex flex-col md:flex-row">
+<!-- Main Ticket Body -->
+<div class="flex-grow p-10 md:p-12 relative overflow-hidden">
+<!-- Background Decoration -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 blur-[80px] -mr-32 -mt-32"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-16">
+<div>
+<div class="font-label-caps text-label-caps text-primary tracking-[0.3em] mb-4">SUMMIT PASS 2060</div>
+<h3 class="font-hero-xl text-hero-xl-mobile md:text-headline-lg leading-tight mb-2">MOMKEN FOR HER</h3>
+<p class="text-secondary font-body-lg">THE FUTURE IS EMPOWERED</p>
+</div>
+<div class="bg-primary/20 text-primary px-4 py-1 rounded-full text-label-caps font-bold">
+                                        PAID
+                                    </div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-2">ATTENDEE</label>
+<p class="font-body-lg text-on-surface">Amara Vance</p>
+</div>
+<div>
+<label class="font-label-caps text-on-surface-variant block mb-2">DATE</label>
+<p class="font-body-lg text-on-surface">Oct 12-14, 2060</p>
+</div>
+<div class="hidden md:block">
+<label class="font-label-caps text-on-surface-variant block mb-2">VENUE</label>
+<p class="font-body-lg text-on-surface">The Neo-Nexus</p>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/10 flex items-center gap-6">
+<div class="flex flex-col">
+<label class="font-label-caps text-on-surface-variant mb-1">GATE</label>
+<p class="text-headline-md font-black text-on-surface">E-1</p>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-on-surface-variant mb-1">SEAT</label>
+<p class="text-headline-md font-black text-on-surface">A-42</p>
+</div>
+<div class="flex-grow flex justify-end">
+<div class="text-right">
+<label class="font-label-caps text-on-surface-variant mb-1">ACCESS LEVEL</label>
+<p class="font-bold text-primary">FULL CONFERENCE + GALA</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket Perforation Line (Vertical on Desktop) -->
+<div class="hidden md:flex flex-col justify-between py-8 px-4 items-center">
+<div class="w-8 h-8 rounded-full bg-background -mt-12 border-b border-white/10"></div>
+<div class="flex-grow border-l border-dashed border-white/20 my-4"></div>
+<div class="w-8 h-8 rounded-full bg-background -mb-12 border-t border-white/10"></div>
+</div>
+<!-- Ticket Stub / QR Section -->
+<div class="bg-white/5 p-10 md:w-80 flex flex-col items-center justify-center border-t md:border-t-0 md:border-l border-white/10">
+<div class="bg-white p-4 rounded-2xl mb-6 shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+<!-- QR Code Placeholder -->
+<img class="w-48 h-48" data-alt="A futuristic QR code design for a tech conference pass. The QR code itself is high-contrast black and white, but it's surrounded by a complex, glowing UI interface frame with data telemetry lines and micro-typography in cyber-red. The background is a clean white rounded square, suggesting a digital scannable asset with high-tech aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7vF4MlVWonThBC_E5ua-bRsUEAEr3nMnEIi8X4VBnkE8EsQuQp9N-dAl45Q3wq8Tnp2w71oa1hMNO1sTM9xTBhqJ5Nq6E0s_c2R9dgp41X752yu-jE6OxK674vsPAc1iECXa3Qvt-W19ZAg9N_mnAo_Ry_BY7zwRnBwqVUbg_zCQcslf9SP-yNPw-v1YgrmKrS2yTomWvcTavvkL7rKunrq-Dd-A9Gu7ZzfeQYs8UaBimYKGUhVIjPR-coSDSUC4jeXclBXS88uUw"/>
+</div>
+<div class="text-center">
+<p class="font-label-caps text-on-surface-variant mb-2">SCAN FOR ENTRY</p>
+<p class="font-mono text-body-base opacity-50">TKT-8842-AV-X</p>
+</div>
+<button class="mt-8 w-full py-4 bg-primary-container text-on-primary-container rounded-2xl font-black text-label-caps hover:brightness-110 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                                DOWNLOAD PDF
+                            </button>
+</div>
+</div>
+</div>
+<!-- Secondary Actions / Info -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="glass-card rounded-3xl p-8 flex items-start gap-6 border-l-4 border-l-secondary">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<div>
+<h4 class="font-headline-md text-[20px] mb-2">Sync to Calendar</h4>
+<p class="text-on-surface-variant font-body-base">Add the 3-day summit schedule and your custom workshops directly to your personal calendar.</p>
+</div>
+</div>
+<div class="glass-card rounded-3xl p-8 flex items-start gap-6 border-l-4 border-l-primary">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+</div>
+<div>
+<h4 class="font-headline-md text-[20px] mb-2">Express Check-in</h4>
+<p class="text-on-surface-variant font-body-base">Save this ticket to your Apple Wallet or Google Pay for seamless biometric entry at the main gate.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-32 border-t border-surface-glass-border bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 py-20 max-w-[1280px] mx-auto w-full">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md font-black text-primary">MOMKEN</div>
+<p class="font-body-base text-on-surface-variant leading-relaxed">
+                    A movement dedicated to the fusion of female leadership and the technologies of 2060.
+                </p>
+</div>
+<div>
+<h5 class="font-label-caps text-on-surface mb-6">RESOURCES</h5>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">About Us</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">Press Kit</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">Sponsorship</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-caps text-on-surface mb-6">SUPPORT</h5>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">Contact Support</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-caps text-on-surface mb-6">STAY UPDATED</h5>
+<div class="relative">
+<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-secondary transition-colors text-body-base" placeholder="Future email..." type="email"/>
+<button class="absolute right-2 top-2 p-1 text-secondary">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1280px] mx-auto px-8 py-8 border-t border-white/5 text-center text-on-surface-variant font-label-caps">
+            © 2060 MOMKEN FOR HER. EMPOWERING THE FUTURE.
+        </div>
+</footer>
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Background parallax effect for orbs
+        window.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 20;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body></html>
+

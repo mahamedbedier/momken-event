@@ -1,0 +1,393 @@
+<!-- Agenda - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agenda | Momken For Her 2060</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#131313",
+                    "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                    "secondary": "#4cd7f6",
+                    "tertiary-fixed-dim": "#fda9ff",
+                    "inverse-surface": "#e5e2e1",
+                    "on-surface-variant": "#e5bdbe",
+                    "primary-fixed": "#ffdada",
+                    "on-primary": "#68001a",
+                    "on-tertiary": "#580063",
+                    "surface-container-highest": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-low": "#1c1b1b",
+                    "inverse-primary": "#be0037",
+                    "primary-container": "#e11d48",
+                    "surface-bright": "#3a3939",
+                    "secondary-container": "#03b5d3",
+                    "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                    "on-tertiary-fixed": "#36003d",
+                    "on-secondary": "#003640",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00424e",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "tertiary-container": "#c026d3",
+                    "surface-tint": "#ffb3b6",
+                    "outline-variant": "#5c3f40",
+                    "secondary-fixed": "#acedff",
+                    "on-error": "#690005",
+                    "tertiary": "#fda9ff",
+                    "outline": "#ac8889",
+                    "on-tertiary-container": "#fffafa",
+                    "on-primary-fixed": "#40000c",
+                    "error-container": "#93000a",
+                    "surface-container": "#201f1f",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "surface-glass": "rgba(255, 255, 255, 0.03)",
+                    "background": "#131313",
+                    "tertiary-fixed": "#ffd6fb",
+                    "on-secondary-fixed": "#001f26",
+                    "on-primary-container": "#fffaf9",
+                    "on-tertiary-fixed-variant": "#7d008c",
+                    "on-surface": "#e5e2e1",
+                    "primary": "#ffb3b6",
+                    "surface": "#131313",
+                    "accent-yellow": "#facc15",
+                    "surface-variant": "#353534",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-primary-fixed-variant": "#920028",
+                    "primary-fixed-dim": "#ffb3b6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "stack-md": "1.5rem",
+                    "card-padding": "2.5rem",
+                    "section-gap-md": "5rem",
+                    "section-gap-lg": "8rem",
+                    "grid-gutter": "2rem",
+                    "stack-sm": "0.75rem"
+            },
+            "fontFamily": {
+                    "body-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "hero-xl": ["Outfit"],
+                    "headline-md": ["Outfit"],
+                    "body-base": ["Outfit"],
+                    "hero-xl-mobile": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "label-caps": ["Outfit"]
+            },
+            "fontSize": {
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "900"}],
+                    "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "800"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "hero-xl-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                    "label-sm": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-red { box-shadow: 0 0 20px rgba(225, 29, 72, 0.2); }
+        .glow-cyan { box-shadow: 0 0 20px rgba(76, 215, 246, 0.2); }
+        .glow-magenta { box-shadow: 0 0 20px rgba(192, 38, 211, 0.2); }
+        
+        /* Custom scrollbar for glassmorphism feel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30 selection:text-white">
+<!-- Atmospheric Background Orbs -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+<div class="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full animate-pulse"></div>
+<div class="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-tertiary/5 blur-[180px] rounded-full"></div>
+</div>
+<!-- Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-2xl border-b border-surface-glass-border shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-black text-primary dark:text-primary tracking-tighter">
+                Momken For Her
+            </div>
+<div class="hidden md:flex items-center space-x-8 font-body-base text-body-base font-bold">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Speakers</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Agenda</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Empowerment</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sponsors</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-xl font-bold transition-transform scale-95 active:scale-90 hover:shadow-lg hover:shadow-primary/20">
+                Get Tickets
+            </button>
+</div>
+</nav>
+<main class="relative z-10 pt-32 pb-section-gap-lg px-6 max-w-container-max mx-auto">
+<!-- Hero Header -->
+<header class="mb-16">
+<span class="inline-block px-4 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary font-label-caps text-label-caps mb-4">MOMKEN 2060 SUMMIT</span>
+<h1 class="font-hero-xl text-hero-xl-mobile md:text-hero-xl mb-6">Summit <span class="text-primary">Agenda</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Explore the journey of empowerment. From deep-tech workshops to leadership keynotes, discover the schedule designed to shape the next 40 years of progress.
+            </p>
+</header>
+<!-- Dynamic Filter System -->
+<section class="mb-12">
+<div class="glass-panel rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<!-- Days Selector -->
+<div class="flex gap-2">
+<button class="px-6 py-2 rounded-xl bg-primary text-on-primary font-bold transition-all">Day 01: The Vision</button>
+<button class="px-6 py-2 rounded-xl border border-surface-glass-border hover:bg-white/5 transition-all font-bold text-on-surface-variant">Day 02: Execution</button>
+<button class="px-6 py-2 rounded-xl border border-surface-glass-border hover:bg-white/5 transition-all font-bold text-on-surface-variant">Day 03: The Future</button>
+</div>
+<!-- Category Filters -->
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-surface-container-low border border-surface-glass-border rounded-xl pl-10 pr-4 py-2 text-body-base focus:ring-2 focus:ring-secondary/50 focus:outline-none transition-all w-full md:w-64" placeholder="Search sessions..." type="text"/>
+</div>
+<div class="flex gap-2 bg-surface-container-low p-1 rounded-xl border border-surface-glass-border">
+<button class="px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface text-label-sm font-bold">All Tracks</button>
+<button class="px-4 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface text-label-sm font-bold transition-colors">Main Stage</button>
+<button class="px-4 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface text-label-sm font-bold transition-colors">Workshops</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Agenda Timeline -->
+<div class="space-y-8 relative">
+<!-- Central Line (Desktop) -->
+<div class="hidden md:block absolute left-[120px] top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-tertiary opacity-30"></div>
+<!-- Session Item: Main Stage -->
+<div class="flex flex-col md:flex-row gap-8 group">
+<div class="md:w-[120px] shrink-0 pt-6">
+<span class="font-headline-md text-headline-md text-primary group-hover:scale-110 transition-transform inline-block">09:00</span>
+<span class="block font-label-caps text-label-caps text-on-surface-variant">AM EST</span>
+</div>
+<div class="grow">
+<div class="glass-panel p-8 rounded-3xl relative overflow-hidden group hover:border-primary/50 transition-all duration-500 glow-red transform hover:-translate-y-1">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -mr-16 -mt-16 group-hover:bg-primary/20 transition-all"></div>
+<div class="flex flex-wrap items-center gap-3 mb-4">
+<span class="px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-label-sm uppercase tracking-widest font-bold">Main Stage</span>
+<span class="px-3 py-1 rounded-full bg-white/5 text-on-surface-variant border border-surface-glass-border text-label-sm font-bold">90 Mins</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Redefining Innovation: The 2060 Roadmap</h3>
+<p class="font-body-base text-on-surface-variant mb-6 max-w-3xl">
+                            Kick off the summit with a visionary perspective on how female-led tech will dominate the next century. Exploring radical shifts in AI, sustainable energy, and decentralized leadership.
+                        </p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-2 border-primary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a futuristic professional woman in a crisp white minimalist tech suit, looking confidently into the camera, with a background of glowing holographic interfaces in soft red and charcoal tones. High-fidelity cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs2f2vZxFdxABP4ob9syG_t7JfdNhS9f2BhXWU_p6B0EZZxoOvKYdyIdeytBvmEi91hsxLc-otRdrxLbpA6sxKGo26Etox299oFArqFhC2G0wpNmsCDGc4NNJ9oK9x3a_ux6_v_VT7s5onkx8kanGRNaKhzr3Di4jOJDawCjFKyFk456O_9EWJHcPqg0n6EkzM428wunL9__tjKLa_PwB3iWGTzcnSIQ3yCF7Ib2AQoI2y3QzNakvcNEse3KieAl25KrmRqnzJBSem"/>
+</div>
+<div>
+<span class="block font-bold text-on-surface">Dr. Elara Vance</span>
+<span class="text-label-sm text-on-surface-variant uppercase">Quantum Computing Pioneer</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+<span>Remind Me</span>
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Session Item: Workshop -->
+<div class="flex flex-col md:flex-row gap-8 group">
+<div class="md:w-[120px] shrink-0 pt-6">
+<span class="font-headline-md text-headline-md text-secondary group-hover:scale-110 transition-transform inline-block">11:30</span>
+<span class="block font-label-caps text-label-caps text-on-surface-variant">AM EST</span>
+</div>
+<div class="grow">
+<div class="glass-panel p-8 rounded-3xl relative overflow-hidden group hover:border-secondary/50 transition-all duration-500 glow-cyan transform hover:-translate-y-1">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 blur-3xl -mr-16 -mt-16 group-hover:bg-secondary/20 transition-all"></div>
+<div class="flex flex-wrap items-center gap-3 mb-4">
+<span class="px-3 py-1 rounded-full bg-secondary/20 text-secondary border border-secondary/30 text-label-sm uppercase tracking-widest font-bold">Lab &amp; Workshop</span>
+<span class="px-3 py-1 rounded-full bg-white/5 text-on-surface-variant border border-surface-glass-border text-label-sm font-bold">120 Mins</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Hands-on: Decentralized Ecosystems</h3>
+<p class="font-body-base text-on-surface-variant mb-6 max-w-3xl">
+                            A deep dive into building resilient, woman-first protocols on the web6 framework. Practical coding session for technical leads and aspiring architects.
+                        </p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-2 border-secondary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a woman with vibrant cyan hair accessories and futuristic eyewear, glowing with reflected screen light in a dark environment. Cinematic cyberpunk aesthetic with neon blue highlights and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq0o6ciJHR6d2FX8KMokaF9Y9wLfEcdocfx4cSxYCZpHWIM9q-DpvkVcyxbLnkMD51rQI1U_L6V9smgbER1OOLuzO1XcqNRquDaZam4T7ozZC_OF_d_oNAYqruI8vGSvdhDipc7fW-BvuByWK3mxl6FJkXiLCyV78dnec8eXR89NnlVgGNr8Cw83_Az0ooNtHf9Hd6rH2d4eWAB1pTe-5bTOD0b3Hy7dhEvxD1WOdcI4H34lOgS1CV1uRxO0idcpXaLQ-PlyGGLIMj"/>
+</div>
+<div>
+<span class="block font-bold text-on-surface">Maya Sterling</span>
+<span class="text-label-sm text-on-surface-variant uppercase">Web6 Infrastructure Architect</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-secondary font-bold hover:gap-3 transition-all">
+<span>Join Waitlist</span>
+<span class="material-symbols-outlined" data-icon="edit_calendar">edit_calendar</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Break / Lunch (Asymmetric Layout) -->
+<div class="flex flex-col md:flex-row gap-8 py-4 opacity-60">
+<div class="md:w-[120px] shrink-0 text-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant" data-icon="restaurant">restaurant</span>
+</div>
+<div class="grow flex items-center border-t border-dashed border-surface-glass-border pt-4">
+<span class="font-label-caps text-label-caps tracking-[0.5em] text-on-surface-variant">NETWORKING LUNCH BREAK &amp; EXPO DISCOVERY</span>
+</div>
+</div>
+<!-- Session Item: Secondary Stage -->
+<div class="flex flex-col md:flex-row gap-8 group">
+<div class="md:w-[120px] shrink-0 pt-6">
+<span class="font-headline-md text-headline-md text-tertiary group-hover:scale-110 transition-transform inline-block">14:00</span>
+<span class="block font-label-caps text-label-caps text-on-surface-variant">PM EST</span>
+</div>
+<div class="grow">
+<div class="glass-panel p-8 rounded-3xl relative overflow-hidden group hover:border-tertiary/50 transition-all duration-500 glow-magenta transform hover:-translate-y-1">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 blur-3xl -mr-16 -mt-16 group-hover:bg-tertiary/20 transition-all"></div>
+<div class="flex flex-wrap items-center gap-3 mb-4">
+<span class="px-3 py-1 rounded-full bg-tertiary/20 text-tertiary border border-tertiary/30 text-label-sm uppercase tracking-widest font-bold">Strategy Stage</span>
+<span class="px-3 py-1 rounded-full bg-white/5 text-on-surface-variant border border-surface-glass-border text-label-sm font-bold">60 Mins</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3">Equity in the Algorithm: Bias-Free Futures</h3>
+<p class="font-body-base text-on-surface-variant mb-6 max-w-3xl">
+                            How we are auditing the neural nets of tomorrow to ensure they reflect the diverse reality of 2060. A crucial talk for ethicists and developers alike.
+                        </p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-2 border-tertiary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of an influential leader of African descent with silver braids and metallic fashion details. She is seated in a luxury glass-walled office overlooking a futuristic neon-lit city at night. Professional, high-end photography with magenta color grading." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnVYO9UrVwZ5xd3MYXEbJgD3HSCIcBeUi9qXDSBoCAnInqNeKxtDVRasarJct5NevjgRz1A80OCcU9Y2tEGh3MwTD5X1rimO9LPZu27SoewfU4lb3u-9Fb6mnMfaNMKsR55bVVPQzaMOh5IvUutYApdY61P1jN52Oq53kyU5Ph86dAidyAO6NaNjaOsKo1jjwE2MgsIKzQ3FVoTAGACUes2VMPTtHzu9bl1lZtFRynw22udbkZazwb5FIft9pWXjxTTwhsoRQJPz9s"/>
+</div>
+<div>
+<span class="block font-bold text-on-surface">Sarah Al-Fayed</span>
+<span class="text-label-sm text-on-surface-variant uppercase">Global AI Ethics Lead</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-tertiary font-bold hover:gap-3 transition-all">
+<span>Save Session</span>
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Call to Action Banner -->
+<section class="mt-section-gap-md relative overflow-hidden rounded-[2.5rem] p-12 text-center">
+
+<div class="relative z-10">
+<h2 class="font-headline-lg text-headline-lg mb-4">Can't make it to everything?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl mx-auto">
+                    All main sessions are streamed live in 8K Spatial Reality. Upgrade to a Digital Pass for lifetime access.
+                </p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform">Digital Pass Upgrade</button>
+<button class="px-8 py-3 rounded-xl border border-white/20 backdrop-blur-xl hover:bg-white/10 transition-all font-bold">Download Schedule PDF</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-section-gap-lg border-t border-surface-glass-border bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-grid-gutter px-8 py-section-gap-md max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md font-black text-primary mb-6">Momken</div>
+<p class="font-body-base text-on-surface-variant">Leading the dialogue on female innovation and empowerment for over four decades.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-primary">Summit</h4>
+<ul class="space-y-2 font-body-base">
+<li><a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Speakers</a></li>
+<li><a class="text-primary font-bold" href="#">Agenda</a></li>
+<li><a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Workshops</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-primary">Resources</h4>
+<ul class="space-y-2 font-body-base">
+<li><a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">About Us</a></li>
+<li><a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Contact Support</a></li>
+<li><a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#">Press Kit</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-primary">Stay Updated</h4>
+<div class="flex gap-2">
+<input class="bg-surface-container-low border border-surface-glass-border rounded-lg px-4 py-2 w-full focus:outline-none focus:border-primary/50" placeholder="Email" type="email"/>
+<button class="bg-primary-container p-2 rounded-lg text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-8 py-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-label-sm text-on-surface-variant opacity-80">
+<span>© 2060 Momken For Her. Empowering the Future.</span>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for the agenda filter
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.parentElement.classList.contains('flex')) {
+                    const siblings = this.parentElement.querySelectorAll('button');
+                    siblings.forEach(s => {
+                        s.classList.remove('bg-primary', 'text-on-primary');
+                        s.classList.add('text-on-surface-variant', 'border-surface-glass-border');
+                    });
+                    this.classList.add('bg-primary', 'text-on-primary');
+                    this.classList.remove('text-on-surface-variant', 'border-surface-glass-border');
+                }
+            });
+        });
+
+        // Simple scroll parallax for glass elements
+        window.addEventListener('scroll', () => {
+            const panels = document.querySelectorAll('.glass-panel');
+            const scrolled = window.pageYOffset;
+            panels.forEach((panel, i) => {
+                const speed = 0.05;
+                const offset = panel.offsetTop;
+                if(scrolled > offset - 1000) {
+                    const y = (scrolled - offset) * speed;
+                    panel.style.transform = `translateY(${y}px)`;
+                }
+            });
+        });
+    </script>
+</body></html>

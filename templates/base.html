@@ -1,65 +1,582 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Momken For Her - Take The Lead{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}A comprehensive platform dedicated to empowering women through real job opportunities, training sessions, and professional networking.{% endblock %}">
+    <meta name="description"
+        content="{% block meta_description %}A comprehensive platform dedicated to empowering women through real job opportunities, training sessions, and professional networking.{% endblock %}">
 
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-    <!-- Compiled Tailwind CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <!-- AOS — Animate on Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind Config & CDN -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0a0a0a',
+                        lightBg: '#f8f9fc',
+                        glassDark: '#131313',
+                        surfaceLight: '#ffffff',
+                        primaryLight: '#111827',
+                        secondaryLight: '#4b5563',
+                        primaryDark: '#ffffff',
+                        secondaryDark: '#9ca3af',
+                        accent: {
+                            red: '#e11d48',
+                            magenta: '#c026d3',
+                            cyan: '#06b6d4',
+                            magentaLight: '#a21caf',
+                            cyanLight: '#0891b2',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* =====================================================================
+           THEME VARIABLES
+           ===================================================================== */
+        :root {
+          /* Luminous Precision (Light Theme) */
+          --color-bg-primary: #f8f9fc;
+          --color-bg-secondary: #ffffff;
+          --color-accent-primary: #e11d48;
+          --color-accent-secondary: #06b6d4;
+          --color-accent-tertiary: #c026d3;
+          --color-text-primary: #111827;
+          --color-text-secondary: #4b5563;
+          --color-border-subtle: rgba(17, 24, 39, 0.08);
+        }
+
+        .dark {
+          /* Momken For Her 3rd Edition (Dark Theme) */
+          --color-bg-primary: #0a0a0a;
+          --color-bg-secondary: #131313;
+          --color-accent-primary: #e11d48;
+          --color-accent-secondary: #06b6d4;
+          --color-accent-tertiary: #c026d3;
+          --color-text-primary: #ffffff;
+          --color-text-secondary: #9ca3af;
+          --color-border-subtle: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+          background-color: var(--color-bg-primary);
+          color: var(--color-text-primary);
+          transition: background-color 0.5s, color 0.5s;
+        }
+
+        ::-moz-selection { background: #fecdd3; color: #881337; }
+        ::selection { background: #fecdd3; color: #881337; }
+        .dark ::-moz-selection { background: rgba(225, 29, 72, 0.25); color: inherit; }
+        .dark ::selection { background: rgba(225, 29, 72, 0.25); color: inherit; }
+
+        /* =====================================================================
+           COMPONENT CLASSES
+           ===================================================================== */
+        /* ── NAVIGATION & HEADER ───────────────────────────────────────── */
+        .glass-nav {
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1.5px solid rgba(225, 29, 72, 0.15);
+          box-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.08);
+          transition: background-color 0.5s, border-color 0.5s;
+        }
+        .dark .glass-nav {
+          background: rgba(10, 10, 10, 0.90);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ── FORMS & INPUTS ────────────────────────────────────────────── */
+        .input-field {
+          width: 100%;
+          border-radius: 0.75rem;
+          padding: 0.75rem 1rem;
+          color: #4c0519;
+          transition: all 0.3s;
+          background: rgba(255, 255, 255, 0.8);
+          border: 1.5px solid rgba(225, 29, 72, 0.25);
+          box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .dark .input-field {
+          color: #ffffff;
+          background: rgba(13, 13, 13, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: none;
+        }
+        .input-field:focus {
+          outline: none;
+          border-color: rgba(225, 29, 72, 0.9);
+          box-shadow: 0 0 20px rgba(225, 29, 72, 0.10);
+          background: rgba(255, 255, 255, 1);
+        }
+        .input-field::placeholder { color: rgba(75, 85, 99, 0.7); }
+        .dark .input-field::placeholder { color: rgba(156, 163, 175, 0.8); }
+
+        /* ── BUTTONS ───────────────────────────────────────────────────── */
+        .btn-primary {
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          border-radius: 0.75rem;
+          padding: 0.75rem 1.5rem;
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          background: linear-gradient(135deg, #e11d48 0%, #c026d3 100%);
+          box-shadow: 0 4px 20px rgba(225, 29, 72, 0.35), 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-primary:hover {
+          box-shadow: 0 6px 30px rgba(225, 29, 72, 0.55), 0 0 40px rgba(192, 38, 211, 0.3);
+          transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn-outline {
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          border-radius: 0.75rem;
+          padding: 0.625rem 1.25rem;
+          color: #be123c;
+          background: rgba(225, 29, 72, 0.08);
+          border: 1.5px solid rgba(225, 29, 72, 0.35);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .btn-outline {
+          color: #06b6d4;
+          background: rgba(6, 182, 212, 0.06);
+          border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .btn-outline:hover {
+          border-color: rgba(225, 29, 72, 0.7);
+          background: rgba(225, 29, 72, 0.15);
+          box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);
+          transform: translateY(-2px);
+        }
+
+        .neon-btn {
+          position: relative;
+          padding: 1rem 2.5rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          color: #ffffff;
+          border-radius: 9999px;
+          overflow: hidden;
+          display: inline-block;
+          text-align: center;
+          background: linear-gradient(135deg, #e11d48 0%, #c026d3 100%);
+          box-shadow: 0 6px 25px rgba(225, 29, 72, 0.40), 0 2px 10px rgba(0, 0, 0, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .neon-btn:hover {
+          box-shadow: 0 8px 35px rgba(225, 29, 72, 0.65), 0 0 50px rgba(192, 38, 211, 0.35);
+          transform: translateY(-3px) scale(1.02);
+        }
+
+        .neon-btn-outline {
+          position: relative;
+          padding: 0.75rem 2rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          border-radius: 9999px;
+          overflow: hidden;
+          display: inline-block;
+          text-align: center;
+          color: #be123c;
+          border: 1.5px solid rgba(225, 29, 72, 0.4);
+          background: rgba(225, 29, 72, 0.08);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .neon-btn-outline {
+          color: #06b6d4;
+          border: 1px solid rgba(6, 182, 212, 0.4);
+          background: rgba(6, 182, 212, 0.05);
+        }
+        .neon-btn-outline:hover {
+          border-color: rgba(225, 29, 72, 0.8);
+          background: rgba(225, 29, 72, 0.16);
+          box-shadow: 0 0 24px rgba(225, 29, 72, 0.25);
+          transform: translateY(-2px);
+        }
+
+        /* ── SECTION LABELS & TITLES ───────────────────────────────────── */
+        .section-label {
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.5rem;
+          color: #be123c;
+        }
+        .dark .section-label {
+          color: #06b6d4;
+          text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .section-title {
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+          font-weight: 900;
+          margin-bottom: 1rem;
+          color: #881337;
+        }
+        @media (min-width: 768px) {
+          .section-title { font-size: 3rem; line-height: 1; }
+        }
+        .dark .section-title { color: #ffffff; }
+
+        /* ── GLOW TEXT ─────────────────────────────────────────────────── */
+        .glow-text { color: inherit; }
+        .dark .glow-text { text-shadow: 0 0 20px rgba(225, 29, 72, 0.5), 0 0 40px rgba(225, 29, 72, 0.2); }
+
+        .glow-text-cyan { color: inherit; }
+        .dark .glow-text-cyan { text-shadow: 0 0 20px rgba(6, 182, 212, 0.5), 0 0 40px rgba(6, 182, 212, 0.2); }
+
+        /* ── FEATURE 3: DYNAMIC FLOATING EMPOWERMENT BUBBLES ───────────── */
+        .emp-bubble {
+          position: fixed;
+          font-weight: 700;
+          font-size: 0.75rem;
+          line-height: 1rem;
+          border-radius: 9999px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+          user-select: none;
+          z-index: 40;
+          white-space: nowrap;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: 0 4px 20px rgba(225, 29, 72, 0.15);
+          transition: opacity 0.6s ease, transform 0.6s ease, background 0.4s ease;
+        }
+
+        /* ── FEATURE 5: LAYERED STICKY SCROLL AUDIENCE SHOWCASE ─────────── */
+        .layered-audience-card {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          width: 100%;
+          height: 100%;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 768px) {
+          .layered-audience-card { padding: 3rem; }
+        }
+        .dark .layered-audience-card { color: #ffffff; }
+
+        .layered-audience-card.is-active {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          pointer-events: auto;
+        }
+        .layered-audience-card.is-inactive {
+          opacity: 0;
+          transform: scale(0.95) translateY(0);
+          pointer-events: none;
+        }
+
+        /* ── CARDS & OVERLAYS ─────────────────────────────────────────── */
+        .stat-card, .stat-card-2060, .metric-card {
+          position: relative;
+          border-radius: 1rem;
+          padding: 1.5rem;
+          text-align: center;
+          overflow: hidden;
+          color: #4c0519;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 235, 240, 0.90) 100%);
+          border: 1.5px solid rgba(225, 29, 72, 0.20);
+          box-shadow: 0 8px 24px -4px rgba(225, 29, 72, 0.08);
+          transition: all 0.5s;
+        }
+        .dark .stat-card, .dark .stat-card-2060, .dark .metric-card {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: none;
+          color: #ffffff;
+        }
+        .stat-card:hover, .stat-card-2060:hover, .metric-card:hover {
+          border-color: rgba(225, 29, 72, 0.45);
+          box-shadow: 0 0 25px rgba(225, 29, 72, 0.14);
+          transform: translateY(-4px);
+        }
+
+        .ticket-card-2060 {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+          text-align: center;
+          color: #4c0519;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 232, 238, 0.92) 100%);
+          border: 1.5px solid rgba(225, 29, 72, 0.25);
+          box-shadow: 0 14px 40px -6px rgba(225, 29, 72, 0.12);
+          transition: all 0.5s;
+        }
+        .dark .ticket-card-2060 {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: none;
+          color: #ffffff;
+        }
+        .ticket-card-2060:hover {
+          border-color: rgba(225, 29, 72, 0.5);
+          box-shadow: 0 0 40px rgba(225, 29, 72, 0.20), 0 8px 32px rgba(0, 0, 0, 0.06);
+          transform: translateY(-6px);
+        }
+
+        .sponsor-card-2060 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          padding: 1.25rem;
+          border-radius: 1rem;
+          color: #111827;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 238, 242, 0.90) 100%);
+          border: 1.5px solid rgba(225, 29, 72, 0.18);
+          box-shadow: 0 6px 20px -2px rgba(225, 29, 72, 0.06);
+          transition: all 0.4s;
+        }
+        .dark .sponsor-card-2060 {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: none;
+          color: #ffffff;
+        }
+        .sponsor-card-2060:hover {
+          border-color: rgba(225, 29, 72, 0.4);
+          background: rgba(225, 29, 72, 0.08);
+          box-shadow: 0 0 25px rgba(225, 29, 72, 0.12);
+          transform: translateY(-4px);
+        }
+
+        .dark body {
+          color: #ffffff;
+          background-color: #0a0a0a;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #ffe4e8; }
+        .dark ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb {
+          background: rgba(225, 29, 72, 0.35);
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(225, 29, 72, 0.60);
+        }
+
+        /* =====================================================================
+           UTILITY ANIMATIONS
+           ===================================================================== */
+        .slide-in { animation: slideIn 0.3s ease-out forwards; }
+        .slide-out { animation: slideOut 0.3s ease-in forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes slideOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Floating empowerment bubble up & down motion */
+        @keyframes bubbleFloatUp1 {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-26px) rotate(3deg); }
+        }
+        @keyframes bubbleFloatUp2 {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(24px) rotate(-3deg); }
+        }
+        .animate-bubble-float-1 { animation: bubbleFloatUp1 5s ease-in-out infinite; }
+        .animate-bubble-float-2 { animation: bubbleFloatUp2 6.5s ease-in-out 1s infinite; }
+
+    <style>
+
+        /* ── SMOOTH FLOATING BUBBLE UP & DOWN KEYFRAMES ── */
+        @keyframes floatUpDown1 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+        @keyframes floatUpDown2 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+        .animate-bubble-float-1 {
+            animation: floatUpDown1 4.5s ease-in-out infinite !important;
+        }
+        .animate-bubble-float-2 {
+            animation: floatUpDown2 5.5s ease-in-out 0.8s infinite !important;
+        }
+
+        /* ── HEADER GLASSNAV REACTIVE COLORS & TEXT ── */
+        .header-glass-nav {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 252, 0.90)) !important;
+            border: 1px solid rgba(200, 200, 200, 0.3) !important;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        html.dark .header-glass-nav {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(30, 5, 12, 0.92)) !important;
+            border: 2px solid rgba(225, 29, 72, 0.35) !important;
+            box-shadow: 0 4px 35px rgba(225, 29, 72, 0.35) !important;
+        }
+
+
+        /* ── WHO SHOULD ATTEND LAYERED CARDS (EXACT SAME POSITION STACK) ── */
+        .layered-audience-card {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .layered-audience-card.is-active {
+            opacity: 1 !important;
+            transform: scale(1) translateY(0) !important;
+            pointer-events: auto !important;
+            z-index: 20 !important;
+        }
+        .layered-audience-card.is-inactive {
+            opacity: 0 !important;
+            transform: scale(0.95) translateY(0) !important;
+            pointer-events: none !important;
+            z-index: 10 !important;
+        }
+    </style>
+
+    <!-- Theme bootstrap (MUST be in <head> to prevent FOUC) -->
+    <script>
+        (function(){
+            var s = localStorage.getItem('momken-theme');
+            if (s === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
 
     {% block head_extra %}{% endblock %}
 </head>
-<body>
 
-    {% include 'partials/_navbar.html' %}
+<body class="relative overflow-x-hidden transition-colors duration-500 bg-lightBg text-primaryLight dark:bg-darkBg dark:text-primaryDark min-h-screen">
 
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- ═══════════════════════════════════════════════════════════════════
+         FIXED BACKGROUND CONTAINER (z-[-20], pointer-events-none)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none -z-20 overflow-hidden" aria-hidden="true">
+        <!-- Red Orb — top right -->
+        <div class="absolute w-[600px] h-[600px] -top-48 -right-48 rounded-full animate-orb-breathe opacity-60 dark:opacity-100 transition-opacity duration-700"
+            style="background: radial-gradient(circle, rgba(225,29,72,0.18), transparent 70%); filter: blur(100px);"></div>
+        <!-- Magenta Orb — bottom left -->
+        <div class="absolute w-[500px] h-[500px] bottom-20 -left-48 rounded-full animate-orb-breathe-delay opacity-60 dark:opacity-100 transition-opacity duration-700"
+            style="background: radial-gradient(circle, rgba(192,38,211,0.15), transparent 70%); filter: blur(100px);"></div>
+        <!-- Cyan Orb — center right -->
+        <div class="absolute w-[450px] h-[450px] top-1/2 -right-32 rounded-full animate-orb-breathe opacity-60 dark:opacity-100 transition-opacity duration-700"
+            style="background: radial-gradient(circle, rgba(6,182,212,0.12), transparent 70%); filter: blur(100px); animation-delay: 4s;"></div>
+
+        <!-- Light-mode background accent texture -->
+        <div class="absolute inset-0 mosaic-dots opacity-100 dark:opacity-0 transition-opacity duration-700"></div>
+    </div>
+
+    <!-- Content wrapper -->
+    <div class="relative z-10 w-full">
+
+        {% include 'partials/_navbar.html' %}
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <div class="fixed top-24 right-6 z-[60] space-y-3 max-w-sm" id="flash-container">
             {% for category, message in messages %}
-            <div class="fade-in flex items-center gap-3 px-5 py-3 rounded-lg border backdrop-blur-sm shadow-xl
-                {% if category == 'success' %}bg-green-900/80 border-green-500/40 text-green-200
-                {% elif category == 'error' %}bg-red-900/80 border-red-500/40 text-red-200
-                {% else %}bg-blue-900/80 border-blue-500/40 text-blue-200{% endif %}">
-                <span class="text-sm font-medium">{{ message }}</span>
-                <button onclick="this.parentElement.remove()" class="ml-auto text-white/60 hover:text-white text-lg">&times;</button>
+            <div class="fade-in flex items-center gap-3 px-5 py-3 rounded-xl border backdrop-blur-xl shadow-xl
+                {% if category == 'success' %}bg-green-50 border-green-200 text-green-800 dark:bg-green-900/60 dark:border-green-500/30 dark:text-green-300
+                {% elif category == 'error' %}bg-red-50 border-red-200 text-red-800 dark:bg-red-900/60 dark:border-red-500/30 dark:text-red-300
+                {% else %}bg-blue-50 border-blue-200 text-blue-800 dark:bg-cyan-900/60 dark:border-cyan-500/30 dark:text-cyan-300{% endif %}">
+                <span class="text-sm font-semibold">{{ message }}</span>
+                <button onclick="this.parentElement.remove()"
+                    class="ml-auto text-current opacity-60 hover:opacity-100 text-lg">&times;</button>
             </div>
             {% endfor %}
         </div>
         {% endif %}
-    {% endwith %}
+        {% endwith %}
 
-    <!-- Page Content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <!-- Page Content -->
+        <main class="w-full">
+            {% block content %}{% endblock %}
+        </main>
 
-    {% include 'partials/_footer.html' %}
+        {% include 'partials/_footer.html' %}
+
+    </div>
+
+    <!-- Theme Toggle JS Engine -->
+    <script src="{{ url_for('static', filename='js/theme-toggle.js') }}"></script>
 
     <!-- Core JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- AOS Init -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80,
+        });
+    </script>
+
     {% block scripts %}{% endblock %}
 
-    <!-- Auto-dismiss flash messages after 5 seconds -->
+    <!-- Auto-dismiss flash messages -->
     <script>
-        setTimeout(() => {
-            const container = document.getElementById('flash-container');
+        setTimeout(function () {
+            var container = document.getElementById('flash-container');
             if (container) {
-                container.querySelectorAll(':scope > div').forEach(el => {
+                container.querySelectorAll(':scope > div').forEach(function (el) {
                     el.style.transition = 'opacity 0.4s';
                     el.style.opacity = '0';
-                    setTimeout(() => el.remove(), 400);
+                    setTimeout(function () { el.remove(); }, 400);
                 });
             }
         }, 5000);
     </script>
 </body>
+
 </html>

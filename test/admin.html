@@ -1,0 +1,532 @@
+<!-- Admin Dashboard - Redesigned -->
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MOMKEN Summit Admin | High-Fidelity Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#4cd7f6",
+                    "momken-red-glow": "rgba(225, 29, 72, 0.3)",
+                    "on-secondary-fixed": "#001f26",
+                    "on-error-container": "#ffdad6",
+                    "inverse-on-surface": "#313030",
+                    "inverse-surface": "#e5e2e1",
+                    "on-secondary-container": "#00424e",
+                    "surface-container-highest": "#353534",
+                    "inverse-primary": "#be0037",
+                    "error": "#ffb4ab",
+                    "surface-glass-border": "rgba(255, 255, 255, 0.1)",
+                    "outline": "#ac8889",
+                    "on-primary": "#68001a",
+                    "tertiary-container": "#c026d3",
+                    "surface-bright": "#3a3939",
+                    "primary-container": "#e11d48",
+                    "on-tertiary-container": "#fffafa",
+                    "primary-fixed": "#ffdada",
+                    "surface": "#131313",
+                    "primary": "#ffb3b6",
+                    "on-error": "#690005",
+                    "on-background": "#e5e2e1",
+                    "surface-container-high": "#2a2a2a",
+                    "tertiary": "#fda9ff",
+                    "on-tertiary-fixed": "#36003d",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary-fixed-variant": "#7d008c",
+                    "surface-dim": "#131313",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "background": "#131313",
+                    "secondary-fixed": "#acedff",
+                    "outline-variant": "#5c3f40",
+                    "accent-yellow": "#facc15",
+                    "on-tertiary": "#580063",
+                    "surface-glass": "rgba(255, 255, 255, 0.03)",
+                    "surface-container": "#201f1f",
+                    "on-surface-variant": "#e5bdbe",
+                    "on-primary-container": "#fffaf9",
+                    "on-secondary": "#003640",
+                    "on-primary-fixed": "#40000c",
+                    "error-container": "#93000a",
+                    "tertiary-fixed": "#ffd6fb",
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary-fixed-dim": "#fda9ff",
+                    "on-primary-fixed-variant": "#920028",
+                    "surface-variant": "#353534",
+                    "primary-fixed-dim": "#ffb3b6",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-container": "#03b5d3",
+                    "surface-tint": "#ffb3b6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "1.5rem",
+                    "container-max": "1280px",
+                    "grid-gutter": "2rem",
+                    "stack-sm": "0.75rem",
+                    "section-gap-lg": "8rem",
+                    "card-padding": "2.5rem",
+                    "section-gap-md": "5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Outfit"],
+                    "hero-xl-mobile": ["Outfit"],
+                    "hero-xl": ["Outfit"],
+                    "body-base": ["Outfit"],
+                    "body-lg": ["Outfit"],
+                    "headline-lg": ["Outfit"],
+                    "label-sm": ["Outfit"],
+                    "label-caps": ["Outfit"]
+            },
+            "fontSize": {
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "normal", "fontWeight": "800"}],
+                    "hero-xl-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+                    "hero-xl": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "body-base": ["16px", {"lineHeight": "1.5", "letterSpacing": "normal", "fontWeight": "400"}],
+                    "body-lg": ["20px", {"lineHeight": "1.6", "letterSpacing": "normal", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "normal", "fontWeight": "900"}],
+                    "label-sm": ["11px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.2em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e2e1;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .neo-glow-red {
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.2);
+        }
+
+        .atmospheric-orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .orb-1 { top: -100px; right: -100px; background: #e11d48; }
+        .orb-2 { bottom: -100px; left: -100px; background: #4cd7f6; }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .chart-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s ease-in-out forwards;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+</head>
+<body class="dark selection:bg-primary-container selection:text-white">
+<!-- Atmospheric Background Elements -->
+<div class="atmospheric-orb orb-1"></div>
+<div class="atmospheric-orb orb-2"></div>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 h-full w-64 bg-surface-container/30 backdrop-blur-xl border-r border-surface-glass-border flex flex-col py-6 px-4 z-[60] shadow-md">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-black text-primary uppercase tracking-tighter">MOMKEN</h1>
+<p class="text-xs font-label-caps text-on-surface-variant/60 mt-1">Admin Dashboard V3.0</p>
+</div>
+<nav class="flex-grow space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-primary font-bold border-r-4 border-primary bg-primary-container/10" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-base">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-on-surface-variant font-medium hover:bg-surface-variant hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+<span class="font-body-base">Registrations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-on-surface-variant font-medium hover:bg-surface-variant hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-base">Ticket Sales</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-on-surface-variant font-medium hover:bg-surface-variant hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-base">Attendees</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-on-surface-variant font-medium hover:bg-surface-variant hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-base">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-4 glass-card rounded-2xl flex flex-col gap-4">
+<button class="w-full bg-gradient-to-r from-primary-container to-tertiary-container text-white py-3 rounded-xl font-bold text-sm transition-transform active:scale-95 neo-glow-red">
+                Create Event
+            </button>
+<div class="flex items-center gap-3 pt-4 border-t border-white/10">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A professional and sleek headshot of a high-level female administrator in a futuristic minimalist environment, soft lighting highlights her features with subtle reflections of digital screens in her eyes. The color palette is dark, dominated by deep charcoal and punctuated by soft red glowing highlights, perfectly matching the Momken Summit brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzE_qrHQPq9rO5ZbXGlmaFX9dfoL-xwgNzhDokNSciNTmJuCckaqt8rrPYe8n0wGkjxvW-8m3TAzQwO60uFuTPHzaZsxhdNjIDS7gijLUuR7I2SZ3v5JdCfo1hlQSjux1DykYGPOCv7qw1lLh3NYyC60kYwH_bGYG7k6A7dIzLVEFaPngjK5c8dbNF_4IRuAdY96Ox_vmX2KwpmX6GY7MbLD2tMGwapeG6SpqK8nYCejMn5CQRsHF_eohXQn8U2A1vdtLstMQtrcwJ"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Summit Admin</p>
+<p class="text-xs text-on-surface-variant">Admin Dashboard</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-8 h-20 w-full ml-64 max-w-[calc(100%-16rem)] bg-surface/80 backdrop-blur-[24px] border-b border-surface-glass-border">
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50" data-icon="search">search</span>
+<input class="bg-surface-container border-none rounded-full py-2 pl-10 pr-6 text-sm w-80 focus:ring-1 focus:ring-primary-container transition-all text-on-surface" placeholder="Search analytics or users..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm font-medium">Support</span>
+</button>
+<div class="flex items-center gap-4 border-l border-white/10 pl-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors relative" data-icon="notifications">
+                    notifications
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-primary-container rounded-full border border-surface"></span>
+</button>
+<div class="flex items-center gap-2 cursor-pointer group">
+<div class="text-right hidden lg:block">
+<p class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">MOMKEN Admin</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 p-8 min-h-screen">
+<!-- Welcome Header -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Summit Intelligence</h2>
+<p class="text-on-surface-variant font-body-lg">Real-time performance metrics for Momken For Her 3rd Edition.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-xl border border-white/10 glass-card text-sm font-bold flex items-center gap-2 text-on-surface hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export Data
+                </button>
+<button class="px-5 py-2.5 rounded-xl bg-primary-container text-white text-sm font-bold flex items-center gap-2 neo-glow-red hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="campaign">campaign</span> Send Announcement
+                </button>
+</div>
+</div>
+<!-- Metric Overview Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Total Attendees -->
+<div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary-container/10 rounded-full blur-2xl group-hover:bg-primary-container/20 transition-colors"></div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" data-icon="people">people</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-label-caps">TOTAL ATTENDEES</p>
+<p class="text-secondary text-xs font-medium">+12% from last week</p>
+</div>
+</div>
+<h3 class="text-5xl font-black text-on-surface tracking-tighter">2,842</h3>
+<div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-primary-container neo-glow-red"></div>
+</div>
+</div>
+<!-- Tickets Sold -->
+<div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-colors"></div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-label-caps">TICKETS SOLD</p>
+<p class="text-secondary text-xs font-medium">94% Target Reached</p>
+</div>
+</div>
+<h3 class="text-5xl font-black text-on-surface tracking-tighter">3,150</h3>
+<div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="w-[94%] h-full bg-secondary shadow-[0_0_10px_rgba(76,215,246,0.4)]"></div>
+</div>
+</div>
+<!-- Revenue -->
+<div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-tertiary-container/10 rounded-full blur-2xl group-hover:bg-tertiary-container/20 transition-colors"></div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-label-caps">REVENUE GENERATED</p>
+<p class="text-primary text-xs font-medium">1.2M EGP</p>
+</div>
+</div>
+<h3 class="text-5xl font-black text-on-surface tracking-tighter">1.2<span class="text-2xl ml-1 font-bold text-on-surface-variant">M</span></h3>
+<div class="mt-4 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="w-[100%] h-full bg-gradient-to-r from-primary-container to-tertiary-container"></div>
+</div>
+</div>
+</div>
+<!-- Data Visualization & Quick Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+<!-- Large Chart -->
+<div class="lg:col-span-3 glass-card rounded-3xl p-8 relative">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Registration Growth</h4>
+<p class="text-sm text-on-surface-variant">Daily signup volume (Last 30 Days)</p>
+</div>
+<select class="bg-surface-container-high border-none rounded-xl text-xs font-bold text-on-surface px-4 py-2 outline-none cursor-pointer">
+<option>Last 30 Days</option>
+<option>Last 7 Days</option>
+</select>
+</div>
+<div class="h-64 w-full relative flex items-end justify-between px-2">
+<!-- SVG Background Grid -->
+<div class="absolute inset-0 flex flex-col justify-between opacity-5 pointer-events-none">
+<div class="border-b border-white w-full"></div>
+<div class="border-b border-white w-full"></div>
+<div class="border-b border-white w-full"></div>
+<div class="border-b border-white w-full"></div>
+</div>
+<!-- Mock Interactive Line Chart using SVG -->
+<svg class="absolute inset-0 w-full h-full preserve-3d overflow-visible" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#4cd7f6;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#e11d48;stop-opacity:1"></stop>
+</lineargradient>
+<filter id="glow">
+<fegaussianblur result="coloredBlur" stddeviation="4"></fegaussianblur>
+<femerge>
+<femergenode in="coloredBlur"></femergenode><femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<path class="chart-line" d="M0,200 Q100,180 200,120 T400,140 T600,60 T800,90 T1000,30" fill="none" filter="url(#glow)" stroke="url(#chartGradient)" stroke-linecap="round" stroke-width="6"></path>
+</svg>
+<!-- Floating Data Tooltip Placeholder -->
+<div class="absolute left-1/2 top-1/4 -translate-x-1/2 glass-card px-4 py-2 rounded-xl text-xs font-bold text-white border-primary-container/30 border">
+                        Peak: 412 Registrations
+                    </div>
+</div>
+<div class="flex justify-between mt-6 text-[10px] font-label-caps text-on-surface-variant/40">
+<span>Oct 1</span>
+<span>Oct 10</span>
+<span>Oct 20</span>
+<span>Oct 30</span>
+</div>
+</div>
+<!-- Quick Action Sidebar -->
+<div class="lg:col-span-1 flex flex-col gap-4">
+<div class="glass-card rounded-3xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-primary-container/10">
+<div class="w-14 h-14 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</div>
+<p class="font-bold text-on-surface mb-1">Manual Entry</p>
+<p class="text-xs text-on-surface-variant">Add attendee manually</p>
+</div>
+<div class="glass-card rounded-3xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-secondary/10">
+<div class="w-14 h-14 rounded-full bg-secondary/20 flex items-center justify-center text-secondary mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<p class="font-bold text-on-surface mb-1">Bulk Email</p>
+<p class="text-xs text-on-surface-variant">Reach 3k+ attendees</p>
+</div>
+<div class="bg-gradient-to-br from-surface-container to-surface-container-high border border-white/10 rounded-3xl p-6 flex flex-col justify-between">
+<div>
+<h5 class="text-xs font-label-caps text-primary-container mb-2">SUMMIT STATUS</h5>
+<p class="text-2xl font-black text-on-surface">LIVE IN 14D</p>
+</div>
+<div class="flex -space-x-2 mt-4">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-gray-500 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up avatar of a female entrepreneur with a confident smile, wearing a modern tech lanyard. Vibrant magenta lighting accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA5Cj6h1NIJmk-JYRwT8HzQVAeG_Q0DT7mChPJwquTucvtDQc4fQJnRaGqQ5NHfenJKuBQfj2dtd67idnKHV_vGfn0YAV0-NscJArQlL9V4cVfPRbX5b3zqrqn0hUYPdTzWpAfp3Gv4weaslgcbYb5Wslu-ilE_YDWa6P1Bq1zLm5U71ZDOFbGj3VHXl2YGr2Nhh5R47_pyIr-z1Whn_r6eDi-4d3HIQ3Y1thp4RphtLhbwbidVqT84poIA929EvKGmnPxGJns5bGp"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-gray-600 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up avatar of a young female tech professional, looking thoughtful, illuminated by cyan neon light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_LyAhWHW_fHlBh_zd1fY7s8NFiM88oIeUYDEz8Du7-FNIH9fvKtgsCMyIgqlBSuB2BMWaEz37VGisn8LGeNCpuZC1yAKBYG1ggwzUb1wWZBNSDChhfxClxeWqufSJIbmDbkqgbOSaCRgfKoYWKR1HGklAfcjuOCGcJ0TMyMM4L36pJQubrnLyyXs5mcKw4Gmg88d67ABZQx48GNrjtl740bZNy19cmKJ31yRWEM5CH7QHH2HkpPfqFLxnG6pBR50n-Mof69jwhUFe"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] text-white font-bold">
+                            +2k
+                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Registrations Table -->
+<section class="glass-card rounded-3xl overflow-hidden">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h4 class="text-lg font-bold text-on-surface">Recent Registrations</h4>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:text-white transition-colors" data-icon="filter_list">filter_list</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:text-white transition-colors" data-icon="more_vert">more_vert</button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-label-caps text-on-surface-variant tracking-widest border-b border-white/5">
+<th class="px-8 py-4">NAME</th>
+<th class="px-8 py-4">EMAIL ADDRESS</th>
+<th class="px-8 py-4">TICKET TYPE</th>
+<th class="px-8 py-4">STATUS</th>
+<th class="px-8 py-4 text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-white/5">
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-xs">SA</div>
+<span class="font-medium text-on-surface">Sara Ahmed</span>
+</div>
+</td>
+<td class="px-8 py-5 text-on-surface-variant">sara.ahmed@example.com</td>
+<td class="px-8 py-5">
+<span class="bg-secondary/10 text-secondary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider border border-secondary/20">Vip Pass</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 neo-glow-red"></span>
+<span class="text-emerald-400 font-medium">Confirmed</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-bold text-xs">LM</div>
+<span class="font-medium text-on-surface">Laila Mahmoud</span>
+</div>
+</td>
+<td class="px-8 py-5 text-on-surface-variant">laila.m@momken.tech</td>
+<td class="px-8 py-5">
+<span class="bg-tertiary-container/10 text-tertiary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider border border-tertiary-container/20">Standard</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-accent-yellow animate-pulse"></span>
+<span class="text-accent-yellow font-medium">Pending</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold text-xs">ME</div>
+<span class="font-medium text-on-surface">Mariam Ezz</span>
+</div>
+</td>
+<td class="px-8 py-5 text-on-surface-variant">m.ezz@future.eg</td>
+<td class="px-8 py-5">
+<span class="bg-secondary/10 text-secondary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider border border-secondary/20">Vip Pass</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="text-emerald-400 font-medium">Confirmed</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-white/10 text-on-surface flex items-center justify-center font-bold text-xs">NS</div>
+<span class="font-medium text-on-surface">Nour Soliman</span>
+</div>
+</td>
+<td class="px-8 py-5 text-on-surface-variant">nour_s@creative.com</td>
+<td class="px-8 py-5">
+<span class="bg-primary-container/10 text-primary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider border border-primary-container/20">Exhibitor</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="text-emerald-400 font-medium">Confirmed</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="open_in_new">open_in_new</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-white/5 flex justify-center">
+<button class="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-widest">
+                    View All Registrations <span class="material-symbols-outlined text-xs" data-icon="keyboard_arrow_right">keyboard_arrow_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Contextual FAB Suppression: Suppression active based on task instructions -->
+<script>
+        // Micro-interactions and subtle atmospheric effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+        });
+    </script>
+</body></html>

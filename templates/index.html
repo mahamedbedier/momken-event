@@ -3,386 +3,711 @@
 {% block title %}Momken For Her - Take The Lead | 3rd Edition{% endblock %}
 
 {% block content %}
+
 <!-- ═══════════════════════════════════════════════════════════════════
-     HERO SECTION
+     FEATURE 3: FIXED ALTERNATING FLOATING EMPOWERMENT BUBBLES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-40" aria-hidden="true">
+    <!-- Top Left -->
+    <div id="bubble-0"
+        class="emp-bubble animate-bubble-float-1 fixed top-20 left-4 md:top-24 md:left-8 z-40 w-max px-4 py-2 rounded-full border shadow-lg backdrop-blur-xl text-xs font-black transition-all duration-700 whitespace-nowrap opacity-0 scale-90
+         bg-white/95 text-primaryLight border-rose-300 shadow-rose-200/50 dark:bg-black/85 dark:text-rose-300 dark:border-rose-500/40 dark:shadow-[0_0_20px_rgba(225,29,72,0.3)]">
+        Empower Her ✦
+    </div>
+
+    <!-- Top Right -->
+    <div id="bubble-1"
+        class="emp-bubble animate-bubble-float-2 fixed top-20 right-4 md:top-24 md:right-8 z-40 w-max px-4 py-2 rounded-full border shadow-lg backdrop-blur-xl text-xs font-black transition-all duration-700 whitespace-nowrap opacity-0 scale-90
+         bg-white/95 text-primaryLight border-rose-300 shadow-rose-200/50 dark:bg-black/85 dark:text-cyan-300 dark:border-cyan-500/40 dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+        Lead The Future ✦
+    </div>
+
+    <!-- Bottom Left -->
+    <div id="bubble-2"
+        class="emp-bubble animate-bubble-float-1 fixed bottom-10 left-4 md:bottom-14 md:left-8 z-40 w-max px-4 py-2 rounded-full border shadow-lg backdrop-blur-xl text-xs font-black transition-all duration-700 whitespace-nowrap opacity-0 scale-90
+         bg-white/95 text-primaryLight border-rose-300 shadow-rose-200/50 dark:bg-black/85 dark:text-fuchsia-300 dark:border-fuchsia-500/40 dark:shadow-[0_0_20px_rgba(192,38,211,0.3)]">
+        Innovate &amp; Excel ✦
+    </div>
+
+    <!-- Bottom Right -->
+    <div id="bubble-3"
+        class="emp-bubble animate-bubble-float-2 fixed bottom-10 right-4 md:bottom-14 md:right-8 z-40 w-max px-4 py-2 rounded-full border shadow-lg backdrop-blur-xl text-xs font-black transition-all duration-700 whitespace-nowrap opacity-0 scale-90
+         bg-white/95 text-primaryLight border-rose-300 shadow-rose-200/50 dark:bg-black/85 dark:text-amber-300 dark:border-amber-500/40 dark:shadow-[0_0_20px_rgba(250,204,21,0.3)]">
+        Break Barriers ✦
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     HERO SECTION (EXACTLY 100VH MAX)
      ═══════════════════════════════════════════════════════════════════ -->
 <section
-    class="relative pt-32 pb-20 min-h-[90vh] flex flex-col items-center justify-center text-center px-6 border-b border-white/5 overflow-hidden">
-    <!-- Background Image & Overlay -->
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style="background-image: url('{{ url_for('static', filename='images/hero-bg.jpg') }}');"></div>
-    <div class="absolute inset-0 bg-darkBg/85"></div>
+    class="relative h-screen min-h-screen max-h-screen pt-20 pb-8 px-6 text-center overflow-hidden flex flex-col justify-center items-center">
 
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center">
-        <span class="bg-brand text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest mb-6">Employment
-            Fair</span>
-        <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight">Momken For Her<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-red-400">3rd Edition</span>
-        </h1>
-        <p class="text-textMuted max-w-2xl mx-auto text-lg mb-10 leading-relaxed">
-            A comprehensive platform dedicated to empowering women and enhancing their skills through real job
-            opportunities, training sessions, and professional networking.
-        </p>
-
-        <div class="flex flex-col md:flex-row gap-6 mb-10">
-            <div
-                class="flex items-center gap-4 bg-white/10 backdrop-blur-md p-4 border-l-4 border-brand w-64 text-left">
-                <span class="text-3xl">📅</span>
-                <div>
-                    <p class="text-xs text-white/60 uppercase tracking-widest">Date</p>
-                    <p class="font-bold text-white">August 8, 2026</p>
-                </div>
-            </div>
-            <div
-                class="flex items-center gap-4 bg-white/10 backdrop-blur-md p-4 border-l-4 border-brand w-80 text-left">
-                <span class="text-3xl">📍</span>
-                <div>
-                    <p class="text-xs text-white/60 uppercase tracking-widest">Venue</p>
-                    <p class="font-bold text-sm text-white">Creativa - Sultan Hussein Kamel Palace &amp; ITI</p>
-                </div>
+    <!-- Floating Date Bubble -->
+    <div
+        class="hidden sm:flex absolute top-[52%] left-[2%] md:left-[5%] z-30 animate-bubble-float-1 glass-card px-5 py-3 rounded-2xl border-l-4 border-l-accent-red shadow-2xl backdrop-blur-xl transition-all duration-500">
+        <div class="flex items-center gap-3 text-left">
+            <span class="text-2xl">📅</span>
+            <div>
+                <p class="text-[10px] font-black uppercase tracking-widest text-secondaryLight dark:text-accent-cyan">Date</p>
+                <p class="text-xs md:text-sm font-extrabold text-primaryLight dark:text-primaryDark">August 8, 2026</p>
             </div>
         </div>
+    </div>
 
-        <a href="#tickets" class="btn-primary px-12 py-4 shadow-[0_0_20px_rgba(230,0,58,0.4)] hover:-translate-y-1">GET
-            TICKET</a>
+    <!-- Floating Venue Bubble -->
+    <div
+        class="hidden sm:flex absolute top-[36%] right-[2%] md:right-[5%] z-30 animate-bubble-float-2 glass-card px-5 py-3 rounded-2xl border-l-4 border-l-accent-cyan shadow-2xl backdrop-blur-xl transition-all duration-500">
+        <div class="flex items-center gap-3 text-left">
+            <span class="text-2xl">📍</span>
+            <div>
+                <p class="text-[10px] font-black uppercase tracking-widest text-secondaryLight dark:text-accent-cyan">Venue
+                </p>
+                <p class="text-xs md:text-sm font-extrabold text-primaryLight dark:text-primaryDark">Creativa - Sultan Hussein
+                    Kamel Palace &amp; ITI</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto flex flex-col items-center relative z-10">
+
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tight leading-tight" data-aos="fade-up"
+            data-aos-delay="100">
+            <span class="block text-primaryLight dark:text-primaryDark dark:glow-text">THE FUTURE IS</span>
+            <span class="block text-rose-600 dark:text-rose-400 font-black italic mt-2">MOMKEN</span>
+        </h1>
+
+        <p class="text-secondaryLight dark:text-secondaryDark max-w-2xl mx-auto text-lg md:text-xl font-bold mb-12 leading-relaxed"
+            data-aos="fade-up" data-aos-delay="200">
+            Egypt's premier Employment Fair &amp; Empowerment Summit for women. Bridging the gap between ambition and
+            career opportunities.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 items-center" data-aos="fade-up" data-aos-delay="300">
+            <a href="#tickets" class="neon-btn animate-glow-pulse text-base font-black px-10 py-4">✦ REGISTER NOW ✦</a>
+            <a href="{{ url_for('agenda_page') }}" class="neon-btn-outline text-base font-black px-10 py-4">VIEW AGENDA
+                →</a>
+        </div>
+
     </div>
 </section>
+
+<div class="h-px bg-gradient-to-r from-transparent via-accent-red/25 to-transparent"></div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      COUNTDOWN SECTION
      ═══════════════════════════════════════════════════════════════════ -->
-<section class="py-16 relative border-b border-white/5">
-    <div class="absolute inset-0 bg-gradient-to-r from-darkBg via-cardBg/90 to-darkBg"></div>
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <p class="section-label">Time Is Running Out</p>
-        <h2 class="text-3xl md:text-4xl font-black text-white mb-10">BOOK YOUR TICKET</h2>
+<section class="py-16 glass-card border-y border-rose-200 dark:border-white/10 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 text-center" data-aos="fade-up">
+        <p class="section-label mb-2">Countdown to 3rd Edition</p>
+        <h2 class="text-3xl font-black text-primaryLight dark:text-primaryDark mb-8 dark:glow-text">GET READY FOR THE SUMMIT</h2>
 
-        <div class="flex justify-center gap-4 md:gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {% for unit in ['days', 'hours', 'minutes', 'seconds'] %}
-            <div class="flex flex-col items-center">
-                <div
-                    class="w-20 h-20 md:w-24 md:h-24 bg-white/5 border-l-4 border-brand flex flex-col items-center justify-center backdrop-blur-sm">
-                    <span id="{{ unit }}" class="text-3xl md:text-4xl font-black text-white">00</span>
-                    <span class="text-[10px] font-semibold text-textMuted uppercase mt-1">{{ unit | capitalize }}</span>
-                </div>
+            <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center">
+                <span id="{{ unit }}" class="text-4xl md:text-6xl font-black text-rose-600 dark:text-rose-400">00</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-secondaryLight dark:text-secondaryDark mt-2">{{
+                    unit | capitalize }}</span>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
 
+<div class="h-px bg-gradient-to-r from-transparent via-accent-cyan/20 to-transparent"></div>
+
 <!-- ═══════════════════════════════════════════════════════════════════
-     ABOUT SECTION
+     MISSION & ABOUT SECTION
      ═══════════════════════════════════════════════════════════════════ -->
-<section class="py-24 px-6 max-w-7xl mx-auto border-b border-white/5">
-    <div class="text-center mb-16">
-        <p class="section-label">About the event</p>
-        <h2 class="section-title">What is Momken For Her?</h2>
-        <p class="text-textMuted max-w-3xl mx-auto leading-relaxed">
-            A women employment forum that empowers women through job opportunities, skill development, and professional
-            networking.
-        </p>
-        <div class="w-12 h-1 bg-brand mx-auto mt-6"></div>
+<section id="about" class="py-28 px-6 max-w-7xl mx-auto relative overflow-hidden">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div data-aos="fade-right">
+            <span class="section-label">Our Mission</span>
+            <h2 class="text-4xl md:text-5xl font-black text-primaryLight dark:text-primaryDark mb-6">
+                Empowering the <br /><span class="text-rose-600 dark:text-rose-400">Workforce Ecosystem</span>
+            </h2>
+            <p class="text-secondaryLight dark:text-secondaryDark text-lg font-bold leading-relaxed mb-8">
+                Momken For Her is more than an employment fair. It is a transformative ecosystem designed to accelerate
+                professional growth, dismantle barriers, and celebrate female leadership across all industries in Egypt.
+            </p>
+
+            <div class="space-y-6">
+                <div class="flex gap-4 items-start">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-950 text-accent-red flex items-center justify-center shrink-0 text-xl font-black">
+                        💼</div>
+                    <div>
+                        <h4 class="font-black text-primaryLight dark:text-primaryDark text-base">Employment Bridges</h4>
+                        <p class="text-xs text-secondaryLight dark:text-secondaryDark font-bold mt-0.5">Direct connection with
+                            hiring managers and corporate leaders offering real job opportunities.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-950 text-accent-cyan flex items-center justify-center shrink-0 text-xl font-black">
+                        💻</div>
+                    <div>
+                        <h4 class="font-black text-primaryLight dark:text-primaryDark text-base">Skill Acceleration</h4>
+                        <p class="text-xs text-secondaryLight dark:text-secondaryDark font-bold mt-0.5">Practical workshops in AI
+                            tools, technology masterclasses, and executive leadership tracks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl border-l-4 border-l-accent-red" data-aos="fade-left">
+            <h3 class="text-2xl font-black text-primaryLight dark:text-primaryDark mb-6">Core Summit Pillars</h3>
+            <ul class="space-y-4 text-sm font-bold text-secondaryLight dark:text-secondaryDark">
+                <li class="flex items-center gap-3">
+                    <span class="text-accent-red font-black text-lg">✓</span> Direct job offers &amp; corporate
+                    recruitment booths.
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="text-accent-cyan font-black text-lg">✓</span> Hands-on technical &amp; AI prompt
+                    engineering masterclasses.
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="text-accent-magenta font-black text-lg">✓</span> Speed mentoring circles with industry
+                    icons.
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="text-amber-500 font-black text-lg">✓</span> Pitching sessions for female-founded
+                    startups &amp; grants.
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="h-px bg-gradient-to-r from-transparent via-accent-magenta/20 to-transparent"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FEATURES BENTO GRID
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="py-28 px-6 max-w-7xl mx-auto relative">
+    <div class="text-center mb-16" data-aos="fade-up">
+        <span class="section-label">What to Expect</span>
+        <h2 class="text-4xl md:text-5xl font-black text-primaryLight dark:text-primaryDark dark:glow-text mt-2">
+            SUMMIT EXPERIENCES
+        </h2>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
-        <div>
-            <p class="text-white leading-relaxed mb-8">
-                Over the years, the summit has become a platform where youth meet opportunities through:
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <!-- Large Card 1 -->
+        <div class="md:col-span-8 glass-card rounded-3xl p-8 border-l-4 border-l-accent-red" data-aos="fade-up">
+            <span class="text-4xl mb-4 block">🤝</span>
+            <h3 class="text-2xl font-black text-primaryLight dark:text-primaryDark mb-3">Corporate Matchmaking</h3>
+            <p class="text-secondaryLight dark:text-secondaryDark text-sm font-bold leading-relaxed max-w-xl">
+                Real-time interviews and career consultations with HR executives from top tech, banking, and global
+                firms across Egypt.
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                {% set features = [
-                ('💼', 'Real employment opportunities'),
-                ('💻', 'AI and technology free workshops'),
-                ('🧠', 'Psychological support & stress management'),
-                ('🚀', 'Small business guidance')
-                ] %}
-                {% for icon, text in features %}
-                <div class="flex items-center gap-4">
-                    <div
-                        class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-brand shrink-0">
-                        {{ icon }}</div>
-                    <span class="text-sm">{{ text }}</span>
+        </div>
+
+        <!-- Small Card 2 -->
+        <div class="md:col-span-4 glass-card rounded-3xl p-8 border-l-4 border-l-accent-cyan" data-aos="fade-up"
+            data-aos-delay="100">
+            <span class="text-4xl mb-4 block">🎓</span>
+            <h3 class="text-xl font-black text-primaryLight dark:text-primaryDark mb-2">Masterclass Series</h3>
+            <p class="text-secondaryLight dark:text-secondaryDark text-xs font-bold leading-relaxed">
+                Technical deep-dive sessions in AI, Fintech, and Digital Leadership.
+            </p>
+        </div>
+
+        <!-- Medium Card 3 -->
+        <div class="md:col-span-4 glass-card rounded-3xl p-8 border-l-4 border-l-accent-magenta" data-aos="fade-up"
+            data-aos-delay="200">
+            <span class="text-4xl mb-4 block">⚡</span>
+            <h3 class="text-xl font-black text-primaryLight dark:text-primaryDark mb-2">1:1 Speed Mentorship</h3>
+            <p class="text-secondaryLight dark:text-secondaryDark text-xs font-bold leading-relaxed">
+                Private 15-minute speed mentoring sessions with executive leaders.
+            </p>
+        </div>
+
+        <!-- Large Card 4 -->
+        <div class="md:col-span-8 glass-card rounded-3xl p-8 border-l-4 border-l-amber-500" data-aos="fade-up"
+            data-aos-delay="300">
+            <span class="text-4xl mb-4 block">🚀</span>
+            <h3 class="text-2xl font-black text-primaryLight dark:text-primaryDark mb-3">The Innovation &amp; Startup Hub</h3>
+            <p class="text-secondaryLight dark:text-secondaryDark text-sm font-bold leading-relaxed max-w-xl">
+                A dedicated pitch showcase for female-led startups to present before angel investors, accelerators, and
+                venture funds.
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="h-px bg-gradient-to-r from-transparent via-accent-red/25 to-transparent"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     WHO SHOULD ATTEND (100VH CENTERED, NO CARD BG, CENTERED ICON & BUBBLES)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section id="sticky-attend-wrapper" class="relative h-[280vh] w-full">
+    <div class="sticky top-0 h-screen max-h-screen w-full flex flex-col items-center justify-center px-4 md:px-6 overflow-hidden">
+        <div class="max-w-4xl w-full mx-auto relative z-10 flex flex-col items-center justify-center text-center">
+
+            <!-- Section Title Header -->
+            <div class="w-full max-w-3xl mx-auto mb-6 text-center">
+                <span class="section-label mb-2 block uppercase tracking-widest text-rose-700 dark:text-rose-400 font-extrabold">TARGET AUDIENCE</span>
+                <h2 class="text-4xl md:text-6xl font-black text-primaryLight dark:text-primaryDark leading-tight mb-4">
+                    Who Should <span class="text-rose-600 dark:text-rose-400">Attend?</span>
+                </h2>
+
+                <!-- Step Dots -->
+                <div class="flex items-center justify-center gap-2" id="sticky-dots">
+                    {% set audiences = [
+                        ('01', 'Founders & Innovators', '🚀', 'Empowering female entrepreneurs scaling tech startups and small businesses.', ['Startup Grants', 'Pitching', 'Mentorship']),
+                        ('02', 'University Students', '🎓', 'Discover career paths and internships before graduation.', ['Internships', 'Networking', 'CV Prep']),
+                        ('03', 'Fresh Graduates & Job Seekers', '💼', 'Launch your career with live job offers and HR interviews.', ['Live Job Offers', 'Interview Prep', 'HR Access']),
+                        ('04', 'Young Professionals', '⚡', 'Level up leadership skills with executive masterclasses.', ['Leadership', 'Skill Masterclasses', 'Networks']),
+                        ('05', 'Career Changers', '🔄', 'Explore new tech industries and transfer your existing skills.', ['Career Pivot', 'Skills Transfer', 'Support'])
+                    ] %}
+                    {% for num, title, icon, desc, pills in audiences %}
+                    <div class="sticky-step-dot h-3 rounded-full transition-all duration-300 cursor-pointer
+                                {% if loop.first %}bg-accent-red w-10{% else %}bg-rose-300 dark:bg-white/20 w-3{% endif %}"
+                         onclick="jumpToAudience({{ loop.index0 }})"
+                         title="{{ title }}"></div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- 5 Audience Items (No Card Box, 100% Centered) -->
+            <div class="w-full max-w-3xl relative h-[360px] md:h-[380px] mx-auto flex items-center justify-center">
+                {% for num, title, icon, desc, pills in audiences %}
+                <div class="layered-audience-card p-4 md:p-6 flex flex-col items-center justify-center text-center
+                            {% if loop.first %}is-active{% else %}is-inactive{% endif %}"
+                     data-index="{{ loop.index0 }}">
+                    
+                    <!-- Centered Icon -->
+                    <div class="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl md:text-5xl mb-6 mx-auto shadow-2xl shrink-0"
+                         style="background: linear-gradient(135deg, rgba(225,29,72,0.18), rgba(192,38,211,0.18)); border: 2px solid rgba(225,29,72,0.4);">
+                        {{ icon }}
+                    </div>
+
+                    <!-- Centered Title (Bright Red in Light Mode) -->
+                    <h3 class="text-3xl md:text-5xl font-black text-rose-600 dark:text-rose-400 leading-tight mb-4 text-center">
+                        {{ title }}
+                    </h3>
+                    
+                    <!-- Centered Description (Crisp Black in Light Mode) -->
+                    <p class="text-primaryLight dark:text-secondaryDark leading-relaxed text-base md:text-xl font-extrabold text-center max-w-2xl mx-auto mb-6">
+                        {{ desc }}
+                    </p>
+
+                    <!-- Centered 3 Bubbles (Pills) -->
+                    <div class="flex flex-wrap justify-center items-center gap-3 text-center mx-auto">
+                        {% for pill in pills %}
+                        <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-black border bg-rose-100/90 border-rose-300 text-rose-900 dark:bg-rose-950/60 dark:border-rose-500/40 dark:text-rose-300 shadow-md">
+                            {{ pill }}
+                        </span>
+                        {% endfor %}
+                    </div>
+
                 </div>
                 {% endfor %}
             </div>
-            <p class="text-textMuted border-l-2 border-brand pl-5">The summit brings together top organizations,
-                industry leaders, and ambitious young minds to shape the future of talent in Egypt.</p>
-        </div>
 
-        <div class="relative group">
-            <div
-                class="absolute -inset-4 border border-white/10 rounded-3xl group-hover:border-brand/40 transition duration-500">
-            </div>
-            <img src="{{ url_for('static', filename='images/hero-bg.jpg') }}" alt="Momken For Her Event"
-                class="w-full h-[350px] rounded-2xl object-cover relative z-10 shadow-2xl">
         </div>
     </div>
+</section>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {% set stats = [('2000+', 'Expected Attendees'), ('3000+', 'Tickets Targeted'), ('100%', 'Activity Completion'),
-        ('20+', 'Sponsors & Partners')] %}
-        {% for value, label in stats %}
-        <div class="stat-card">
-            <h3 class="font-bold text-2xl mb-2">{{ value }}</h3>
-            <p class="text-textMuted text-sm">{{ label }}</p>
+<div class="h-px bg-gradient-to-r from-transparent via-accent-cyan/20 to-transparent"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPACT STATS
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="py-24 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {% set stats = [('2000+', 'Expected Attendees', 'accent-red'), ('3000+', 'Tickets Targeted', 'accent-magenta'),
+        ('100%', 'Activity Completion', 'accent-cyan'), ('20+', 'Sponsors & Partners', 'accent-yellow')] %}
+        {% for value, label, color in stats %}
+        <div class="stat-card-2060 group" data-aos="zoom-in" data-aos-delay="{{ loop.index0 * 100 }}">
+            <h3 class="font-black text-3xl md:text-5xl mb-2 text-rose-600 dark:text-rose-400">{{ value }}</h3>
+            <p class="text-primaryLight dark:text-secondaryDark text-xs md:text-sm font-extrabold">{{ label }}</p>
         </div>
         {% endfor %}
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     WHO SHOULD ATTEND
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="py-24 px-6 bg-cardBg border-b border-white/5">
-    <div class="max-w-6xl mx-auto text-center">
-        <p class="text-xs font-bold text-brand uppercase tracking-[0.3em] mb-4">Who is it for</p>
-        <h2 class="section-title">Who Should Attend?</h2>
-        <p class="text-textMuted text-[15px] max-w-2xl mx-auto mb-12">Momken For Her Summit is designed for:</p>
+<div class="h-px bg-gradient-to-r from-transparent via-accent-magenta/20 to-transparent"></div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
-            {% set audiences = ['University Students', 'Fresh Graduates', 'Job Seekers', 'Young Professionals'] %}
-            {% for audience in audiences %}
-            <div class="bg-darkBg border-l-4 border-brand p-6 text-left hover:-translate-y-1 transition duration-300">
-                <h3 class="font-bold text-white">{{ audience }}</h3>
-            </div>
-            {% endfor %}
-            <div
-                class="bg-darkBg border-l-4 border-brand p-6 text-left hover:-translate-y-1 transition duration-300 md:col-span-2">
-                <h3 class="font-bold text-white">Anyone exploring a career shift</h3>
-            </div>
+<!-- ═══════════════════════════════════════════════════════════════════
+     SPEAKERS SHOWCASE (SLIDER)
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="py-28 px-6 max-w-7xl mx-auto relative">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-6" data-aos="fade-up">
+        <div>
+            <span
+                class="section-label block mb-2 uppercase tracking-widest text-rose-700 dark:text-rose-400 font-extrabold">VOICES
+                OF POWER</span>
+            <h2 class="text-4xl md:text-5xl font-black text-primaryLight dark:text-primaryDark">Featured <span
+                    class="text-rose-600 dark:text-rose-400">Experts</span></h2>
         </div>
 
-        <p class="text-textMuted text-lg max-w-2xl mx-auto">If you want to grow your career, build connections, and
-            explore opportunities, this summit is for you.</p>
+        <div class="flex items-center gap-3">
+            <!-- Slider Controls -->
+            <button onclick="scrollSpeakerSlider(-1)" aria-label="Previous Speakers"
+                class="w-10 h-10 rounded-full glass-card border border-rose-300 dark:border-white/10 flex items-center justify-center text-primaryLight dark:text-primaryDark hover:border-rose-500 transition-all cursor-pointer">
+                ❮
+            </button>
+            <button onclick="scrollSpeakerSlider(1)" aria-label="Next Speakers"
+                class="w-10 h-10 rounded-full glass-card border border-rose-300 dark:border-white/10 flex items-center justify-center text-primaryLight dark:text-primaryDark hover:border-rose-500 transition-all cursor-pointer">
+                ❯
+            </button>
+            <a href="{{ url_for('speakers_page') }}"
+                class="hidden sm:inline-flex text-sm font-extrabold text-rose-600 dark:text-rose-400 items-center gap-2 hover:underline ml-2">
+                View All Speakers ➔
+            </a>
+        </div>
     </div>
-</section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     SPEAKERS SECTION (Featured — from DB)
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="py-24 px-6 max-w-7xl mx-auto border-b border-white/5">
-    <div class="text-center mb-16">
-        <p class="section-label">Our Speakers</p>
-        <h2 class="section-title">WHO IS SPEAKING</h2>
-        <p class="text-textMuted max-w-xl mx-auto text-sm">Learn from industry leaders and experts who have shaped
-            successful careers across various fields.</p>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-        {% for speaker in speakers %}
-        <div class="text-center group">
-            <!-- SVG Avatar with Initials -->
+    <!-- 6-Speaker Touch & Button Slider -->
+    <div id="speaker-slider-track" class="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-6 pb-6"
+        style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+        {% for speaker in speakers[:6] %}
+        <div class="snap-start shrink-0 w-[240px] sm:w-[270px] md:w-[290px] group" data-aos="fade-up"
+            data-aos-delay="{{ loop.index0 * 80 }}">
             <div
-                class="w-28 h-28 md:w-32 md:h-32 rounded-full mx-auto mb-4 border-2 border-brand/30 group-hover:border-brand transition duration-300 overflow-hidden bg-cardBg flex items-center justify-center">
-                <svg viewBox="0 0 150 150" class="w-full h-full">
-                    <rect width="150" height="150" fill="#0d1536" />
-                    <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-                        font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="48" fill="#e6003a">{{
-                        speaker.initials }}</text>
-                </svg>
+                class="aspect-[3/4] rounded-3xl overflow-hidden glass-card mb-4 relative shadow-lg border border-rose-300/50 dark:border-white/10">
+                {% set speaker_images = [
+                    "images/Speakers/88 (2).png",
+                    "images/Speakers/88(1).png",
+                    "images/Speakers/Abbberrupd.png",
+                    "images/Speakers/Ayman (2).png",
+                    "images/Speakers/Ayman(1).png",
+                    "images/Speakers/WhatsApp Image 2026-02-02 at 8.22(1).01 PM.jpeg",
+                    "images/Speakers/dina(1).png",
+                    "images/Speakers/heba.jpg",
+                    "images/Speakers/mohamed bedier.png",
+                    "images/Speakers/radwa(1).png"
+                ] %}
+                <img src="{{ url_for('static', filename=speaker_images[loop.index0 % 10]) }}" alt="{{ speaker.name }}"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70">
+                </div>
             </div>
-            <h3 class="font-bold uppercase text-sm mb-1">{{ speaker.name }}</h3>
-            <p class="text-xs text-textMuted">{{ speaker.title }}</p>
+            <h3 class="text-base md:text-lg font-black text-primaryLight dark:text-primaryDark group-hover:text-rose-600 transition-colors duration-300">
+                {{ speaker.name }}</h3>
+            <p class="text-xs font-bold text-secondaryLight dark:text-secondaryDark mt-0.5">{{ speaker.title }}</p>
         </div>
         {% endfor %}
     </div>
 
-    <div class="flex justify-center mt-8">
-        <a href="{{ url_for('speakers_page') }}" class="btn-outline px-8 py-3">View All Speakers</a>
+    <!-- View All Speakers Button -->
+    <div class="mt-8 text-center" data-aos="fade-up">
+        <a href="{{ url_for('speakers_page') }}"
+            class="neon-btn-outline inline-block text-xs md:text-sm font-black px-8 py-3.5">
+            View All Speakers &amp; Mentors ➔
+        </a>
     </div>
 </section>
 
+<div class="h-px bg-gradient-to-r from-transparent via-accent-cyan/20 to-transparent"></div>
+
 <!-- ═══════════════════════════════════════════════════════════════════
-     TICKETS SECTION (from DB — secure pricing)
+     TICKETS / PRICING CARDS
      ═══════════════════════════════════════════════════════════════════ -->
-<section id="tickets" class="py-24 px-6 max-w-7xl mx-auto border-b border-white/5">
-    <div class="text-center mb-16">
-        <p class="section-label">Reserve Your Spot</p>
-        <h2 class="section-title">TICKETS</h2>
-        <div class="w-16 h-1 bg-brand mx-auto mb-4"></div>
-        <p class="text-textMuted max-w-2xl mx-auto text-sm">Choose the ticket that fits your career goals. Gain access
-            to sessions, workshops, and exclusive mentoring.</p>
+<section id="tickets" class="py-28 px-6 max-w-7xl mx-auto relative">
+    <div class="text-center mb-16 relative z-10" data-aos="fade-up">
+        <span class="section-label">Reserve Your Ticket</span>
+        <h2 class="text-4xl md:text-5xl font-black text-primaryLight dark:text-primaryDark dark:glow-text mt-1">TICKET TIERS</h2>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-3 gap-8 relative z-10">
         {% for ticket in ticket_types %}
-        <div
-            class="bg-cardBg p-8 border border-white/10 hover:border-brand transition group text-center relative overflow-hidden">
-            {% if ticket.badge %}
-            <div class="absolute top-0 right-0 bg-brand text-xs font-bold px-3 py-1">{{ ticket.badge }}</div>
-            {% endif %}
-            <h3 class="text-xl font-black uppercase mb-4">{{ ticket.name }}</h3>
-            <div class="mb-6">
-                <span class="text-4xl font-black text-brand">{{ ticket.price }}</span>
-                <span class="text-textMuted ml-1">EGP</span>
+        <div class="ticket-card-2060 p-8 group flex flex-col justify-between" data-aos="fade-up"
+            data-aos-delay="{{ loop.index0 * 100 }}">
+            <div>
+                {% if ticket.badge %}
+                <div class="holo-badge mb-4 inline-block">{{ ticket.badge }}</div>
+                {% endif %}
+
+                <h3 class="text-2xl font-black uppercase text-primaryLight dark:text-primaryDark mb-4">{{ ticket.name }}</h3>
+                <div class="mb-6">
+                    <span class="text-5xl font-black text-rose-600 dark:text-rose-400">{{ ticket.price }}</span>
+                    <span class="text-secondaryLight dark:text-secondaryDark ml-2 text-base font-bold">EGP</span>
+                </div>
+                <p class="text-xs text-secondaryLight dark:text-secondaryDark mb-8 leading-relaxed font-bold">{{ ticket.description
+                    }}</p>
             </div>
-            <p class="text-sm text-textMuted mb-8 h-16">{{ ticket.description }}</p>
-            <!-- Authenticated users go straight to checkout; guests go to auth first -->
+
             {% if current_user.is_authenticated %}
-            <a href="{{ url_for('checkout_page', ticket_id=ticket.id) }}" class="btn-primary inline-block px-8 py-3">Get
-                Your Ticket Now →</a>
+            <a href="{{ url_for('checkout_page', ticket_id=ticket.id) }}" class="neon-btn w-full text-center block">Get
+                Ticket Now →</a>
             {% else %}
-            <a href="{{ url_for('auth_page', ticket_id=ticket.id) }}" class="btn-primary inline-block px-8 py-3">Get
-                Your Ticket Now →</a>
+            <a href="{{ url_for('auth_page', ticket_id=ticket.id) }}" class="neon-btn w-full text-center block">Get
+                Ticket Now →</a>
             {% endif %}
         </div>
         {% endfor %}
     </div>
 </section>
 
+<div class="h-px bg-gradient-to-r from-transparent via-accent-red/25 to-transparent"></div>
+
 <!-- ═══════════════════════════════════════════════════════════════════
-     SPONSORS SECTION (from DB — grouped by tier)
+     PRESERVED CUSTOM SPONSORS
      ═══════════════════════════════════════════════════════════════════ -->
-<section class="py-24 px-6 bg-darkBg text-center border-b border-white/5">
-    <p class="text-brand text-sm font-bold uppercase tracking-widest mb-2">Partners</p>
-    <h2 class="text-4xl md:text-5xl font-black mb-16">OFFICIAL SPONSORS</h2>
+<section class="py-28 px-6 text-center relative overflow-hidden">
+    <div class="relative z-10 max-w-6xl mx-auto">
+        <div data-aos="fade-up">
+            <span class="section-label">Partners &amp; Supporters</span>
+            <h2 class="text-4xl md:text-5xl font-black mb-20 text-primaryLight dark:text-primaryDark dark:glow-text">OFFICIAL
+                SPONSORS</h2>
+        </div>
 
-    <div class="max-w-6xl mx-auto space-y-16">
-
-        <!-- Diamond Sponsors -->
-        <div>
-            <p class="text-xs font-bold text-textMuted uppercase tracking-widest mb-6">Diamond Sponsors</p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-40 md:w-48">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR71aM4Ug2535Vx9M3oZBUC4i6WoxyAlKTcqbNPHmYL6hSHz0vi_NWIbcDS&s=10"
-                        alt="VOIS" class="h-16 w-auto object-contain rounded">
-                    <span class="text-sm font-bold text-white text-center">VOIS</span>
+        <div class="space-y-20">
+            <!-- Diamond Sponsors -->
+            <div data-aos="fade-up">
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <div class="h-px w-16 bg-gradient-to-r from-transparent to-accent-red/30"></div>
+                    <p class="text-xs font-bold text-rose-600 uppercase tracking-[0.3em]">💎 Diamond Sponsors</p>
+                    <div class="h-px w-16 bg-gradient-to-l from-transparent to-accent-red/30"></div>
                 </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-12S rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-40 md:w-48">
-                    <img src="https://prod.widget.mubasher.info/static-resources/mubasher-info/company-logo/21.png"
-                        alt="Mashreq Bank" class="h-16 w-auto object-contain rounded">
-                    <span class="text-sm font-bold text-white text-center">Mashreq Bank</span>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div class="sponsor-card-2060 w-40 md:w-48">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR71aM4Ug2535Vx9M3oZBUC4i6WoxyAlKTcqbNPHmYL6hSHz0vi_NWIbcDS&s=10"
+                            alt="VOIS" class="h-16 w-auto object-contain rounded">
+                        <span class="text-sm font-black text-primaryLight dark:text-primaryDark text-center">VOIS</span>
+                    </div>
+                    <div class="sponsor-card-2060 w-40 md:w-48">
+                        <img src="https://prod.widget.mubasher.info/static-resources/mubasher-info/company-logo/21.png"
+                            alt="Mashreq Bank" class="h-16 w-auto object-contain rounded">
+                        <span class="text-sm font-black text-primaryLight dark:text-primaryDark text-center">Mashreq Bank</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gold Sponsors -->
+            <div data-aos="fade-up">
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <div class="h-px w-16 bg-gradient-to-r from-transparent to-accent-cyan/30"></div>
+                    <p class="text-xs font-bold text-rose-800 dark:text-accent-yellow uppercase tracking-[0.3em]">🥇
+                        Gold Sponsors</p>
+                    <div class="h-px w-16 bg-gradient-to-l from-transparent to-accent-cyan/30"></div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://www.cibeg.com/-/media/feature/navigation/footer/logo-white.svg" alt="CIB"
+                            class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">CIB</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://cdn.prod.website-files.com/6874bcb26cc8479274177d70/6874d94433ddf23b95a0ae29_swvl-logo.svg"
+                            alt="SWVL" class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">SWVL</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxTbi6A3YKs_pmOYMrb58SCtxRUeT2MIm4h5JPvQTZDw&s=10"
+                            alt="WEN" class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">WEN</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://cdn.elabdfoods.com/abdproimages-blob/0000526_storeArabicLogo.png"
+                            alt="El Abd Foods" class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">El Abd Foods</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://www.nogoumfm.net/wp-content/uploads/2019/12/logo-nogoum-1.png" alt="Nogoum FM"
+                            class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">Nogoum FM</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://ncw.gov.eg/Images/logo/%D9%84%D9%88%D8%AC%D9%88%20%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9%20copy-22023129577857.jpg"
+                            alt="NCW" class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">NCW</span></div>
+                    <div class="sponsor-card-2060 w-36 md:w-44"><img
+                            src="https://baheya.org/new-uploads/settings/120401721612463.png" alt="Baheya Foundation"
+                            class="h-14 w-auto object-contain rounded"><span
+                            class="text-xs font-bold text-primaryLight dark:text-primaryDark">Baheya Foundation</span></div>
+                </div>
+            </div>
+
+            <!-- Silver Sponsors -->
+            <div data-aos="fade-up">
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <div class="h-px w-16 bg-gradient-to-r from-transparent to-accent-magenta/30"></div>
+                    <p class="text-xs font-bold text-secondaryLight dark:text-accent-cyan uppercase tracking-[0.3em]">🥈
+                        Silver Sponsors</p>
+                    <div class="h-px w-16 bg-gradient-to-l from-transparent to-accent-magenta/30"></div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://nolabakery.com/wp-content/uploads/2019/01/NOLA-logo.png" alt="Nola"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-rose-950 dark:text-white">Nola</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://www.shop.eva-cosmetics.com/cdn/shop/files/01_Eva_Cosmetics.svg?v=1754668871&width=220"
+                            alt="Eva Care" class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-rose-950 dark:text-white">Eva Care</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://www.shop.eva-cosmetics.com/cdn/shop/files/01_Eva_Cosmetics.svg?v=1754668871&width=220"
+                            alt="Eva Cosmetics" class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-rose-950 dark:text-white">Eva Cosmetics</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://cdn.prod.website-files.com/66fbec42e8324f284d8d8a9b/66fbec42e8324f284d8d8b4e_EFE-Egypt-Horizontal-RGB-large-1.png"
+                            alt="EFE Egypt" class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-rose-950 dark:text-white">EFE Egypt</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img src="https://absegy.com/assets/logo-light.svg"
+                            alt="ABS" class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-rose-950 dark:text-white">ABS</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://iti.gov.eg/assets/images/organization/iti-logo-text.png" alt="ITI"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">ITI</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://www.alxafrica.com/wp-content/uploads/2026/02/header-logo.svg" alt="ALX Arabia"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">ALX Arabia</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://www.nawy.com/assets/icons/common/nawy.svg" alt="Nawy"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">Nawy</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://www.egyptianrc.org/assets/media/ERCLogo.webp" alt="Red Crescent"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">Egyptian Red Crescent</span>
+                    </div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://med-spark.com/images/front/logo-wide-spark.png" alt="MedSpark"
+                            class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">MedSpark</span></div>
+                    <div class="sponsor-card-2060 w-32 md:w-40"><img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQduftnqL05N6K2sB2osUfQhwBSwpxpE7i0lLxnNaoJmQ&s=10"
+                            alt="Abdaa" class="h-12 w-auto object-contain rounded"><span
+                            class="text-[11px] font-bold text-primaryLight dark:text-primaryDark">Abdaa</span></div>
                 </div>
             </div>
         </div>
-
-        <!-- Gold Sponsors -->
-        <div>
-            <p class="text-xs font-bold text-textMuted uppercase tracking-widest mb-6">Gold Sponsors</p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://www.cibeg.com/-/media/feature/navigation/footer/logo-white.svg" alt="CIB"
-                        class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">CIB</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://cdn.prod.website-files.com/6874bcb26cc8479274177d70/6874d94433ddf23b95a0ae29_swvl-logo.svg"
-                        alt="SWVL" class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">SWVL</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxTbi6A3YKs_pmOYMrb58SCtxRUeT2MIm4h5JPvQTZDw&s=10"
-                        alt="WEN" class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">WEN</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://cdn.elabdfoods.com/abdproimages-blob/0000526_storeArabicLogo.png"
-                        alt="El Abd Foods" class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">El Abd Foods</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://www.nogoumfm.net/wp-content/uploads/2019/12/logo-nogoum-1.png" alt="Nogoum FM"
-                        class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">Nogoum FM</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://ncw.gov.eg/Images/logo/%D9%84%D9%88%D8%AC%D9%88%20%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9%20copy-22023129577857.jpg"
-                        alt="NCW" class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">NCW</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-3 p-5 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-36 md:w-44">
-                    <img src="https://baheya.org/new-uploads/settings/120401721612463.png" alt="Baheya Foundation"
-                        class="h-14 w-auto object-contain rounded">
-                    <span class="text-xs font-bold text-white text-center">Baheya Foundation</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Silver Sponsors -->
-        <div>
-            <p class="text-xs font-bold text-textMuted uppercase tracking-widest mb-6">Silver Sponsors</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://nolabakery.com/wp-content/uploads/2019/01/NOLA-logo.png" alt="Nola"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Nola</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://www.shop.eva-cosmetics.com/cdn/shop/files/01_Eva_Cosmetics.svg?v=1754668871&width=220"
-                        alt="Eva Care" class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Eva Care</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://www.shop.eva-cosmetics.com/cdn/shop/files/01_Eva_Cosmetics.svg?v=1754668871&width=220"
-                        alt="Eva Cosmetics" class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Eva Cosmetics</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://cdn.prod.website-files.com/66fbec42e8324f284d8d8a9b/66fbec42e8324f284d8d8b4e_EFE-Egypt-Horizontal-RGB-large-1.png"
-                        alt="EFE Egypt" class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">EFE Egypt</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://absegy.com/assets/logo-light.svg" alt="ABS"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">ABS</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://iti.gov.eg/assets/images/organization/iti-logo-text.png" alt="ITI"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">ITI</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://www.alxafrica.com/wp-content/uploads/2026/02/header-logo.svg" alt="ALX Arabia"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">ALX Arabia</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://www.nawy.com/assets/icons/common/nawy.svg" alt="Nawy"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Nawy</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://www.egyptianrc.org/assets/media/ERCLogo.webp" alt="Red Crescent"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Egyptian Red Crescent</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://med-spark.com/images/front/logo-wide-spark.png" alt="MedSpark"
-                        class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">MedSpark</span>
-                </div>
-                <div
-                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-brand hover:bg-brand/5 transition-all hover:-translate-y-1 w-32 md:w-40">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQduftnqL05N6K2sB2osUfQhwBSwpxpE7i0lLxnNaoJmQ&s=10"
-                        alt="Abdaa" class="h-12 w-auto object-contain rounded">
-                    <span class="text-[11px] font-bold text-white text-center">Abdaa</span>
-                </div>
-            </div>
-        </div>
-
     </div>
 </section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var phrases = [
+            "Empower Her ✦",
+            "Lead The Future ✦",
+            "Innovate & Excel ✦",
+            "Break Barriers ✦",
+            "Shape Tomorrow ✦",
+            "Take The Lead ✦",
+            "Unstoppable Women ✦",
+            "Limitless Potential ✦"
+        ];
+
+        var pairA = [document.getElementById('bubble-0'), document.getElementById('bubble-3')];
+        var pairB = [document.getElementById('bubble-1'), document.getElementById('bubble-2')];
+
+        var showPairA = true;
+
+        function toggleBubblePairs() {
+            if (showPairA) {
+                pairA.forEach(function (el) {
+                    if (el) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'scale(1) translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    }
+                });
+                pairB.forEach(function (el) {
+                    if (el) {
+                        el.style.opacity = '0';
+                        el.style.transform = 'scale(0.85) translateY(8px)';
+                        el.style.pointerEvents = 'none';
+                    }
+                });
+            } else {
+                pairB.forEach(function (el) {
+                    if (el) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'scale(1) translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    }
+                });
+                pairA.forEach(function (el) {
+                    if (el) {
+                        el.style.opacity = '0';
+                        el.style.transform = 'scale(0.85) translateY(-8px)';
+                        el.style.pointerEvents = 'none';
+                    }
+                });
+            }
+
+            // Change text randomly on hidden bubbles
+            var hiddenPair = showPairA ? pairB : pairA;
+            hiddenPair.forEach(function (el) {
+                if (el) {
+                    var newPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+                    el.innerText = newPhrase;
+                }
+            });
+
+            showPairA = !showPairA;
+        }
+
+        toggleBubblePairs();
+        setInterval(toggleBubblePairs, 3500);
+    })();
+
+    (function () {
+        var wrapper = document.getElementById('sticky-attend-wrapper');
+        if (!wrapper) return;
+
+        var cards = wrapper.querySelectorAll('.layered-audience-card');
+        var dots = wrapper.querySelectorAll('.sticky-step-dot');
+        var total = cards.length;
+
+        function updateStickyScroll() {
+            var rect = wrapper.getBoundingClientRect();
+            var maxScroll = wrapper.offsetHeight - window.innerHeight;
+            if (maxScroll <= 0) return;
+
+            var progress = Math.max(0, Math.min(1, -rect.top / maxScroll));
+            var activeIdx = Math.min(total - 1, Math.floor(progress * total));
+
+            cards.forEach(function (card, idx) {
+                if (idx === activeIdx) {
+                    card.classList.add('is-active');
+                    card.classList.remove('is-inactive');
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1) translateY(0)';
+                    card.style.pointerEvents = 'auto';
+                    card.style.zIndex = '20';
+                } else {
+                    card.classList.remove('is-active');
+                    card.classList.add('is-inactive');
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.92) translateY(12px)';
+                    card.style.pointerEvents = 'none';
+                    card.style.zIndex = '10';
+                }
+            });
+
+            dots.forEach(function (dot, idx) {
+                if (idx === activeIdx) {
+                    dot.style.backgroundColor = '#e11d48';
+                    dot.style.width = '40px';
+                } else {
+                    dot.style.backgroundColor = '';
+                    dot.style.width = '12px';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateStickyScroll, { passive: true });
+        window.addEventListener('resize', updateStickyScroll);
+        updateStickyScroll();
+
+        window.jumpToAudience = function (idx) {
+            var maxScroll = wrapper.offsetHeight - window.innerHeight;
+            var targetTop = wrapper.offsetTop + (idx / total) * maxScroll;
+            window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        };
+    })();
+
+    function scrollSpeakerSlider(direction) {
+        var track = document.getElementById('speaker-slider-track');
+        if (!track) return;
+        var scrollAmount = track.clientWidth * 0.75;
+        track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+</script>
 {% endblock %}

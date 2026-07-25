@@ -1,68 +1,106 @@
 {% extends "base.html" %}
 
-{% block title %}Agenda - Momken For Her{% endblock %}
-{% block meta_description %}Explore the full schedule of sessions, workshops, and panels at Momken For Her 3rd Edition.{% endblock %}
+{% block title %}Summit Agenda &amp; Schedule - Momken For Her{% endblock %}
 
 {% block content %}
-<section class="pt-32 pb-24 px-6 max-w-5xl mx-auto">
-    <div class="text-center mb-12">
-        <p class="section-label">Event Schedule</p>
-        <h1 class="section-title uppercase">Agenda</h1>
-        <div class="w-16 h-1 bg-brand mx-auto mb-6"></div>
-        <p class="text-textMuted">Explore the full schedule across both days of the summit.</p>
-    </div>
+<div class="min-h-screen pt-32 pb-24 px-4 md:px-6 relative">
+    
+    <!-- Ambient Glow Orbs -->
+    <div class="fixed top-24 right-10 w-[500px] h-[500px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(225,29,72,0.12), transparent 70%); filter: blur(90px);"></div>
+    <div class="fixed bottom-10 left-10 w-[450px] h-[450px] rounded-full pointer-events-none -z-10"
+         style="background: radial-gradient(circle, rgba(192,38,211,0.1), transparent 70%); filter: blur(90px);"></div>
 
-    <!-- Filter Buttons -->
-    <div class="flex flex-wrap justify-center gap-3 mb-12 sticky top-24 z-40 bg-darkBg/90 py-4 backdrop-blur">
-        <button onclick="filterAgenda('all', this)"
-                class="filter-btn bg-brand text-white border border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">All</button>
-        <button onclick="filterAgenda('main', this)"
-                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Main Stage</button>
-        <button onclick="filterAgenda('secondary', this)"
-                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Secondary Stage</button>
-        <button onclick="filterAgenda('workshop', this)"
-                class="filter-btn bg-cardBg text-textMuted border border-white/10 hover:border-brand px-6 py-2 font-bold uppercase text-xs tracking-wider transition">Workshop</button>
-    </div>
-
-    <!-- Agenda List — Rendered from DB -->
-    <div class="space-y-6" id="agenda-list">
-        {% for item in agenda_items %}
-        {% set stage_colors = {'main': 'brand', 'secondary': 'blue-500', 'workshop': 'purple-500'} %}
-        {% set stage_color = stage_colors.get(item.stage, 'brand') %}
-        {% set stage_labels = {'main': 'Main Stage', 'secondary': 'Secondary Stage', 'workshop': 'Workshop'} %}
-
-        <div class="agenda-item agenda-card border-l-{{ stage_color }}" data-stage="{{ item.stage }}">
-            <div class="flex justify-between items-start mb-4">
-                <span class="text-{{ stage_color }} font-bold">{{ item.time_start }} — {{ item.time_end }}</span>
-                <span class="text-xs bg-white/10 px-2 py-1 rounded text-textMuted">{{ stage_labels.get(item.stage, item.stage) }}</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">{{ item.title }}</h3>
-            <p class="text-sm text-textMuted">{{ item.speakers_text }}</p>
+    <div class="max-w-5xl mx-auto space-y-12">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+            <span class="holo-badge mb-3">✦ August 8, 2026 ✦ Schedule ✦</span>
+            <h1 class="text-4xl md:text-6xl font-black text-primaryLight dark:text-primaryDark dark:glow-text mt-2">
+                SUMMIT AGENDA
+            </h1>
+            <p class="text-secondaryLight dark:text-secondaryDark text-base md:text-lg font-bold mt-3 leading-relaxed">
+                Explore keynotes, masterclasses, executive panels, and hands-on AI workshops taking place across our three stages at Creativa Palace.
+            </p>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-accent-red via-accent-magenta to-accent-cyan mx-auto mt-6 rounded-full"></div>
         </div>
-        {% endfor %}
+
+        <!-- Stage Track Filter Pills -->
+        <div class="flex justify-center flex-wrap gap-3" data-aos="fade-up">
+            <button onclick="filterAgenda('all')" class="agenda-filter-btn px-5 py-2.5 rounded-full text-xs font-black bg-rose-600 text-white shadow-lg transition-all duration-300">
+                All Sessions
+            </button>
+            <button onclick="filterAgenda('main')" class="agenda-filter-btn px-5 py-2.5 rounded-full text-xs font-black border border-gray-200 bg-white/80 text-primaryLight dark:bg-white/5 dark:text-white dark:border-white/10 hover:border-rose-500 transition-all duration-300">
+                Main Stage 🎤
+            </button>
+            <button onclick="filterAgenda('secondary')" class="agenda-filter-btn px-5 py-2.5 rounded-full text-xs font-black border border-gray-200 bg-white/80 text-primaryLight dark:bg-white/5 dark:text-white dark:border-white/10 hover:border-cyan-500 transition-all duration-300">
+                Career Track 💼
+            </button>
+            <button onclick="filterAgenda('workshop')" class="agenda-filter-btn px-5 py-2.5 rounded-full text-xs font-black border border-gray-200 bg-white/80 text-primaryLight dark:bg-white/5 dark:text-white dark:border-white/10 hover:border-fuchsia-500 transition-all duration-300">
+                AI &amp; Tech Workshops 💻
+            </button>
+        </div>
+
+        <!-- Agenda Timetable List -->
+        <div class="space-y-6">
+            {% for item in agenda_items %}
+            <div class="agenda-item-card glass-card p-6 md:p-8 rounded-3xl border-l-4 
+                        {% if item.stage == 'main' %}border-l-accent-red{% elif item.stage == 'secondary' %}border-l-accent-cyan{% else %}border-l-accent-magenta{% endif %}
+                        flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:translate-x-1 transition-all duration-300"
+                 data-stage="{{ item.stage }}" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 60 }}">
+                
+                <!-- Time & Stage Tag -->
+                <div class="flex items-center gap-4 shrink-0">
+                    <div class="px-4 py-2 rounded-2xl bg-gray-100/90 text-primaryLight border border-gray-200 dark:bg-white/10 dark:text-white dark:border-white/15 text-center">
+                        <span class="text-sm font-mono font-black block">{{ item.time_start }}</span>
+                        <span class="text-[10px] text-secondaryLight dark:text-secondaryDark font-bold uppercase tracking-wider block">to {{ item.time_end }}</span>
+                    </div>
+
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest
+                                {% if item.stage == 'main' %}bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-950 dark:text-rose-300
+                                {% elif item.stage == 'secondary' %}bg-cyan-100 text-cyan-800 border border-cyan-300 dark:bg-cyan-950 dark:text-cyan-300
+                                {% else %}bg-fuchsia-100 text-fuchsia-800 border border-fuchsia-300 dark:bg-fuchsia-950 dark:text-fuchsia-300{% endif %}">
+                        {{ item.stage | upper }} STAGE
+                    </span>
+                </div>
+
+                <!-- Session Title & Speakers -->
+                <div class="flex-grow">
+                    <h3 class="text-xl md:text-2xl font-black text-primaryLight dark:text-primaryDark group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+                        {{ item.title }}
+                    </h3>
+                    {% if item.speakers_text %}
+                    <p class="text-xs text-secondaryLight dark:text-secondaryDark font-bold mt-1 flex items-center gap-2">
+                        <span class="text-accent-red font-bold">👤 Speakers:</span> {{ item.speakers_text }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                <!-- Location Pin -->
+                <div class="shrink-0 text-left md:text-right">
+                    <span class="text-[11px] font-extrabold text-secondaryLight dark:text-secondaryDark uppercase tracking-widest block">Hall Location</span>
+                    <span class="text-xs font-bold text-primaryLight dark:text-primaryDark">Creativa Palace • Hall A</span>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
-</section>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    function filterAgenda(stage, btnElement) {
-        // Update button styles
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('bg-brand', 'text-white', 'border-brand');
-            btn.classList.add('bg-cardBg', 'text-textMuted', 'border-white/10');
-        });
-        btnElement.classList.remove('bg-cardBg', 'text-textMuted', 'border-white/10');
-        btnElement.classList.add('bg-brand', 'text-white', 'border-brand');
-
-        // Filter items
-        document.querySelectorAll('.agenda-item').forEach(item => {
-            if (stage === 'all' || item.getAttribute('data-stage') === stage) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
+function filterAgenda(stage) {
+    var cards = document.querySelectorAll('.agenda-item-card');
+    cards.forEach(function(card) {
+        if (stage === 'all' || card.getAttribute('data-stage') === stage) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 </script>
 {% endblock %}
